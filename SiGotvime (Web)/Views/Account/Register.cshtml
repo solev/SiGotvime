@@ -1,0 +1,67 @@
+﻿@model SiGotvime.Data.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+@using(Html.BeginForm("Register", "Account", null, FormMethod.Post, new { id = "registerForm", novalidate = "novalidate" }))
+{
+    @Html.AntiForgeryToken()
+    <!--wrap-->
+    <div class="wrap clearfix">
+        <!--row-->
+        <div class="row">
+            <!--content-->
+            <section class="content center full-width wow fadeInUp">
+                <div class="modal container">
+                    <h3>Регистрација</h3>
+                    <div class="f-row">
+                        @Html.TextBoxFor(x => x.FirstName, new { placeholder = "Име" })
+                    </div>
+                    <div class="f-row ">
+                        @Html.TextBoxFor(x => x.LastName, new { placeholder = "Презиме" })
+                    </div>
+                    <div class="f-row ">
+                        @Html.TextBoxFor(x => x.Email, new { placeholder = "Email" })
+                    </div>
+                    <div class="f-row ">
+                        @Html.PasswordFor(x => x.Password, new { placeholder = "Лозинка" })
+                    </div>
+                    <div class="f-row ">
+                        @Html.PasswordFor(x => x.RepeatPassword, new { placeholder = "Повторете Лозинка" })
+                    </div>
+
+                    <div class="f-row bwrap">
+                        <input type="submit" value="Регистрирај се" />
+                    </div>
+                    <p>Веќе си корисник? <a href="@Url.Action("Login")">Најави се</a></p>
+                </div>
+            </section>
+            <!--//content-->
+        </div>
+        <!--//row-->
+    </div>
+    <!--//wrap-->
+}
+
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#registerForm").validate({
+                rules: {
+                    FirstName: {required:true},
+                    LastName: { required: true },
+                    Email: { required: true,email:true },
+                    Password: { required: true },
+                    RepeatPassword: {equalTo:"#Password"}
+                },
+                messages: {
+                    
+                    Email: {email: "Внесената адреса не е валидна" },                    
+                    RepeatPassword: { equalTo: "Лозинките не се совпаѓаат" }
+                }
+            });
+        });        
+    </script>
+}

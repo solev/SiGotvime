@@ -1,0 +1,16 @@
+﻿@model SiGotvime.Data.ViewModels.PagerViewModel
+
+@{
+    int maxPage = Model.maxCount / Model.pageSize;
+    if(Model.maxCount % Model.pageSize > 0)
+    {
+        maxPage++;
+    }   
+}
+
+<div class="pager wow fadeInUp">
+    @for(int i=1;i<=maxPage;i++)
+    {        
+        <a href="@Url.Action(Model.action, Model.controller, new {page = i,id=(Model.id!=0?Model.id.ToString():"") })" class="@(Model.currentPage == i?"current":"")">@i</a>       
+    }
+</div>

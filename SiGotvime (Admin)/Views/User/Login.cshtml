@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/css/metro-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/Site.css" rel="stylesheet" />
+</head>
+<body class="metro">
+    <div id="login">
+        <h1 class="text-warning" style="text-align:center;margin-bottom:50px;">Logo</h1>
+        @using(Html.BeginForm("Login","User"))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="input-control text">
+                <input type="text" placeholder="Username" name="Username" />
+            </div>
+            <div class="input-control text">
+                <input type="password" placeholder="Password" name="Password" />
+            </div>
+            <input type="submit" value="Login" class="button success large" style="width:320px;" />
+        }
+
+        <p style="text-align:center;" class="text-alert">@ViewBag.error</p>
+    </div>
+</body>
+</html>

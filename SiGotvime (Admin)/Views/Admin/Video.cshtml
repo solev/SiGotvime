@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Video";
+}
+
+<h2>Video</h2>
+<hr />
+
+
+
+@using(Html.BeginForm("UploadVideo", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="grid">
+        <div class="row">
+            <div class="input-control file span5">
+                <input type="file" name="video" />
+                <button class="btn-file"></button>
+            </div>
+            <div class="span2">
+                <input class="large" type="submit" value="Зачувај" />
+            </div>
+        </div>
+    </div>
+    
+}
+
+<video controls>
+    <source style="max-width:1250px;max-height:800px;"  src="/Content/video/@ViewBag.src">    
+</video>
+
+
+@section Scripts{
+
+
+}

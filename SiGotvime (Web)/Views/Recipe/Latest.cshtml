@@ -1,0 +1,81 @@
+﻿@model SiGotvime.Data.Result_Models.RecipesResultModel
+@using SiGotvime.Utilities;
+@{
+    ViewBag.Title = "Најнови";
+    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;    
+    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel { 
+        action="Latest",
+        controller = "Recipe",
+        pageSize = Constants.PageSize,
+        currentPage = page,
+        maxCount = Model.MaxCount
+    };
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            ActivateNavigation("#recipes");
+            $("ul.categories > #allRecipes").addClass("active");
+        })
+        
+
+    </script>
+}
+<!--wrap-->
+<div class="wrap clearfix">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
+            <li>Latest Recipes</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--row-->
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">Најнови Рецепти</h2>
+        </header>
+
+        <!--content-->
+        <section class="content three-fourth wow fadeInUp">
+            <!--entries-->
+            <div class="entries row">
+                <!--item-->
+                @foreach(var item in Model.Recipes)
+                {
+                    <div class="entry one-third wow fadeInLeft">
+                        <figure>
+                            <img src="@(!string.IsNullOrWhiteSpace(item.CroppedUrl)?item.CroppedUrl:item.ImageUrl)" alt="" class="imageFullSize"/>
+                            <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>View recipe</span></a></figcaption>
+                        </figure>
+                        <div class="container">
+                            <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
+                            <div class="actions">
+                                <div>
+                                    <div class="difficulty"><i class="ico @CommonHelper.EvaluateDifficultyClass(item.Difficulty)"></i><a href="javascript:void(0)">@CommonHelper.EvaluateDifficulty(item.Difficulty)</a></div>
+                                    <div class="likes"><i class="ico i-likes"></i><a href="#">@item.LikeCount</a></div>
+                                    <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})#comments">@item.CommentCount</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }         
+                
+                @{Html.RenderPartial("Pager", pagerConfig);}
+                               
+            </div>
+            <!--//entries-->
+        </section>
+        <!--//content-->
+        <!--right sidebar-->
+        <aside class="sidebar one-fourth wow fadeInRight">
+            @{Html.RenderPartial("_SideCategoriesList");}
+            @Html.Action("Advertisments","Home")
+        </aside>
+        <!--//right sidebar-->
+    </div>
+    <!--//row-->
+</div>
+<!--//wrap-->

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SiGotvime.Data.Models.Ingredient>
+
+@{
+    ViewBag.Title = "Ingredients";
+}
+
+
+<p style="margin-top:30px;">
+    @Html.ActionLink("Нова Состојка", "AddIngredient", null, new { @class = "button" })
+</p>
+<table class="table striped">
+    <thead>
+        <tr>
+            <th class="text-left">
+                Име
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="text-right">                    
+                    @Html.ActionLink("Промени", "EditIngredient","Admin", new { id = item.ID }, new {@class="text-info" })
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
+@section Scripts{
+
+    <script>
+        $(function () {
+            $(".btnDeleteIngredient").click(function (event) {
+
+                var r = confirm("Дали сте сигурни?");
+                if (!r)
+                    event.preventDefault();
+            });
+        })
+    </script>
+
+}

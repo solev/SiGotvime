@@ -1,0 +1,334 @@
+﻿@model SiGotvime.Data.ViewModels.RecipeViewModel
+
+@{
+    ViewBag.Title = "AddRecipe";
+    List<SiGotvime.Data.ViewModels.IngredientViewModel> ingredients = new List<SiGotvime.Data.ViewModels.IngredientViewModel>();
+    List<int> tags = new List<int>();
+    if(Model!=null)
+    {
+        ingredients = Model.ingredients.ToList();
+        tags = Model.tags.ToList();
+    }
+}
+
+<h2>Нов Рецепт</h2>
+
+
+@using (Html.BeginForm("AddRecipe", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "formRecipe" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="grid" ng-app="app" ng-controller="main">
+        <div class="row">
+            <div style="max-width:400px;">
+                <img class="rounded" ng-src="{{Image}}" width="230" ng-cropper ng-show="{{showEvent}}" ng-hide="{{hideEvent}}" ng-options="options" />
+                <input type="file" id="ImageToUpload" name="ImageToUpload" ng-model="Image" accept="image/*" onchange="angular.element(this).scope().onFile(this.files[0])" hidden />
+            </div>
+        </div>
+        <a class="button" id="picBtn" style="margin-top:10px;">Одберете слика</a>
+
+        <div class="row">
+            <div class="span3">
+                <h2>Наслов:</h2>
+            </div>
+            <div class="span9 input-control text">
+                @Html.TextBoxFor(model => model.Title, new { id = "titleInput", placeholder = "Наслов" })
+            </div>
+        </div>
+
+        <div style="visibility: hidden; position: absolute; top: 0;">
+            <div ng-repeat="item in added">
+                <input type="text" value="{{item.Name}}" name="ingredients[{{$index}}].Name" />
+                <input type="text" value="{{item.Quantity}}" name="ingredients[{{$index}}].Quantity" />
+            </div>
+            <input type="text" name="x" ng-model="data.x" />
+            <input type="text" name="y" ng-model="data.y" />
+            <input type="text" name="height" ng-model="data.height" />
+            <input type="text" name="width" ng-model="data.width" />
+        </div>
+
+
+        <div style="visibility: hidden; position: absolute; top: 0;">
+            <div ng-repeat="item in selectedCategories">
+                <input type="text" value="{{item}}" name="tags" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span3">
+                <h2>Начин на приготвување:</h2>
+            </div>
+            <div class="span9 input-control textarea">
+                @Html.TextAreaFor(model => model.Content, new { style = "height:200px;", id = "npInput" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <h2>Состојки:</h2>
+            </div>
+            <div class="span9 input-control textarea">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Состојка</th>
+                            <th class="text-left">Количина</th>
+                            <th class="text-right"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in added">
+                            <td>
+                                {{item.Name}}
+                            </td>
+                            <td>
+                                {{item.Quantity}}
+                            </td>
+                            <td class="text-right">
+                                <a class="button danger small" ng-click="remove(item)">Избриши</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-control text" ng-class="{'error-state': NameValid == false}">
+                                    <autocomplete ng-model="Name" data="list"></autocomplete>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-control text" ng-class="{'error-state': QuantityValid == false}">
+                                    <input type="text" ng-model="Quantity" />
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <a class="newRow button" ng-click="add()">Додади</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <h2>Категории:</h2>
+            </div>
+            <div class="span9 categories" style="padding:15px;">
+                <a ng-repeat="item in categories" style="margin:5px;" ng-class="{success: selectedCategories.indexOf(item.ID) >= 0}" class="button" ng-click="selectCategory(item)">{{item.Name}}</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <h2>Број на луѓе:</h2>
+            </div>
+            <div class="span9 input-control text">
+                @Html.TextBoxFor(model => model.NumberOfPeople, new { id = "numPeopleInput" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <h2>Време за приготвување:</h2>
+                <p>(Во минути)</p>
+            </div>
+            <div class="span9 input-control text">
+                @Html.TextBoxFor(model => model.PreparationTime, new { id = "ptInput" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <h2>Тежина: </h2>
+            </div>
+            <div class="span9 input-control select">
+                <select name="Difficulty">
+                    <option value="@SiGotvime.Data.Models.RecipeDifficulty.Easy">Лесна</option>
+                    <option value="@SiGotvime.Data.Models.RecipeDifficulty.Medium">Средна</option>
+                    <option value="@SiGotvime.Data.Models.RecipeDifficulty.Hard">Тешка</option>
+                </select>
+            </div>
+        </div>
+        <div style="margin-top:30px;" class="row">
+            <div class="span3">
+                <input type="submit" value="Зачувај" class="success large" />
+            </div>
+            <div class="span9">
+                <h2 id="errorLog" class="text-alert" style="margin:0;">@ViewBag.Error</h2>
+            </div>
+        </div>
+
+
+        <div id="modalContent" style="visibility:hidden;position:absolute;top:0;">
+            <div class="cropper-example-2" style="height:300px;width:555px;margin:10px auto;">
+                <img ng-src="{{Image}}" width="200" height="200">
+            </div>
+
+            <div style="text-align:center;margin-top:30px;">
+                <button class="large info choosePic" onclick="loadImage()">Одбери слика</button>
+                <button class="success large savePic" style="margin-left:40px;">Зачувај</button>
+            </div>
+        </div>
+
+    </div>
+}
+
+@section Scripts{
+
+    <script>
+
+        app.controller("main", function ($scope, $http, $timeout, Cropper) {
+            $scope.list = [];
+            $scope.categories = [];
+            $scope.Name = "";
+            $scope.Quantity = "";
+            $scope.Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAACG0lEQVR4nO3XMXKDMBQA0dz/KHTqaOjoVKrnCLoCqT4jsJI0YSzWW2xhy7Y8evMx/qq17sbt691fwAQ2gU3gD01geALDExiewPAEhicwPIHhCQxPYHgCwxMYnsDwBIYnMDyB4QkMT2B4AsMTGJ7A8ASGJzA8geEJDE9geALDExiewPAEhicwPIHhCQxPYHgCwxMYnsDwBIYnMDyB4QkMT2B4AsMTGJ7A8ASGJzA8geEJDE9geEMDz/O8T9N0ei7nvE/TdJRzPta2bTutbds29H4fDdwe3PVAl2XZa637uq6ng00pHWvzPO8ppWH3+1jgdipSSi8T1RbTlXPeSymnCYu1UsqxFhjLshxrd+z37jMcHjgmoXfJbIv1UsrLAbcYLWpMYWDftd8oDQfcO9DeWoAFzvXArxNWa/8yfOd+I/RI4Djs3gT9NlHxvpjeu/cboccBxyX2+nv3129irPfee8d+o/Qo4PaGqDcp7XRe72rjBio+o3fH+5/7jdKjgK//Sa+H/9P/0pjCeF08Xtf1lv1GamhgE9gE/uwEhicwPIHhCQxPYHgCwxMYnsDwBIYnMDyB4QkMT2B4AsMTGJ7A8ASGJzA8geEJDE9geALDExiewPAEhicwPIHhCQxPYHgCwxMYnsDwBIYnMDyB4QkMT2B4AsMTGJ7A8ASGJzA8geEJDE9geALDExiewPAEhicwPIHhCQxPYHgCw/sGNlhdDky4v4YAAAAASUVORK5CYII=";
+
+
+
+
+            $scope.showEvent = 'show';
+            $scope.hideEvent = 'hide';
+            var file;
+            $scope.data = {};
+            $scope.options = {
+                aspectRatio: 1,
+                strict: true,
+                zoomable: false,
+                minCropBoxWidth: 230,
+                maximize: true,
+                done: function (dataNew) {
+                    $scope.data = dataNew;
+                    $scope.$apply();
+                }
+            };
+
+            function showCropper() { $scope.$broadcast($scope.showEvent); }
+            function hideCropper() { $scope.$broadcast($scope.hideEvent); }
+
+            var url = "http://portal-baranjerecepti.azurewebsites.net/";
+            //var url = "http://localhost:61820/";
+
+            $scope.NameValid = true;
+            $scope.QuantityValid = true;
+
+
+            $scope.ImageData = function () {
+                console.log($scope.data);
+            }
+
+            $http.get(url + "api/Ingredient/getAll").success(function (data) {
+
+                for (var i = 0; i < data.length; i++) {
+                    $scope.list.push(data[i].Name);
+                }
+            });
+
+            $http.get(url + "api/Tags/getAll").success(function (data) {
+                $scope.categories = data;
+            });
+
+            $scope.added = @Html.Raw(Json.Encode(ingredients));
+            $scope.selectedCategories = @Html.Raw(Json.Encode(tags));
+                
+            
+            $scope.add = function () {
+                if ($scope.Name == "") {
+                    $scope.NameValid = false;
+                    return;
+                }
+                $scope.NameValid = true;
+                if ($scope.Quantity == "") {
+                    $scope.QuantityValid = false;
+                    return;
+                }
+
+                var checkIfExists = $scope.list.filter(function (el) {
+                    return el == $scope.Name;
+                })
+                console.log(checkIfExists);
+                if (checkIfExists.length < 1) {
+                    $scope.NameValid = false;
+                    return;
+                }
+
+                var filt = $scope.added.filter(function (el) {
+                    return el.Name == $scope.Name;
+                })
+                if (filt.length > 0)
+                    return;
+                $scope.QuantityValid = true;
+
+                $scope.added.push({ Name: $scope.Name, Quantity: $scope.Quantity });
+
+                $scope.Name = $scope.Quantity = "";
+            }
+
+            $scope.onFile = function (blob) {
+                Cropper.encode((file = blob)).then(function (dataUrl) {
+                    $scope.Image = dataUrl;
+                    $timeout(showCropper);
+                });
+            };
+
+            $scope.selectCategory = function (item) {
+                if ($scope.selectedCategories.indexOf(item.ID) >= 0) {
+                    $scope.selectedCategories = $scope.selectedCategories.filter(function (el) {
+                        return el != item.ID;
+                    })
+
+                }
+                else {
+                    $scope.selectedCategories.push(item.ID);
+                }
+            }
+
+            $scope.remove = function (item) {
+                $scope.added = $scope.added.filter(function (el) {
+                    return el.Name != item.Name;
+                })
+            }
+
+            $("#formRecipe").submit(function (event) {
+                var log = $("#errorLog");
+                log.text("");
+                var img = $("#ImageToUpload").val();
+                if (img == "") {
+                    log.text("Немате одбрано слика!");
+                    event.preventDefault();
+                    return;
+                }
+
+                if ($("#titleInput").val() == "") {
+                    log.text("Немате внесено наслов!");
+                    event.preventDefault();
+                    return;
+                }
+
+                if ($("#npInput").val() == "") {
+                    log.text("Немате внесено начин на приготвување!");
+                    event.preventDefault();
+                    return;
+                }
+
+                if ($("#numPeopleInput").val() == "") {
+                    log.text("Немате внесено број на луѓе!");
+                    event.preventDefault();
+                    return;
+                }
+
+
+                if ($scope.added.length < 1) {
+                    log.text("Немате внесено состојки!");
+                    event.preventDefault();
+                    return;
+                }
+
+
+
+            })
+
+            $("#picBtn").click(function (event) {
+                event.preventDefault();
+                hideCropper();
+                $("#ImageToUpload").click();
+            })
+
+        })
+
+    </script>
+}

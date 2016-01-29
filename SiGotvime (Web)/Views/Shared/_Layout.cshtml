@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="keywords" content="SiGotvime - Social Recipe HTML Website Application" />
+    <meta name="description" content="SiGotvime - Social Recipe HTML Website Application">
+    <meta name="author" content="SiGotvime.mk">
+
+    @RenderSection("metas", required: false)
+    <title>@ViewBag.Title - СиГотвиме</title>
+
+
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800" rel="stylesheet">
+    <link rel="shortcut icon" href="~/images/favicon.ico" />
+    <link href="~/Content/loaders/loaders.css.min.css" rel="stylesheet" />
+    <link href="~/Content/backTop.css" rel="stylesheet" />
+    <link href="~/Content/remodal.css" rel="stylesheet" />
+    <link href="~/Content/remodal-default-theme.css" rel="stylesheet" />
+    <link href="~/Content/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    <link href="~/Content/angucomplete-alt.css" rel="stylesheet" />
+    <script src="~/Scripts/moment.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+
+    @RenderSection("styles", required: false)
+</head>
+
+@using SiGotvime.Utilities;
+
+@{
+
+    var controller = ViewContext.RouteData.GetRequiredString("controller");
+    var action = ViewContext.RouteData.GetRequiredString("action");
+    string full = string.Format("{0}/{1}", controller, action);
+
+}
+<body class="@(full == "Home/Index"?"home":"") sagoeFont" ng-app="SiGotvime">
+    <header class="head" role="banner">
+        <!--wrap-->
+        <div class="wrap clearfix">
+            <a href="@Url.Action("Index","Home")" title="SocialChef" class="logo"><h1 class="logoFont">SiGotvime</h1></a>
+
+            <nav class="main-nav" role="navigation" id="menu">
+                <ul>
+                    <li id="home"><a href="@Url.Action("Index","Home")" title="Home"><span>Дома</span></a></li>
+                    <li id="recipes">
+                        <a href="@Url.Action("Latest","Recipe")" title="Recipes"><span>Рецепти</span></a>
+                    </li>
+                    <li id="plan">
+                        <a href="@Url.Action("Index","Plan")" title="Планирање оброци"><span>Планирање оброци</span></a>
+                    </li>
+                    <li id="blog">
+                        <a href="@Url.Action("Index","Blog")" title="Статии"><span>Статии</span></a>
+                        @*<ul>
+                                <li><a href="left_sidebar.html" title="Left sidebar page">Left sidebar page</a></li>
+                                <li><a href="right_sidebar.html" title="Right sidebar page">Right sidebar page</a></li>
+                                <li><a href="two_sidebars.html" title="Both sidebars page">Both sidebars page</a></li>
+                                <li><a href="full_width.html" title="Full width page">Full width page</a></li>
+                                <li><a href="login.html" title="Login page">Login page</a></li>
+                                <li><a href="register.html" title="Register page">Register page</a></li>
+                                <li><a href="error404.html" title="Error page">Error page</a></li>
+                            </ul>*@
+                    </li>
+                    <li id="contact"><a href="@Url.Action("Contact","Home")" title="Contact"><span>Контакт</span></a></li>
+                </ul>
+            </nav>
+
+            <nav class="user-nav" role="navigation">
+                <ul>
+                    <li class="light" id="searchRecipe">
+                        <a href="@Url.Action("Search","Recipe")" title="Пребарување рецепти"><i class="ico i-search"></i> <span>Пребарaj Рецепти</span></a>
+                        <ul>
+                            <li><a href="#">Нов Пост</a></li>
+                        </ul>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="medium">
+                            <div class="avatar">
+                                <a href="@Url.Action("Profile", "User")" class="wow flipInX" data-wow-delay=".5s" data-wow-duration="1s" data-wow-offset="300"><img src="@Env.UserImage()" alt="" class="imageFullSize" /><span style="visibility:visible!important;">@Env.FirstName() @Env.LastName()</span></a>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="medium"><a href="@Url.Action("Login","Account")" title="My account" class="wow flipInX" data-wow-delay=".5s" data-wow-duration="1s" data-wow-offset="300"><i class="ico i-account"></i> <span>Најава</span></a></li>
+                    }
+
+                    <li class="dark" id="addRecipe"><a href="@Url.Action("Create","Recipe")" title="Submit a recipe"><i class="ico i-submitrecipe"></i> <span>Поставете рецепт</span></a></li>
+                </ul>
+            </nav>
+        </div>
+        <!--//wrap-->
+    </header>
+
+    <main class="main" role="main">
+        @RenderBody()
+    </main>
+
+    <!--call to action-->
+    <section class="cta">
+        <div class="wrap clearfix">
+            <h2>Не му ја мислете за храна, за тоа постои СиГотвиме.  Со нас и реките спротивно течат</h2>
+        </div>
+    </section>
+    <!--//call to action-->
+
+    <footer class="foot" role="contentinfo">
+        <div class="wrap clearfix">
+            <div class="row">
+                <article class="one-half">
+                    <h5>За <span class="logoFont">SiGotvime</span></h5>
+                    <p>Создадовме решение за штедлива исхрана,  планирање оброци за подолг период. СиГотвиме преку вашиот креиран профил ќе ги запомни внесените состојки, а алатката планирање оброци ќе ви помогне поефикасно да се справувате со секојдневната активност околу храната, на ваше и наше големо задоволство. Ги очекуваме вашите коментари, рецепти и  критики и .....</p>
+                    <p>Ајде да СиГотвиме &#9786;</p>
+                </article>
+                <article class="one-fourth">
+                    <h5>Ви треба помош?</h5>
+                    <p>Контактирајте не!</p>
+                    <p>
+                        <strong style="color:#FF7A73">Контакт: </strong><a href="javascript:void(0)">contact@sigotvime.mk</a><br/>
+                        <strong style="color:#FF7A73">Маркетинг: </strong><a href="javascript:void(0)">marketing@sigotvime.mk</a><br />   
+                        <strong style="color:#FF7A73">За ваши рецепти: </strong><a href="javascript:void(0)">recept@sigotvime.mk</a><br />      
+                    </p>
+                </article>
+                <article class="one-fourth">
+                    <h5>Следете не </h5>
+                    <ul class="social">
+                        <li class="facebook"><a href="https://www.facebook.com/sigotvime.mk/" title="facebook" target="_blank">facebook</a></li>
+                        <li class="twitter"><a href="https://twitter.com/SiGotvime" title="twitter" target="_blank">twitter</a></li>
+                        <li class="pinterest"><a href="https://www.pinterest.com/sigotvime/" title="pinterest" target="_blank">pinterest</a></li>
+                        @*<li class="youtube"><a href="#" title="youtube" target="_blank">youtube</a></li>*@
+                        @*<li class="rss"><a href="#" title="rss" target="_blank">rss</a></li>*@
+                        <li class="gplus"><a href="https://plus.google.com/105369165020998612779" title="gplus" target="_blank">google plus</a></li>
+                        <li class="linkedin"><a href="https://www.linkedin.com/in/SiGotvime" title="linkedin" target="_blank">linkedin</a></li>
+                        @*<li class="vimeo"><a href="#" title="vimeo" target="_blank">vimeo</a></li>*@
+                    </ul>
+                </article>
+
+                <div class="bottom">
+                    <p class="copy">&copy; 2015 СиГотвиме. Сите права се задржани</p>
+
+                    <nav class="foot-nav">
+                        <ul>
+                            <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
+                            <li><a href="@Url.Action("Latest","Recipe")" title="Recipes">Рецепти</a></li>
+                            <li><a href="@Url.Action("Index","Plan")" title="Планирање оброци">Планирање оброци</a></li>
+                            <li><a href="@Url.Action("Index","Blog")" title="Статии">Статии</a></li>
+                            <li><a href="@Url.Action("Search","Recipe")" title="Search for recipes">Пребарувај рецепти</a></li>
+                            <li><a href="@Url.Action("Contact","Home")" title="Contact"><span>Контакт</span></a></li>
+                            <li><a href="@Url.Action("Register","Account")" title="Register">Зачлени се</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!--preloader-->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+    <!--//preloader-->
+    <!--backToTop-->
+    <a id='backTop'>Back To Top</a>
+    <!--//backToTop-->
+    <div id="twitter-wjs"></div>
+    <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.uniform.min.js"></script>
+    @*<script src="~/Scripts/jquery.validate.js"></script>*@
+    <script src="~/Scripts/validation/languages/jquery.validationEngine-en.js"></script>
+    <script src="~/Scripts/validation/jquery.validationEngine.js"></script>
+    <script src="~/Scripts/wow.min.js"></script>
+    <script src="~/Scripts/jquery.slicknav.min.js"></script>
+    <script src="~/Scripts/scripts.js"></script>
+    <script src="~/Scripts/jquery.backTop.min.js"></script>
+    <script src="~/Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/MyScripts/BlockUI.js"></script>
+    <script>
+        window.dynamicNumbersBound = false;
+        var wow = new WOW();
+        WOW.prototype.show = function (box) {
+            wow.applyStyle(box);
+            if (typeof box.parentNode !== 'undefined' && hasClass(box.parentNode, 'dynamic-numbers') && !window.dynamicNumbersBound) {
+                bindDynamicNumbers();
+                window.dynamicNumbersBound = true;
+            }
+            return box.className = "" + box.className + " " + wow.config.animateClass;
+        };
+        wow.init();
+
+        function hasClass(element, cls) {
+            return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+        }
+
+        function bindDynamicNumbers() {
+            $('.dynamic-number').each(function () {
+                var startNumber = $(this).text();
+                var endNumber = $(this).data('dnumber');
+                var dynamicNumberControl = $(this);
+
+                $({ numberValue: startNumber }).animate({ numberValue: endNumber }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function () {
+                        $(dynamicNumberControl).text(Math.ceil(this.numberValue));
+                    }
+                });
+            });
+        }
+
+        var isAuthenticated = '@User.Identity.IsAuthenticated';
+        var isFbUser = '@(Env.FbLink() != "")';
+
+        $(function () {
+            $("#backTop").backTop({
+                position: 400,
+                speed: 500,
+                color: 'red'
+            });
+
+            $("img").on("contextmenu", function () {
+                return false;
+            });
+
+            $('main img[src$=".gif"]').each(function (idx, obj) {
+                $(obj).removeClass("imageFullSize");
+                $(obj).width("100%");
+                $(obj).height($(obj).width());
+                console.log(idx);
+            });
+        })
+
+        function GetPage(url, target) {
+            $.get(url, function (data) {
+                $(target).html(data);
+            });
+        }
+
+        function ActivateNavigation(elem) {
+            $(".main-nav , .user-nav ").find(elem).addClass('current-menu-item');
+        }
+
+    </script>
+
+    @*angular*@
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/AngularApp/angucomplete-alt.min.js"></script>
+    <script src="~/Scripts/AngularApp/app.js"></script>
+    <script src="~/Scripts/Facebook/FBLogin.js"></script>
+    <script src="~/Scripts/Twitter/Twitter.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+﻿@model List<SiGotvime.Data.Models.Recipe>
+@{
+    ViewBag.Title = "Recipes";
+    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    serializer.MaxJsonLength = Int32.MaxValue;    
+
+    int page = Convert.ToInt32(Request.QueryString["page"]);
+                
+}
+<div ng-app="app" ng-controller="RecipeController">
+    <h2 style="margin-top:50px;">Рецепти</h2>
+    <hr />
+    <div>
+        <div class="input-control text span5">
+            <input type="text" placeholder="Пребарај" id="searchRecipe"/>           
+        </div>
+        @Html.ActionLink("Нов рецепт", "AddRecipe", "Admin", null, new { @class = "button" })
+        <p class="clearfix"></p>
+
+        <div class="tile" ng-repeat="item in Recipes | filter:search" ng-click="goTo(item)">
+            <div class="tile-content image">
+                <img src="{{item.CroppedUrl || item.ImageUrl}}" id="recipeImage">
+            </div>
+            <div class="brand bg-dark opacity">
+                <span class="text">
+                    {{item.Title}}
+                </span>
+            </div>
+        </div>
+        <p class="clearfix"></p>
+    </div>
+</div>
+
+<div class="pagination">
+    <ul>
+        <li class="first"><a href="@Url.Action("Recipes", "Admin", new { page = 1})"><i class="icon-first-2"></i></a></li>
+        @if(page > 1) { 
+        <li class="prev"><a href="@Url.Action("Recipes", "Admin", new { page = page-1})"><i class="icon-previous"></i></a></li>
+        }
+        else
+        {
+          <li class="prev disabled"><a><i class="icon-previous"></i></a></li>
+        }
+        @for(int i = 1; i <= ViewBag.RecipeCount; i++)
+        {
+            if(i == page){
+                <li class="active"><a href="@Url.Action("Recipes", "Admin", new { page = i})">@i</a></li>
+            }
+            else { 
+                <li><a href="@Url.Action("Recipes", "Admin", new { page = i})">@i</a></li>
+            }
+        }       
+        @if(page < ViewBag.RecipeCount){
+            <li class="next"><a href="@Url.Action("Recipes", "Admin", new { page = page+1})"><i class="icon-next"></i></a></li>    
+        }
+        else{
+            <li class="next disabled"><a><i class="icon-next"></i></a></li>    
+        }        
+        <li class="last"><a href="@Url.Action("Recipes", "Admin", new { page = ViewBag.RecipeCount})"><i class="icon-last-2"></i></a></li>
+    </ul>
+</div>
+
+@section Scripts{
+    <script>
+        app.controller("RecipeController", function ($scope) {
+            $scope.Recipes = @Html.Raw(serializer.Serialize(Model))            
+            $scope.search = { Title: "" };
+
+            var editUrl = '@Url.Action("EditRecipe","Admin")';
+            
+            $scope.goTo = function(item)
+            {
+                window.location.href = editUrl+"/"+ item.ID+"?page="+'@page';
+            }
+        })
+
+
+        $(function () {
+            $("#searchRecipe").keyup(function (e) {
+                console.log("Asd");
+                var text = $(this).val();
+                if(e.which == 13)
+                {
+                    if(text!="")
+                    {
+                        url = '@Url.Action("Recipes","Admin")';
+                        url += "?search=" + text;
+                        window.location.replace(url);
+                    }
+                }
+            })
+        })
+    </script>
+}

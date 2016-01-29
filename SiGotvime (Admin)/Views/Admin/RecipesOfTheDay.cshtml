@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SiGotvime.Data.Models.Recipe>
+@{
+    ViewBag.Title = "RecipesOfTheDay";
+
+    int rid = (int)ViewBag.RecipeID;
+
+    SiGotvime.Data.Models.Recipe recipe = Model.FirstOrDefault(x => x.ID == rid);
+}
+
+<h2>Рецепт на денот е одбран</h2>
+
+<table class="table striped">
+    <thead>
+        <tr>
+            <th class="text-left">
+                Име
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+           <tr>
+                <td>
+                    @recipe.Title
+                </td>
+                <td class="text-right">                    
+                </td>
+            </tr>        
+    </tbody>
+</table>
+
+<h2>Одбери нов рецепт на денот</h2>
+<table class="table striped">
+    <thead>
+        <tr>
+            <th class="text-left">
+                Име
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td class="text-right">
+                    @Html.ActionLink("Рецепт на денот", "RecipeOfTheDaySelect", "Admin", new { id = item.ID }, new { @class = "text-success" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

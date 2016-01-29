@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Контакт";
+}
+<h2>@ViewBag.Title</h2>
+
+
+<address>
+    <strong>Информации:</strong>   <a href="javascript:void(0)">info@sigotvime.mk</a><br />
+    <strong>Маркетинг:</strong> <a href="javascript:void(0)">marketing@sigotvime.mk</a>
+</address>
+
+<div class="wrap clearfix">
+    <!--row-->
+    <div class="row">
+        <!--content-->
+        <section class="content center full-width wow fadeInUp">
+            <div class="modal container">
+                @using (Html.BeginForm("SendMessage", "Home", FormMethod.Post, new { id = "ContactForm"}))
+                {
+                    @Html.AntiForgeryToken()
+                    <h3>Контактирај не</h3>
+                    <div class="f-row">
+                        <input type="text" placeholder="Вашето Име" class="validate[required]" id="name" name="FullName" />
+                    </div>
+                    <div class="f-row">
+                        <input type="text" class="validate[required,custom[email]]" placeholder="Емаил" id="email" name="Email" />
+                    </div>
+                    <div class="f-row">
+                        <textarea placeholder="Порака" id="comments" name="Content" class="validate[required,minSize[10]]"></textarea>
+                    </div>
+                    <div class="f-row bwrap">
+                        <input type="submit" value="Прати порака" />
+                    </div>
+                    
+                    <input type="text" hidden name="Validate" />
+                }
+                
+                <label class="bootstrap-item"><span class="text-success">@ViewBag.Message</span></label>
+            </div>
+        </section>
+        <!--//content-->
+    </div>
+    <!--//row-->
+</div>
+
+@section Scripts{
+    <script>        
+        $("#ContactForm").validationEngine({
+            promptPosition: "bottomLeft",
+            custom_error_messages: {
+                required: {
+                    message: "Полето е задолжително!"
+                },
+                'custom[email]': {
+                    message: "Внесете валидна емаил адреса!"
+                },
+                'minSize':{
+                    message:"Внесете најмалку 10 букви!"
+                }
+            }
+        });
+
+        ActivateNavigation("#contact");
+    </script>
+}

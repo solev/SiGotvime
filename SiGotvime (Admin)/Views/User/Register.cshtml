@@ -1,0 +1,52 @@
+﻿@model Food_App_Service.Models.User
+
+@{
+    ViewBag.Title = "Нов корисник";
+}
+
+<h2>Нов корисник</h2>
+<hr />
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+        
+        @Html.ValidationSummary(true)
+    <div class="span6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, new { @class = "control-label col-md-2" })
+            <div class="input-control text">
+                @Html.EditorFor(model => model.Username)
+                
+            </div>
+            @Html.ValidationMessageFor(model => model.Username)
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+            <div class="input-control text">
+                @Html.EditorFor(model => model.Password)
+                
+            </div>
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label col-md-2" })
+            <div class="input-control text">
+                @Html.EditorFor(model => model.ConfirmPassword)                
+            </div>
+            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Додади" class="button large"  />
+            </div>
+        </div>
+    </div>
+    <p class="text-success">@ViewBag.success</p>
+    <p class="text-alert">@ViewBag.error</p>
+
+}
+

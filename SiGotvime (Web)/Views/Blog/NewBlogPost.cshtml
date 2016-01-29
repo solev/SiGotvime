@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "Нов блог пост";
+}
+<style>
+    .note-toolbar ul > li:before {
+        display: none;
+    }
+</style>
+<div class="wrap clearfix">
+    @using (Html.BeginForm("CreateBlogPost", "Blog", FormMethod.Post, new { enctype = "multipart/form-data", id = "createBlogPostForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="bootstrap-item">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 style="padding:0;margin:0;">Нова статија</h3>
+                </div>
+
+                <input type="text" name="imgx" hidden />
+                <input type="text" name="imgy" hidden />
+                <input type="text" name="imgw" hidden />
+                <input type="text" name="imgh" hidden />
+
+                <div class="panel-body">
+                    <section>
+                        <div class="f-row full bootstrap-item" style="max-width:25%;">
+                            <img id="imageToUpload" src="~/images/img.jpg" class="img-thumbnail hidden"  />
+                            <img id="imageCropper" src="~/images/img.jpg" class="img-thumbnail " />
+                        </div>
+                        <div class="f-row full">
+                            <input type="file" id="pictureFile" accept="image/*" name="ImageToUpload" />
+                        </div>
+                    </section>
+                    <section>
+                        <input type="text" placeholder="Наслов" id="titleInput" name="Title" />
+                    </section>
+                    <section>
+                        <h2>Опис</h2>
+                        <div class="f-row">
+                            <div class="full">
+                                <textarea name="Description" placeholder="Опис" style="height:100px!important;"></textarea>
+                            </div>
+                        </div>
+                    </section>
+                    <textarea hidden name="Content" id="blogContentInput"></textarea>
+                    <section>
+                        <h2>Содржина</h2>
+                        <div id="summernote">Почеток...</div>
+                    </section>
+
+                </div>
+                <div class="panel-footer">
+                    <input type="submit" value="Постави" class="pull-right" />
+                    <span class="clearfix"></span>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <h1 style="border-bottom:1px solid gray;">Преглед</h1>
+    <div id="preview" style="padding-top:15px;">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large" id="titleContent">Наслов</h2>
+        </header>
+        <article class="post ">
+            <div class="container" style="margin:auto;">
+                <div class="entry-featured cropPreview" style="overflow:hidden;height:585px!important;width:780px!important;"><a href="#"><img src="~/images/img.jpg" alt="" id="blogImage" style="width:100%;" /></a></div>
+                <div class="entry-content" id="blogContent">
+
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+
+@section Styles{
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+<link href="~/Scripts/summernote/summernote.css" rel="stylesheet" />
+<link href="~/Content/cropper/cropper.min.css" rel="stylesheet" />
+}
+@section Scripts{
+
+    <script src="~/Content/cropper/cropper.min.js"></script>
+    <script src="~/Scripts/summernote/summernote.min.js"></script>
+    <script>
+        $(function () {
+            window.onbeforeunload = function (e) {
+                return "Дали сте сигурни дека сакате да напуштите?";
+            };
+            var cropper;
+            $("#summernote").summernote({
+                height: 300,
+                focus: true
+            });
+            var blogContent = $("#blogContent");
+            blogContent.html($("#summernote").code());
+            $("body").on("DOMSubtreeModified", ".note-editable", function () {
+                blogContent.html($("#summernote").code());
+                $("#blogContentInput").val($("#summernote").code());
+            })
+
+            
+
+            $("#pictureFile").on("change", function () {
+                var path = $(this).val();
+                var input = document.getElementById("pictureFile");
+                var fReader = new FileReader();
+                fReader.readAsDataURL(input.files[0]);
+
+                fReader.onloadend = function (event) {
+                    var img = document.getElementById("imageToUpload");
+                    var cropImage = document.getElementById("imageCropper");
+                    img.src = event.target.result;
+                    cropImage.src = event.target.result;
+                    
+                    if (cropper != null)
+                    {
+                        $("#imageCropper").cropper('replace',event.target.result);
+                    }
+                    else {
+                        cropper= $("#imageCropper").cropper({
+                            aspectRatio: 1.3333333,
+                            viewMode: 2,
+                            preview: ".cropPreview",
+                            background: false,
+
+                            crop: function (e) {
+                                console.log(e);
+                                $("input[name=imgx]").val(e.x);
+                                $("input[name=imgy]").val(e.y);
+                                $("input[name=imgw]").val(e.width);
+                                $("input[name=imgh]").val(e.height);
+                            }
+                        });
+                    }
+                    
+                }
+
+            });
+
+            $("#titleInput").on("input", function () {
+                $("#titleContent").text($(this).val());
+            })
+        })
+        ActivateNavigation("#blog");
+
+
+    </script>
+}

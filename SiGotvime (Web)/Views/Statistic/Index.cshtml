@@ -1,0 +1,35 @@
+﻿@model SiGotvime.Data.ViewModels.StatisticsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div class="wrap clearfix">
+    <section class="content full-width wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+        <div class="container box">
+            <h2>Табела на статистика</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Проперти</th>
+                        <th>Вредност</th>
+                    </tr>
+                    <tr>
+                        <td>Минимално време на подготвување</td>
+                        <td>@Model.MinimumRecipeTime</td>
+                    </tr>
+                    <tr>
+                        <td>Средно време на подготвување</td>
+                        <td>@Model.AverageRecipeTime</td>
+                    </tr>
+                    <tr>
+                        <td>Максимално време на подготвување</td>
+                        <td>@Model.MaximumRecipeTime</td>
+                    </tr>
+                    
+            </tbody>
+        </table>
+    </div>
+</section>
+</div>

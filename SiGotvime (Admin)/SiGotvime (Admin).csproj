@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7D834FCD-5DDF-4527-BBCC-9B9B783FA1F2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Food_App_Service</RootNamespace>
+    <AssemblyName>Food App Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.4.0.1\lib\net45\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.WebApi, Version=5.2.3.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.WebAPI.5.2.3\lib\net45\Unity.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Views\Replication\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\IngredientsController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
+    <Compile Include="Controllers\ReplicationController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\css\autocomplete.css" />
+    <Content Include="Content\css\iconFont.css" />
+    <Content Include="Content\css\iconFont.min.css" />
+    <Content Include="Content\css\metro-bootstrap-responsive.css" />
+    <Content Include="Content\css\metro-bootstrap.css" />
+    <Content Include="Content\css\ngCropper.all.min.css" />
+    <Content Include="Content\css\Site.css" />
+    <Content Include="Content\images\100шпагетиболоњезе%28cropped%29.jpg" />
+    <Content Include="Content\images\100шпагетиболоњезе.jpg" />
+    <Content Include="Content\images\101Осличсобеловиноилуквофурна%28cropped%29.jpg" />
+    <Content Include="Content\images\101Осличсобеловиноилуквофурна.jpg" />
+    <Content Include="Content\images\10928793_432987473525052_1759541116_n.jpg" />
+    <Content Include="Content\images\21поснитопчиња%28cropped%29.jpg" />
+    <Content Include="Content\images\21поснитопчиња.jpg" />
+    <Content Include="Content\images\23питасовишни%28cropped%29.jpg" />
+    <Content Include="Content\images\23питасовишни%28cropped%290.jpg" />
+    <Content Include="Content\images\23питасовишни.jpg" />
+    <Content Include="Content\images\23питасовишни0.jpg" />
+    <Content Include="Content\images\24посниколачисопивоиореви%28cropped%29.jpg" />
+    <Content Include="Content\images\24посниколачисопивоиореви.jpg" />
+    <Content Include="Content\images\25тортелинипримавера%28cropped%29.jpg" />
+    <Content Include="Content\images\25тортелинипримавера.jpg" />
+    <Content Include="Content\images\27сутлијаш%28cropped%29.jpg" />
+    <Content Include="Content\images\27сутлијаш.jpg" />
+    <Content Include="Content\images\28макалосувипиперкикомпири%28cropped%29.jpg" />
+    <Content Include="Content\images\28макалосувипиперкикомпири.jpg" />
+    <Content Include="Content\images\29ликеродореви%28cropped%29.jpg" />
+    <Content Include="Content\images\29ликеродореви.jpg" />
+    <Content Include="Content\images\30ликеркарамела%28cropped%29.jpg" />
+    <Content Include="Content\images\30ликеркарамела.jpg" />
+    <Content Include="Content\images\31ликеркапини%28cropped%29.jpg" />
+    <Content Include="Content\images\31ликеркапини.jpg" />
+    <Content Include="Content\images\32ликерпортокал%28cropped%29.jpg" />
+    <Content Include="Content\images\32ликерпортокал.jpg" />
+    <Content Include="Content\images\33чорбаморкови%28cropped%29.jpg" />
+    <Content Include="Content\images\33чорбаморкови.jpg" />
+    <Content Include="Content\images\34пролетначорба%28cropped%29.jpg" />
+    <Content Include="Content\images\34пролетначорба.jpg" />
+    <Content Include="Content\images\35чорбаодлеб%28cropped%29.jpg" />
+    <Content Include="Content\images\35чорбаодлеб.jpg" />
+    <Content Include="Content\images\36векнамеленомесо%28cropped%29.jpg" />
+    <Content Include="Content\images\36векнамеленомесо.jpg" />
+    <Content Include="Content\images\37младикомпирисомагдонос%28cropped%29.jpg" />
+    <Content Include="Content\images\37младикомпирисомагдонос.jpg" />
+    <Content Include="Content\images\38брзкачамак%28cropped%29.jpg" />
+    <Content Include="Content\images\38брзкачамак.jpg" />
+    <Content Include="Content\images\40овошнасалата%28cropped%29.jpg" />
+    <Content Include="Content\images\40овошнасалата.jpg" />
+    <Content Include="Content\images\41сладокомлет%28cropped%29.jpg" />
+    <Content Include="Content\images\41сладокомлет.jpg" />
+    <Content Include="Content\images\424-300x200%28cropped%29.jpg" />
+    <Content Include="Content\images\424-300x200.jpg" />
+    <Content Include="Content\images\42Tequilla-Sunrise%28cropped%29.jpg" />
+    <Content Include="Content\images\42Tequilla-Sunrise.jpg" />
+    <Content Include="Content\images\44CubaLibre%28cropped%29.jpg" />
+    <Content Include="Content\images\44CubaLibre.jpg" />
+    <Content Include="Content\images\45Mai-Tai%28cropped%29.jpg" />
+    <Content Include="Content\images\45Mai-Tai.jpg" />
+    <Content Include="Content\images\46SexontheBeach%28cropped%29.jpg" />
+    <Content Include="Content\images\46SexontheBeach.jpg" />
+    <Content Include="Content\images\47Margarita%28cropped%29.jpg" />
+    <Content Include="Content\images\47Margarita.jpg" />
+    <Content Include="Content\images\48Mojito%28cropped%29.jpg" />
+    <Content Include="Content\images\48Mojito.jpg" />
+    <Content Include="Content\images\49Paloma%28cropped%29.jpg" />
+    <Content Include="Content\images\49Paloma.jpg" />
+    <Content Include="Content\images\50ElDiablo%28cropped%29.jpg" />
+    <Content Include="Content\images\50ElDiablo.jpg" />
+    <Content Include="Content\images\51пилешкомед%28cropped%29.jpg" />
+    <Content Include="Content\images\51пилешкомед.jpg" />
+    <Content Include="Content\images\53макаронисирењепечурки%28cropped%29.jpg" />
+    <Content Include="Content\images\53макаронисирењепечурки.jpg" />
+    <Content Include="Content\images\54салатаграв%28cropped%29.jpg" />
+    <Content Include="Content\images\54салатаграв.jpg" />
+    <Content Include="Content\images\55полнетимодрипатлиџани%28cropped%29.jpg" />
+    <Content Include="Content\images\55полнетимодрипатлиџани.jpg" />
+    <Content Include="Content\images\56беласалата%28cropped%29.jpg" />
+    <Content Include="Content\images\56беласалата.jpg" />
+    <Content Include="Content\images\57мусакатиквички%28cropped%29.jpg" />
+    <Content Include="Content\images\57мусакатиквички.jpg" />
+    <Content Include="Content\images\58салатацвеклојаболка%28cropped%29.jpg" />
+    <Content Include="Content\images\58салатацвеклојаболка.jpg" />
+    <Content Include="Content\images\59салатасокрушиисланина%28cropped%29.jpg" />
+    <Content Include="Content\images\59салатасокрушиисланина.jpg" />
+    <Content Include="Content\images\60салатапеченипиперки%28cropped%29.jpg" />
+    <Content Include="Content\images\60салатапеченипиперки.jpg" />
+    <Content Include="Content\images\61Топлисендвичи%28cropped%29.jpg" />
+    <Content Include="Content\images\61Топлисендвичи.jpg" />
+    <Content Include="Content\images\62Бананабомбици%28cropped%29.jpg" />
+    <Content Include="Content\images\62Бананабомбици.jpg" />
+    <Content Include="Content\images\63Јајцасотартарсос%28cropped%29.jpg" />
+    <Content Include="Content\images\63Јајцасотартарсос.jpg" />
+    <Content Include="Content\images\64Салатацрвеназелка%28cropped%29.jpg" />
+    <Content Include="Content\images\64Салатацрвеназелка.jpg" />
+    <Content Include="Content\images\65Полнетипечурки%28cropped%29.jpg" />
+    <Content Include="Content\images\65Полнетипечурки.jpg" />
+    <Content Include="Content\images\66Полнетидоматинарускиначин%28cropped%29.jpg" />
+    <Content Include="Content\images\66Полнетидоматинарускиначин.jpg" />
+    <Content Include="Content\images\67полнетидоматисошкампи%28cropped%29.jpg" />
+    <Content Include="Content\images\67полнетидоматисошкампи.jpg" />
+    <Content Include="Content\images\69Празнагрчкиначин%28cropped%29.jpg" />
+    <Content Include="Content\images\69Празнагрчкиначин.jpg" />
+    <Content Include="Content\images\71Валдорфсалата%28cropped%29.jpg" />
+    <Content Include="Content\images\71Валдорфсалата.jpg" />
+    <Content Include="Content\images\74Рускасалата%28cropped%29.jpg" />
+    <Content Include="Content\images\74Рускасалата.jpg" />
+    <Content Include="Content\images\75Францускасалата%28cropped%29.jpg" />
+    <Content Include="Content\images\75Францускасалата.jpg" />
+    <Content Include="Content\images\76Јапонскасалата%28cropped%29.JPG" />
+    <Content Include="Content\images\76Јапонскасалата.JPG" />
+    <Content Include="Content\images\77Салатаодкомпирисомајонез%28cropped%29.jpg" />
+    <Content Include="Content\images\77Салатаодкомпирисомајонез.jpg" />
+    <Content Include="Content\images\78салатасокомпириикраставици%28cropped%29.jpg" />
+    <Content Include="Content\images\78салатасокомпириикраставици.jpg" />
+    <Content Include="Content\images\79салатаодвиршли%28cropped%29.jpg" />
+    <Content Include="Content\images\79салатаодвиршли.jpg" />
+    <Content Include="Content\images\80Пилешкасалатаводиња%28cropped%29.jpg" />
+    <Content Include="Content\images\80Пилешкасалатаводиња.jpg" />
+    <Content Include="Content\images\81францускиордевер%28cropped%29.jpg" />
+    <Content Include="Content\images\81францускиордевер.jpg" />
+    <Content Include="Content\images\82ладнотелешкофрикандо%28cropped%29.JPG" />
+    <Content Include="Content\images\82ладнотелешкофрикандо.JPG" />
+    <Content Include="Content\images\83Пилешкобеломесовомајонез%28cropped%29.jpg" />
+    <Content Include="Content\images\83Пилешкобеломесовомајонез.jpg" />
+    <Content Include="Content\images\87Паштетаодпилешкомесо%28cropped%29.jpg" />
+    <Content Include="Content\images\87Паштетаодпилешкомесо.jpg" />
+    <Content Include="Content\images\89салатаодтуна%28cropped%29.jpg" />
+    <Content Include="Content\images\89салатаодтуна.jpg" />
+    <Content Include="Content\images\90ЈајцаБенедикт%28cropped%29.jpg" />
+    <Content Include="Content\images\90ЈајцаБенедикт.jpg" />
+    <Content Include="Content\images\91Натуромлет%28cropped%29.jpg" />
+    <Content Include="Content\images\91Натуромлет.jpg" />
+    <Content Include="Content\images\92Омлетнашпанскиначин%28cropped%29.jpg" />
+    <Content Include="Content\images\92Омлетнашпанскиначин.jpg" />
+    <Content Include="Content\images\93Кајганасосирење%28cropped%29.jpg" />
+    <Content Include="Content\images\93Кајганасосирење.jpg" />
+    <Content Include="Content\images\94Кајганасошкампи%28cropped%29.jpg" />
+    <Content Include="Content\images\94Кајганасошкампи.jpg" />
+    <Content Include="Content\images\95Тврдоваренијајцасобешамел%28cropped%29.jpg" />
+    <Content Include="Content\images\95Тврдоваренијајцасобешамел.jpg" />
+    <Content Include="Content\images\96Палачинкисопилешкомесо%28cropped%29.jpg" />
+    <Content Include="Content\images\96Палачинкисопилешкомесо.jpg" />
+    <Content Include="Content\images\97крофниодсирење%28cropped%29.jpg" />
+    <Content Include="Content\images\97крофниодсирење.jpg" />
+    <Content Include="Content\images\98Шпагетимиланезе%28cropped%29.jpg" />
+    <Content Include="Content\images\98Шпагетимиланезе.jpg" />
+    <Content Include="Content\images\99Шпагетинаполитански%28cropped%29.jpg" />
+    <Content Include="Content\images\99Шпагетинаполитански.jpg" />
+    <Content Include="Content\images\azEen8B_700b.jpg" />
+    <Content Include="Content\images\beshamel%28cropped%29.jpg" />
+    <Content Include="Content\images\beshamel.jpg" />
+    <Content Include="Content\images\brusketi.gif" />
+    <Content Include="Content\images\cokoladoSoOriz.jpg" />
+    <Content Include="Content\images\cropped_0_25тортелинипримавера.jpg" />
+    <Content Include="Content\images\cropped_0_39прженитиквички.jpg" />
+    <Content Include="Content\images\cropped_0_89салатаодтуна.jpg" />
+    <Content Include="Content\images\cropped_0_tzatziki.jpg" />
+    <Content Include="Content\images\cropped_1_tzatziki.jpg" />
+    <Content Include="Content\images\full_0_25тортелинипримавера.jpg" />
+    <Content Include="Content\images\full_0_39прженитиквички.jpg" />
+    <Content Include="Content\images\full_0_89салатаодтуна.jpg" />
+    <Content Include="Content\images\full_0_tzatziki.jpg" />
+    <Content Include="Content\images\full_1_tzatziki.jpg" />
+    <Content Include="Content\images\goodIcon.jpg" />
+    <Content Include="Content\images\images2%28cropped%29.jpg" />
+    <Content Include="Content\images\images2.jpg" />
+    <Content Include="Content\images\jajcasosenf%28cropped%29.jpg" />
+    <Content Include="Content\images\jajcasosenf.jpg" />
+    <Content Include="Content\images\kiflivirsla%28cropped%29.jpg" />
+    <Content Include="Content\images\kiflivirsla.jpg" />
+    <Content Include="Content\images\kohkaskaval%28cropped%29.jpg" />
+    <Content Include="Content\images\kohkaskaval.jpg" />
+    <Content Include="Content\images\konjak.jpg" />
+    <Content Include="Content\images\lutiPileskiKrilcamvc%28cropped%29.jpg" />
+    <Content Include="Content\images\lutiPileskiKrilcamvc.jpg" />
+    <Content Include="Content\images\PicMonkey Collage.jpg" />
+    <Content Include="Content\images\pogaca%28cropped%29.jpg" />
+    <Content Include="Content\images\pogaca.jpg" />
+    <Content Include="Content\images\pohuvanoBienoSirenje%28cropped%29.jpg" />
+    <Content Include="Content\images\pohuvanoBienoSirenje.jpg" />
+    <Content Include="Content\images\rolat%28cropped%290.jpg" />
+    <Content Include="Content\images\rolat.jpg" />
+    <Content Include="Content\images\rolat0.jpg" />
+    <Content Include="Content\images\rolatspanak%28cropped%29.jpg" />
+    <Content Include="Content\images\rolatspanak.jpg" />
+    <Content Include="Content\images\rolattuna%28cropped%29.jpg" />
+    <Content Include="Content\images\rolattuna%28cropped%290.jpg" />
+    <Content Include="Content\images\rolattuna.jpg" />
+    <Content Include="Content\images\rolattuna0.jpg" />
+    <Content Include="Content\images\sausage%28cropped%29.jpg" />
+    <Content Include="Content\images\sausage.jpg" />
+    <Content Include="Content\images\soleniPernicinja%28cropped%29.jpg" />
+    <Content Include="Content\images\soleniPernicinja.jpg" />
+    <Content Include="Content\images\sutlijas.jpg" />
+    <Content Include="Content\images\svinskoFile%28cropped%29.jpg" />
+    <Content Include="Content\images\svinskoFile.jpg" />
+    <Content Include="Content\images\tumblr_naghnwe39n1qmz9t5o1_500.gif" />
+    <Content Include="Content\images\Брускети.gif" />
+    <Content Include="Content\images\Колачодафион%28cropped%29.jpeg" />
+    <Content Include="Content\images\Колачодафион.jpeg" />
+    <Content Include="Content\images\Макаронинастудентскиначин%28cropped%29.JPG" />
+    <Content Include="Content\images\Макаронинастудентскиначин.JPG" />
+    <Content Include="Content\images\Печензеленчук%28cropped%29.jpeg" />
+    <Content Include="Content\images\Печензеленчук.jpeg" />
+    <Content Include="Content\images\пилешкасупасофиде%28cropped%29.png" />
+    <Content Include="Content\images\пилешкасупасофиде.png" />
+    <Content Include="Content\images\пилешкосолимон%28cropped%29.jpg" />
+    <Content Include="Content\images\пилешкосолимон.jpg" />
+    <Content Include="Content\images\Пилешкосопавлакаипечурки%28cropped%29.jpg" />
+    <Content Include="Content\images\Пилешкосопавлакаипечурки.jpg" />
+    <Content Include="Content\images\Прженијаболкавотесто%28cropped%29.jpg" />
+    <Content Include="Content\images\Прженијаболкавотесто.jpg" />
+    <Content Include="Content\images\салатајајцамарула%28cropped%29.jpg" />
+    <Content Include="Content\images\салатајајцамарула.jpg" />
+    <Content Include="Content\images\Салатаодцвекло%28cropped%29.jpg" />
+    <Content Include="Content\images\Салатаодцвекло.jpg" />
+    <Content Include="Content\images\Салатасотиквички%28cropped%29.jpg" />
+    <Content Include="Content\images\Салатасотиквички.jpg" />
+    <Content Include="Content\images\Салатацелер%28cropped%29.jpg" />
+    <Content Include="Content\images\Салатацелер.jpg" />
+    <Content Include="Content\images\топчињапилешкоикашкавал%28cropped%29.jpg" />
+    <Content Include="Content\images\топчињапилешкоикашкавал.jpg" />
+    <Content Include="Content\images\Чоколадосоориз%28cropped%29.jpg" />
+    <Content Include="Content\images\Чоколадосоориз.jpg" />
+    <Content Include="Content\images\Чорбасоцелер%28cropped%29.jpeg" />
+    <Content Include="Content\images\Чорбасоцелер.jpeg" />
+    <Content Include="Content\video\Chocolate.mp4" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Content\fonts\metroSysIcons.ttf" />
+    <Content Include="Content\fonts\metroSysIcons.woff" />
+    <Content Include="Content\fonts\iconFont.ttf" />
+    <Content Include="Content\fonts\iconFont.woff" />
+    <None Include="Properties\PublishProfiles\portal-baranjerecepti.pubxml" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\autocomplete.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.widget.min.js" />
+    <Content Include="Scripts\metro-dialog.js" />
+    <Content Include="Scripts\metro-dropdown.js" />
+    <Content Include="Scripts\metro-input-control.js" />
+    <Content Include="Scripts\metro.min.js" />
+    <Content Include="Scripts\ngCropper.all.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Admin\AddIngredient.cshtml" />
+    <Content Include="Views\Admin\Ingredients.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Admin\AddRecipe.cshtml" />
+    <Content Include="Views\Admin\Recipes.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\Admin\Categories.cshtml" />
+    <Content Include="Views\Admin\AddCategory.cshtml" />
+    <Content Include="Views\Admin\EditRecipe.cshtml" />
+    <Content Include="Views\Admin\Statuses.cshtml" />
+    <Content Include="Views\Admin\Video.cshtml" />
+    <Content Include="Views\Admin\RecipesOfTheDay.cshtml" />
+    <Content Include="Views\Admin\EditCategory.cshtml" />
+    <Content Include="Views\Admin\EditIngredient.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SiGotvime.Data\SiGotvime.Data.csproj">
+      <Project>{2aa6df41-9c7e-405c-a800-9ff73c6f41c4}</Project>
+      <Name>SiGotvime.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SiGotvime.Utilities\SiGotvime.Utilities.csproj">
+      <Project>{982da9a4-bbd6-4325-94bf-5d07ed1bd1c0}</Project>
+      <Name>SiGotvime.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>61820</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:61820/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,442 @@
+﻿@model SiGotvime.Data.Models.Recipe
+@using SiGotvime.Utilities
+
+@{
+    ViewBag.Title = Model.Title;
+    List<string> steps = new List<string>();
+    if (Model.Content.ToLower().Contains("чекор"))
+    {
+        Model.Content = Model.Content.Replace("Чекор", "чекор");
+        string[] separator = { "чекор" };
+        var tempSteps = Model.Content.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 1; i <= tempSteps.Length; i++)
+        {
+            tempSteps[i - 1] = tempSteps[i - 1].Trim();
+            if (tempSteps[i - 1].StartsWith(i.ToString()))
+            {
+                tempSteps[i - 1] = tempSteps[i - 1].Substring(2);
+            }
+        }
+        steps.AddRange(tempSteps);
+    }
+    else
+    {
+        steps.Add(Model.Content);
+    }
+    var descriptionTag = Model.Categories.FirstOrDefault(x => !string.IsNullOrEmpty(x.Tag.Description));
+    string description = descriptionTag != null ? descriptionTag.Tag.Description : "";
+    string currentUrl = Request.Url.AbsoluteUri;
+    string imageType, Height, Width;
+    imageType = Height = Width = "";
+    try
+    {
+        System.Drawing.Image mainImage = System.Drawing.Image.FromFile(Server.MapPath(ViewBag.ImageUrl));
+        if (mainImage != null)
+        {
+            Width = mainImage.Width.ToString();
+            Height = mainImage.Height.ToString();
+            imageType = string.Format("image/{0}", Path.GetExtension(Model.ImageUrl).Trim('.'));
+        }
+    }
+    catch (Exception e)
+    {
+
+    }
+}
+
+@section Styles{
+    <link href="~/Scripts/bootstrap-datepicker/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable/bootstrap-editable.css" rel="stylesheet" />
+
+}
+
+@section Metas{
+    <meta property="og:image" content="@Model.ImageUrl" />
+    <meta property="og:image:type" content="@imageType">
+    <meta property="og:image:width" content="@Width" />
+    <meta property="og:image:height" content="@Height" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Рецепт кој би го зготвил денес?" />
+}
+
+
+
+<div class="wrap clearfix remodal-bg">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="index.html" title="Home">Home</a></li>
+            <li><a href="#" title="Recipes">Recipes</a></li>
+            <li><a href="recipes.html" title="Cocktails">Deserts</a></li>
+            <li>Recipe</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--row-->
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">@Model.Title</h2>
+        </header>
+        <!--content-->
+        <section class="content three-fourth">
+            <!--recipe-->
+            <div class="recipe">
+                <div class="row">
+                    <!--two-third-->
+                    <article class="two-third wow fadeInLeft">
+                        <div class="image"><img src="@(Model.ImageUrl)" alt="" property="og:image" class="imageFullSize" /></div>
+                        <div class="intro">
+
+                            @if (!string.IsNullOrEmpty(Model.Description))
+                            {
+                                <p>
+                                    @Model.Description
+                                </p>
+                            }
+                            else
+                            {
+                                if (Model.Categories.Any())
+                                {
+                                    <p>
+                                        @CommonHelper.ShortenContent(description, 300)
+                                        ...
+                                    </p>
+                                }
+                            }
+                            <a class="button" href="javaдscript:void(0)" data-remodal-target="modalDescription">Прочитај повеќе</a>
+                        </div>
+                        <div class="instructions">
+                            <ol>
+                                @foreach (var step in steps)
+                                {
+                                    <li>@step</li>
+                                }
+                            </ol>
+                        </div>
+                    </article>
+                    <!--//two-third-->
+                    <!--one-third-->
+                    
+                    <article class="one-third wow fadeInDown">
+                        <dl class="basic">
+                            <dt>Време за подготовка (мин)</dt>
+                            <dd>@Model.PreparationTime</dd>
+                            <dt>Тежина</dt>
+                            <dd>@CommonHelper.EvaluateDifficulty(Model.Difficulty)</dd>
+                            <dt>Порции</dt>
+                            <dd>@Model.NumberOfPeople</dd>
+                        </dl>
+                        <div class="widget nutrition">
+                            <h3>Категории</h3>
+                            <table>
+                                @foreach (var item in Model.Categories)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(item.Tag.Name, "Category", "Recipe", new { id = item.Tag.ID }, null)
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+
+                        <dl class="user">
+                            <dt>Ставено од</dt>
+                            @if (Model.User != null)
+                            {
+                                <dd><a href="@Url.Action("Profile", "User", new {id=Model.User.ID })">@Model.User.FirstName @(Model.User.LastName.ElementAt(0)).</a></dd>
+                            }
+                        </dl>
+
+                        <dl class="ingredients">
+                            @foreach (var item in Model.Ingredients)
+                            {
+                                if (item.Quantity.Length <= 10)
+                                {
+                                    <dt>@item.Quantity</dt>
+                                }
+                                else
+                                {
+                                    <dt class="justifyIngredient">@item.Quantity</dt>
+                                }
+
+                                if (item.Ingredient.Name.Length <= 18)
+                                {
+                                    <dd>@item.Ingredient.Name</dd>
+                                }
+                                else
+                                {
+                                    <dd class="justifyIngredient">@item.Ingredient.Name</dd>
+                                }
+                            }
+
+                        </dl>
+                    </article>
+                    <!--//one-third-->
+                </div>
+            </div>
+            <!--//recipe-->
+            <!--comments-->
+            <div id="commentSection">
+                @{Html.RenderPartial("_CommentSection", Model.Comments);}
+            </div>
+            <!--//comments-->
+            <!--respond-->
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="comment-respond wow fadeInUp" id="respond">
+                    <div class="container">
+                        @using (Ajax.BeginForm("Comment", "Recipe", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "commentSection", InsertionMode = InsertionMode.Replace }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <h3>Коментирај:</h3>
+                            <input type="text" hidden value="@Model.ID" name="recipeID" />
+
+                            <div class="row">
+                                <div class="one-fourth">
+                                    <div class="avatar">
+                                        <img src="@Env.UserImage()" />
+                                    </div>
+                                </div>
+                                <div class="three-fourth">
+                                    <textarea name="content" placeholder="Коментар..."></textarea>
+                                </div>
+                            </div>
+                            <div class="f-row">
+                                <div class="third bwrap">
+                                    <input type="submit" value="Постави коментар" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <!--//respond-->
+        </section>
+        <!--//content-->
+        <!--right sidebar-->
+        <aside class="sidebar one-fourth wow fadeInRight">
+            @*<div class="widget nutrition">
+                    <h3>Nutrition facts <span>(per serving)</span></h3>
+                    <table>
+                        <tr>
+                            <td>Calories </td>
+                            <td>505</td>
+                        </tr>
+                        <tr>
+                            <td>Protein</td>
+                            <td>59g</td>
+                        </tr>
+                        <tr>
+                            <td>Carbs</td>
+                            <td>59g</td>
+                        </tr>
+                        <tr>
+                            <td>Fat</td>
+                            <td>29g</td>
+                        </tr>
+                        <tr>
+                            <td>Saturates</td>
+                            <td>17g</td>
+                        </tr>
+                        <tr>
+                            <td>Fibre</td>
+                            <td>2g</td>
+                        </tr>
+                        <tr>
+                            <td>Sugar</td>
+                            <td>44g</td>
+                        </tr>
+                        <tr>
+                            <td>Salt</td>
+                            <td>0.51g</td>
+                        </tr>
+                    </table>
+                </div>*@
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="alert alert-danger center bootstrap-item" role="alert"><a href="javascript:void(0)" id="planinng" style="color:white;" class="editableWhite" data-title="Планирај за датум" data-type="date">Планирај</a></div>
+            }
+            else
+            {
+                <div class="alert alert-danger center bootstrap-item" role="alert"><a href="javascript:void(0)" style="color:white;" data-toggle="tooltip" data-placement="top" title="Мора да сте најавени за да планирате!">Планирај</a></div>
+            }
+
+            <div class="widget share">
+                <ul class="boxed">
+                    <li class="light"><a href="javascript:void(0)" onclick="shareFB('@currentUrl')" title="Facebook"><i class="ico i-facebook"></i> <span>Сподели на Facebook</span></a></li>
+                    <li class="medium"><a href="https://twitter.com/intent/tweet?url=@(currentUrl)&via=@string.Format("@SiGotvime")" title="Twitter" target="_blank"><i class="ico i-twitter"></i> <span>Сподели на Twitter</span></a></li>
+                    @if (ViewBag.Like)
+                    {
+                        <li class="alert-success"><a href="@Url.Action("Like", new { id = Model.ID })" title="Favourites"><i class="ico i-favourites"></i> <span>Не ми се допаѓа</span></a></li>
+                    }
+                    else
+                    {
+                        <li class="dark "><a href="@Url.Action("Like", new { id = Model.ID })" title="Favourites"><i class="ico i-favourites"></i> <span>Ми се допаѓа</span></a></li>
+                    }
+
+                </ul>
+            </div>
+            @if (Model.UserLikes.Any())
+            {
+                <div class="widget members">
+                    <h3>Луѓе на кои им се допаѓа рецептот</h3>
+
+                    @foreach (var user in Model.UserLikes.Select(x => x.User).ToList())
+                    {
+                        <ul class="boxed">
+                            <li><div class="avatar"><a href="@Url.Action("Profile", "User", new { id = user.ID})"><img src="@user.ImageUrl" alt="" /><span>@user.FirstName @user.LastName</span></a></div></li>
+
+                        </ul>
+                        <p style="padding:7px;clear:both;border-top:1px solid lightgray;"><a href="javascript:void(0)" data-remodal-target="modal">Види ги сите</a></p>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">Биди прв на кој му се допаѓа рецептот</div>
+            }
+
+            @Html.Action("Advertisments", "Home")
+        </aside>
+        <!--//right sidebar-->
+    </div>
+    <!--//row-->
+</div>
+
+
+<div class="remodal" data-remodal-id="modal"
+     data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+    <button data-remodal-action="close" class="remodal-close pull-right"></button>
+    <h1>Луѓе на кои им се допаѓа рецептот</h1>
+    <div class="modal-content">
+        <div class="loader red">
+            <div class="loader-inner line-scale">
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                </div>
+            </div>
+        </div>
+        <div class="userList" data-loaded="false">
+
+        </div>
+    </div>
+</div>
+
+<div class="remodal" data-remodal-id="modalDescription"
+     data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+    <button data-remodal-action="close" class="remodal-close pull-right"></button>
+    <h1>Опис</h1>
+    <div class="modal-content">
+        <p style="margin:10px;text-align:justify;">
+            @description
+        </p>
+    </div>
+</div>
+@section Scripts{
+
+
+
+    <script src="~/Scripts/bootstrap-editable/bootstrap-editable.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.mk.js"></script>
+
+    <script src="~/Scripts/remodal.min.js"></script>
+    <script>
+        $(function () {
+
+            ActivateNavigation("#recipes");
+
+            var likesUrl = '@Url.Action("GetRecipeLikes", "Recipe", new { id = Model.ID})';
+
+            $(".remodal .modal-content").mCustomScrollbar({
+                setHeight: "400px",
+                axis: "y"
+            });
+
+            $(document).on('opening', '.remodal', function () {
+
+                var loaded = $(".remodal .userList").data("loaded");
+                if (!loaded) {
+
+                    $.get(likesUrl).then(function (data) {
+
+                        $(".modal-content .loader").hide();
+                        var i = 0;
+                        setIntervalX(function () { $(".remodal .userList ").append("<div class='animated fadeInLeft'><img src='" + data[i].ImageUrl + "' alt='' class='circular-img' /><p>" + data[i].FirstName + " " + data[i].LastName + "</p></div>"); i++; }, 100, data.length);
+
+                        $(".remodal .userList").data("loaded", true);
+                        loaded = $(".remodal .userList").data("loaded");
+                        console.log(loaded);
+                    })
+                }
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('#planinng').editable({
+                format: 'mm/dd/yyyy',
+                clear: 'Избриши',
+                viewformat: 'dd/mm',
+                placement: 'left',
+                url: '@Url.Action("CreatePlan","Plan")',
+                pk: '@Model.ID',
+                name: 'planDate',
+                success: function (response) {
+                    return response.Message;
+                },
+                error: function () {
+                    return 'Планирањето беше неуспешно обидете се повторно!';
+                },
+                datepicker: {
+                    firstDay: 1,
+                    language: 'mk',
+                    maxViewMode: 0,
+                    minViewMode: 0,
+                    startDate: Date.now().toString()
+                }
+            });
+
+        })
+
+
+        function setIntervalX(callback, delay, repetitions) {
+            var x = 0;
+            var intervalID = window.setInterval(function () {
+
+                callback();
+
+                if (++x === repetitions) {
+                    window.clearInterval(intervalID);
+                }
+            }, delay);
+        }
+
+        function shareFB(url) {
+
+            FB.ui({
+                method: 'share',
+                href: url
+            }, function (response) {
+                console.log(response);
+            });
+        }
+
+
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Index";
+
+}
+@section Styles{
+    <link href="~/Scripts/Full Calendar/fullcalendar.css" rel="stylesheet" />
+}
+
+
+<div class="wrap clearfix">
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="alert alert-warning" role="alert">Најавете се <a href="@Url.Action("Login", "Account", new { ReturnUrl = Url.Action("Index","Plan")})">овде</a> за да го видите вашиот календар на оброци</div>
+    }
+    <div class="bootstrap-item">
+        <div class="panel">
+            <div class="panel-heading">
+
+            </div>
+            <div class="panel-body">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/Full Calendar/fullcalendar.js"></script>
+    <script src="~/Scripts/Full Calendar/es.js"></script>
+    <script type="text/javascript">
+        $('#calendar').fullCalendar({            
+            editable: false,
+            events: {
+                url: '@Url.Action("GetPlans","Plan")'
+            },
+            loading: function (isLoading, view) {                
+                if (isLoading)
+                {
+                    BlockUIElement('#calendar');
+                }
+                else {
+                    UnblockUIElement('#calendar');
+                }                
+            },
+            eventTextColor: '#fff'            
+        });
+    </script>
+}

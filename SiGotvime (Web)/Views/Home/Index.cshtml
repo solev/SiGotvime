@@ -1,0 +1,342 @@
+﻿@model SiGotvime.Data.ViewModels.HomePageViewModel
+@using SiGotvime.Utilities
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section Scripts{
+<script>
+    function GoToSearch() 
+    {
+        window.location.replace('@Url.Action("Search", "Recipe")');
+    }
+
+    ActivateNavigation("#home");
+    //BlockUIElement('tipsAndTricksAside');
+</script>
+}
+
+
+<div class="intro">
+    <figure class="bg"><img src="~/images/intro.jpg" alt="" /></figure>
+    <!--wrap-->
+    <div class="wrap clearfix">
+        <!--row-->
+        <div class="row">
+            <article class="three-fourth text wow zoomIn" data-wow-delay=".2s">
+                <h1 class="sagoeFont">Добредојдовте во  <span class="logoFont">SiGotvime</span></h1>
+                <p class="sagoeFont">СиГотвиме го создаваме со љубов, насмевка и мисла добра.</p>
+                <p>Само ги внесувате прехрамбените артикли во СиГотвиме  и откако веднаш ќе ви се појават предложените рецепти, шоуто почнува.</p>
+                <p>Ајде да СиГотвиме &#9786;</p>
+                <a href="@Url.Action("Register","Account")" class="button white more medium">Придружи ни се</a>
+                <p>Веќе сте корисник? Кликнете <a href="@Url.Action("Login","Account")">овде</a> за да се најавите</p>
+            </article>
+
+
+            <!--search recipes widget-->
+            <div class="one-fourth wow fadeInDown" data-wow-delay=".5s">
+                <div class="widget container">
+                    <div class="textwrap">
+                        <h3>Пребарување рецепти</h3>
+                        <p>Не знаеш што да си зготвиш и само гледаш во фрижидерот? Да ти прозбори нема сигурно &#9786;</p>
+
+                        <p> Се’ што треба да направите е да внесете состојки кои ги поседувате.</p>
+
+                    </div>
+
+                    <div class="f-row bwrap">                        
+                        <input type="submit" value="Пребарување" onclick="GoToSearch()" />
+                    </div>
+
+                </div>
+            </div>
+            <!--//search recipes widget-->
+        </div>
+        <!--//row-->
+    </div>
+    <!--//wrap-->
+</div>
+<!--//intro-->
+<!--wrap-->
+<div class="wrap clearfix">
+    <!--row-->
+    <div class="row">
+        <!--content-->
+        <section class="content full-width">
+            <div class="icons dynamic-numbers">
+                <header class="s-title wow fadeInDown">
+                    <h2 class="ribbon large">СиГотвиме во бројки</h2>
+                </header>
+                <!--row-->
+                <div class="row wow fadeInUp">
+                    <!--item-->
+                    <div class="one-sixth">
+                        <div class="container">
+                            <i class="ico i-members"></i>
+                            <span class="title dynamic-number" data-dnumber="@Model.Members">0</span>
+                            <span class="subtitle">Корисници</span>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    <!--item-->
+                    <div class="one-sixth">
+                        <div class="container">
+                            <i class="ico i-recipes"></i>
+                            <span class="title dynamic-number" data-dnumber="@Model.Recipes">0</span>
+                            <span class="subtitle">Рецепти</span>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    <!--item-->
+                    <div class="one-sixth">
+                        <div class="container">
+                            <i class="ico i-photos"></i>
+                            <span class="title dynamic-number" data-dnumber="@Model.Photos">0</span>
+                            <span class="subtitle">Фотографии</span>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    <!--item-->
+                    <div class="one-sixth">
+                        <div class="container">
+                            <i class="ico i-posts"></i>
+                            <span class="title dynamic-number" data-dnumber="@Model.Articles">0</span>
+                            <span class="subtitle">Статии</span>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    <!--item-->
+                    <div class="one-sixth">
+                        <div class="container">
+                            <i class="ico i-comment"></i>
+                            <span class="title dynamic-number" data-dnumber="@Model.Comments">0</span>
+                            <span class="subtitle">Коментари</span>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    <!--item-->
+                    <div class="one-sixth">
+                        <div class="container">
+                            <i class="ico i-articles"></i>
+                            <span class="title dynamic-number" data-dnumber="@Model.Articles">0</span>
+                            <span class="subtitle">Блог постови</span>
+                        </div>
+                    </div>
+                    <!--//item-->
+
+                    <div class="cta">
+                        <a href="@Url.Action("Register","Account")" class="button big">Придружи ни се!</a>
+                    </div>
+                </div>
+                <!--//row-->
+            </div>
+        </section>
+        <!--//content-->
+        <!--content-->
+        <section class="content three-fourth">
+            <!--cwrap-->
+            <div class="cwrap">
+                <!--entries-->
+                <div class="entries row">
+                    <!--featured recipe-->
+                    <div class="featured two-third wow fadeInLeft">
+                        <header class="s-title">
+                            <h2 class="ribbon">Рецепт на денот</h2>
+                        </header>
+                        <article class="entry">
+                            <figure>
+                                <img src="@Model.RecipeOfTheDay.ImageUrl" alt="" class="imageFullSize" />
+                                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})">@Model.RecipeOfTheDay.Title</a></h2>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+                                <div class="actions">
+                                    <div>
+                                        <a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})" class="button">Погледни го целиот рецепт</a>
+                                        <div class="more"><a href="javascript:void(0)">Види ги минатите рецепти на денот</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!--//featured recipe-->
+                    <!--featured member-->
+                    <div class="featured one-third wow fadeInLeft" data-wow-delay=".2s">
+                        <header class="s-title">
+                            <h2 class="ribbon star">Featured member</h2>
+                        </header>
+                        <article class="entry">
+                            <figure>
+                                <img src="@Model.FeaturedMember.ImageUrl" alt="" />
+                                <figcaption><a href="@Url.Action("Profile", "User", new { id = Model.FeaturedMember.ID })"><i class="ico i-view"></i><span>Погледни корисник</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="@Url.Action("Profile", "User", new { id = Model.FeaturedMember.ID })">@Model.FeaturedMember.FirstName @Model.FeaturedMember.LastName</a></h2>
+                                <blockquote>Traditional dishes and fine bakery products accompanied by beautiful photographs to bend around and attract the tryout! Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</blockquote>
+                                <div class="actions">
+                                    <div>
+                                        <a href="@Url.Action("Profile", "User", new { id = Model.FeaturedMember.ID })#recipes" class="button">Моите рецепти</a>
+                                        <div class="more"><a href="javascript:void(0)">See past featured members</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!--//featured member-->
+                </div>
+                <!--//entries-->
+            </div>
+            <!--//cwrap-->
+            <!--cwrap-->
+            <div class="cwrap">
+                <header class="s-title">
+                    <h2 class="ribbon bright">Најнови рецепти</h2>
+                </header>
+
+                <!--entries-->
+                <div class="entries row">
+                    <!--item-->
+                    @foreach(var item in Model.LatestRecipes)
+                    {
+                        <div class="entry one-third wow fadeInLeft">
+                            <figure>
+                                <img src="@(item.CroppedUrl??item.ImageUrl)" alt="" />
+                                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID })"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID })">@item.Title</a></h2>
+                                <div class="actions">
+                                    <div>
+                                        <div class="difficulty">
+                                            <i class="ico @CommonHelper.EvaluateDifficultyClass(item.Difficulty)"></i><a href="javascript:void(0)">@CommonHelper.EvaluateDifficulty(item.Difficulty)</a>
+                                        </div>
+                                        <div class="likes"><i class="ico i-likes"></i><a href="javascript:void(0)">@item.LikeCount</a></div>
+                                        <div class="comments"><i class="ico i-comments"></i><a href="javascript:void(0)">@item.CommentCount</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="quicklinks">
+                        <a href="@Url.Action("Latest","Recipe")" class="button">Види ги сите рецепти</a>
+                    </div>
+                </div>
+                <!--//entries-->
+            </div>
+            <!--//cwrap-->
+            <!--cwrap-->
+            <div class="cwrap blogposts">
+                <header class="s-title">
+                    <h2 class="ribbon bright">Најнови статии</h2>
+                </header>
+                <!--entries-->
+                <div class="entries row">
+                    @foreach (var item in Model.BlogPosts)
+                    {
+                       <!--item-->
+                        <div class="entry one-third wow fadeInLeft">
+                            <figure>
+                                <img src="@item.ImageUrl" alt="" />
+                                <figcaption><a href="@Url.Action("GetPost", "Blog", new  {id = item.BlogPostID })"><i class="ico i-view"></i> <span>Погледни статија</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="@Url.Action("GetPost", "Blog", new  {id = item.BlogPostID })">@item.Title</a></h2>
+                                <div class="actions">
+                                    <div>
+                                        <div class="date"><i class="ico i-date"></i><a href="#">@item.DateCreated.ToLongDateString()</a></div>
+                                        <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetPost", "Blog", new  {id = item.BlogPostID })#comments">@item.CommentCount</a></div>
+                                    </div>
+                                </div>
+                                <div class="excerpt">
+                                    <p>@item.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    
+                    
+
+                    <div class="quicklinks">
+                        <a href="@Url.Action("Index", "Blog")" class="button">Повеќе статии</a>
+                        <a href="@Url.Action("NewBlogPost", "Blog")" class="button">Напишете ваша статија</a>
+                    </div>
+                </div>
+                <!--//entries-->
+            </div>
+            <!--//cwrap-->
+        </section>
+        <!--//content-->
+        <!--right sidebar-->
+        <aside class="sidebar one-fourth">
+               
+
+            @{Html.RenderPartial("_SideCategoriesBlocks");}
+
+            
+            <div class="widget wow fadeInRight" data-wow-delay=".2s" id="tipsAndTricksAside"> 
+                <h3>Совети и трикови</h3>
+                <ul class="articles_latest">
+                    @foreach(var item in Model.BlogPosts)
+                    {
+                        <li>
+                            <a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID })">
+                                <img src="@item.ImageUrl" alt="" />
+                                <h6>@item.Title</h6>
+                            </a>
+                        </li>
+                    }
+                    
+                    @*<li>
+                        <a href="blog_single.html">
+                            <img src="~/images/img.jpg" alt="" />
+                            <h6>Make your own bread</h6>
+                        </a>
+                    </li>*@
+                    <li>
+                        <a href="blog_single.html">
+                            <img src="~/images/img.jpg" alt="" />
+                            <h6>How to make sushi</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="blog_single.html">
+                            <img src="~/images/img.jpg" alt="" />
+                            <h6>Barbeque party</h6>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="blog_single.html">
+                            <img src="~/images/img.jpg" alt="" />
+                            <h6>How to make a cheesecake</h6>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <a class="twitter-timeline" href="https://twitter.com/SiGotvime" data-widget-id="681599396665004033" height="450" data-lang="mk">Tweets by @@SiGotvime</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+            @*<div class="widget members wow fadeInRight" data-wow-delay=".4s">
+                <h3>Our members</h3>
+                <div id="members-list-options" class="item-options">
+                    <a href="#">Newest</a>
+                    <a class="selected" href="#">Active</a>
+                    <a href="#">Popular</a>
+                </div>
+                <ul class="boxed">
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Kimberly C.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Alex J.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Denise M.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Jason H.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Jennifer W.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Anabelle Q.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Thomas M.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Michelle S.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Bryan A.</span></a></div></li>
+                </ul>
+            </div>*@
+
+            @Html.Action("Advertisments", "Home")
+        </aside>
+    </div>
+    <!--//right sidebar-->
+</div>

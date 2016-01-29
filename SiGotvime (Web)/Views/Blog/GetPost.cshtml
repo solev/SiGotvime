@@ -1,0 +1,113 @@
+﻿@model SiGotvime.Data.Models.BlogPost
+
+@{
+    ViewBag.Title = "Post";
+
+}
+
+@section Scripts{
+    <script>
+        ActivateNavigation("#blog");
+    </script>
+}
+
+<div class="wrap clearfix">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="index.html" title="Home">Home</a></li>
+            <li><a href="#" title="Blog">Blog</a></li>
+            <li>Post</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--row-->
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">@Model.Title</h2>
+        </header>
+
+
+        <!--content-->
+        <section class="content three-fourth wow fadeInLeft">
+            <!--blog entry-->
+            <article class="post single">
+                <div class="entry-meta">
+                    <div class="date">
+                        <span class="day">@Model.DateCreated.Day</span>
+                        <span class="my">@Model.DateCreated.ToString("MMMM", System.Globalization.CultureInfo.InvariantCulture), @Model.DateCreated.Year</span>
+                    </div>
+                    <div class="avatar">
+                        <a href="my_profile.html"><img src="@Model.User.ImageUrl" alt="" /><span>@Model.User.FirstName @Model.User.LastName</span></a>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="entry-featured"><a href="#"><img src="@Model.ImageUrl" style="width:100%" /></a></div>
+                    <div class="entry-content">
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div>
+            </article>
+            <!--//blog entry-->
+            <!--comments-->
+            <div id="commentSection">
+                @{Html.RenderPartial("_CommentSection", Model.Comments);}
+            </div>
+            <!--//comments-->
+            <!--respond-->
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="comment-respond wow fadeInUp" id="respond">
+                    <div class="container">
+                        @using (Ajax.BeginForm("Comment", "Blog", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "commentSection", InsertionMode = InsertionMode.Replace, OnBegin = "BlockUIElement('#respond')", OnSuccess = "UnblockUIElement('#respond')" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <h3>Коментирај:</h3>
+                            <input type="text" hidden value="@Model.BlogPostID" name="BlogPostID" />
+
+                            <div class="row">
+                                <div class="one-fourth">
+                                    <div class="avatar">
+                                        <img src="@SiGotvime.Utilities.Env.UserImage()" />
+                                    </div>
+                                </div>
+                                <div class="three-fourth">
+                                    <textarea name="content" placeholder="Коментар..."></textarea>
+                                </div>
+                            </div>
+                            <div class="f-row">
+                                <div class="third bwrap">
+                                    <input type="submit" value="Постави коментар" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            <!--//respond-->
+        </section>
+        <!--//content-->
+        <!--right sidebar-->
+        <aside class="sidebar one-fourth wow fadeInRight">
+            <div class="widget">
+                <ul class="categories right">
+                    <li><a href="#">All recipes</a></li>
+                    <li class="active"><a href="#">Tips and Tricks</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Inspiration</a></li>
+                    <li><a href="#">Category name</a></li>
+                    <li><a href="#">Lorem ipsum</a></li>
+                    <li><a href="#">Dolor</a></li>
+                    <li><a href="#">Sit amet</a></li>
+                </ul>
+            </div>
+            <div class="widget">
+                <h3>Advertisment</h3>
+                <a href="#"><img src="images/img.jpg" alt="" /></a>
+            </div>
+        </aside>
+        <!--//right sidebar-->
+    </div>
+    <!--//row-->
+</div>
+

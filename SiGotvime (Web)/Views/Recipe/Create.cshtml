@@ -1,0 +1,325 @@
+﻿@model SiGotvime.Data.ViewModels.RecipeModel
+@using SiGotvime.Web.Helpers
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    #ingredientInput_dropdown {
+        margin-top: 25px !important;
+    }
+</style>
+
+<!--wrap-->
+<div class="wrap clearfix" ng-controller="CreateRecipe">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="index.html" title="Home">Home</a></li>
+            <li>Submit a recipe</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--row-->
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">Најнови Рецепти</h2>
+        </header>
+
+        <!--content-->
+        <section class="content full-width wow fadeInUp">
+            <div class="submit_recipe container">
+                @using (Html.BeginForm("Create", "Recipe", FormMethod.Post, new { enctype = "multipart/form-data", id = "createRecipeForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(x => x.ID)
+                    //ingredients
+                    <div ng-repeat="item in SelectedIngredients" style="display:none;">
+                        <input type="text" value="{{item.ID}}" name="Ingredients[{{$index}}].ID" hidden />
+                        <input type="text" value="{{item.Quantity}}" name="Ingredients[{{$index}}].Quantity" hidden />
+                    </div>
+                    <section>
+                        <h2>Рецепт</h2>
+                        <p>Сите полиња се задолжителни</p>
+                        <div class="f-row">
+                            <div class="full">
+                                @Html.TextBoxFor(x => x.Title, new { placeholder = "Наслов", @class = "validate[required]",})
+                            </div>
+                        </div>
+                        <div class="f-row">
+                            <div class="third">
+                                @Html.TextBoxFor(x => x.PreparationTime, new { placeholder = "Време на приготвување (мин)", @class = "validate[required,custom[integer]]", data_prompt_position = "bottomLeft" })
+
+                            </div>
+                            <div class="third">
+                                @Html.EnumDropDownListFor(x => x.Difficulty, "--Одберете Тежина--", new { @class = "validate[required]", data_prompt_position = "topLeft:0,35" })
+                            </div>
+                            <div class="third">
+                                <select name="CategoryID" class="validate[required]" data-prompt-position="topLeft:0,35">
+                                    <option value="">--Одберете категорија--</option>
+                                    @foreach (var item in Model.Categories)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Опис на рецептот</h2>
+                        <div class="f-row">
+                            <div class="full">
+                                @Html.TextAreaFor(x => x.Description, new { placeholder = "Опис на рецептот", @class = "validate[required]" })
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Состојки</h2>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>Состојка</th>
+                                    <th>Количина</th>
+                                    <th width="15%">Избриши</th>
+                                </tr>
+                                <tr ng-repeat="item in SelectedIngredients">
+                                    <td>
+                                        {{item.Name}}
+                                    </td>
+                                    <td>
+                                        {{item.Quantity}}
+                                    </td>
+                                    <td class="bootstrap-item"><a class="button" style="width:150px!important;" href="javascript:void(0)" ng-click="RemoveIngredient(item)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                </tr>
+                                <tr ng-if="SelectedIngredients.length == 0">
+                                    <td colspan="3">Немате внесено ниедна состојка!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="f-row ingredient">
+                            <div class="large">
+                                <angucomplete-alt id="ingredientInput"
+                                                  placeholder="Состојка"
+                                                  pause="100"
+                                                  selected-object="selectIngredient"
+                                                  local-data="Ingredients"
+                                                  search-fields="Name"
+                                                  title-field="Name"
+                                                  match-class="selection"
+                                                  minlength="1" />
+                            </div>
+                            <div class="small"><input type="text" placeholder="Количина" ng-model="Ingredient.Quantity" /></div>
+                            <div class="third"><a class="button" href="javascript:void(0)" ng-click="AddIngredient()">Додади</a></div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Начин на приготвување <span>(внесете објаснување чекор по чекор)</span></h2>
+                        <input type="text" name="Steps" value="{{ComputedSteps()}}" hidden />
+                        <div class="f-row ingredient" ng-repeat="item in Steps">
+                            <div class="small"><h4>Чекор {{$index + 1}}</h4></div>
+                            <div class="xlarge" style="padding-top:10px;"><p>{{item}}</p></div>
+                            <div class="bootstrap-item">
+                                <button type="button" class="remove" style="font-size:initial!important;" ng-click="RemoveStep($index)"><i class="glyphicon glyphicon-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="f-row ingredient">
+                            <div class="small"><h3>Чекор {{Steps.length + 1}}</h3></div>
+                            <div class="xlarge"><textarea placeholder="Текст за чекорот" ng-model="StepText" id="stepText"></textarea></div>
+                        </div>
+                        <div class="f-row">
+                            <button type="button" class="button add" href="javascript:void(0)" ng-click="SaveStep()">Зачувај чекор</button>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Фото</h2>
+                        <div class="f-row full bootstrap-item">
+                            @if (Model.ImageUrl != null)
+                            {
+                                <img id="imageToUpload" src="@Model.ImageUrl" class="img-thumbnail" style="max-width:25%;" />
+                            }
+                            else
+                            {
+                                <img id="imageToUpload" src="~/images/img.jpg" class="img-thumbnail" style="max-width:25%;" />
+                            }
+                        </div>
+                        <div class="f-row full">
+                            <input type="file" id="pictureFile" accept="image/*" name="ImageToUpload"/>
+                        </div>
+                    </section>
+                    <div class="f-row full">
+                        <input type="submit" ng-click="submit()" class="button" id="submitRecipe" value="Постави рецепт" />
+                    </div>
+                }
+            </div>
+        </section>
+        <!--//content-->
+    </div>
+    <!--//row-->
+</div>
+<!--//wrap-->
+
+@section Scripts{
+    <script>
+        app.controller("CreateRecipe", function ($scope) {
+            $scope.Ingredients = @Html.Raw(JsonSerializer.serializer.Serialize(Model.Ingredients));
+            $scope.Categories = [];
+            $scope.SelectedIngredients = [];
+            $scope.SelectedCategories = [];
+            $scope.StepText = "";
+            $scope.Steps = [];
+            $scope.Ingredient = {
+                Name: "",
+                Quantity: "",
+                ID:0
+            };
+
+            $scope.AddIngredient = function()
+            {
+                if($scope.Ingredient.Quantity=="")
+                    return;
+                var ing = {
+                    ID: $scope.Ingredient.ID,
+                    Name:$scope.Ingredient.Name,
+                    Quantity: $scope.Ingredient.Quantity
+                };
+
+                var filterH = $scope.Ingredients.filter(function(el){
+                    return el.ID == ing.ID
+                });
+
+                if(filterH.length == 0)
+                    return;
+
+                var filter = $scope.SelectedIngredients.filter(function(el){
+                    return el.ID == ing.ID
+                });
+
+                if(filter.length > 0)
+                    return;
+
+                $scope.SelectedIngredients.push(ing);
+                $("#ingredientInput_value").val("");
+                $scope.Ingredient.Quantity = "";
+
+            }
+
+            $scope.selectIngredient = function(item){
+                $scope.Ingredient.Name = item.description.Name;
+                $scope.Ingredient.ID = item.description.ID;
+            }
+
+            $scope.RemoveIngredient = function(item){
+                var filter = $scope.SelectedIngredients.filter(function(el){
+                    return el.ID != item.ID;
+                });
+
+                $scope.SelectedIngredients = filter;
+            }
+
+            $scope.SaveStep = function()
+            {
+                if($scope.StepText!="")
+                {
+                    $scope.Steps.push($scope.StepText);
+                    $scope.StepText = "";
+                }
+
+            }
+
+            $scope.RemoveStep = function(idx)
+            {
+                $scope.Steps.splice(idx,1);
+            }
+
+            $scope.ComputedSteps = function()
+            {
+                return $scope.Steps.join();
+            }
+
+           
+
+            $("#createRecipeForm").on("submit",function(event){
+                window.onbeforeunload = null;
+                var submit = true;
+                var image = $("#pictureFile").val();
+                if($scope.Steps.length < 1)
+                {
+                    $("#stepText").validationEngine('showPrompt','Задолжителен е барем 1 чекор','','topLeft',true);
+                    submit = false;
+                }
+
+                if($scope.SelectedIngredients.length < 1)
+                {
+                    $("#ingredientInput").validationEngine('showPrompt','Задолжитена e барем 1 состојка','','topLeft',true);
+                    submit = false;
+                }
+
+                if(image == "")
+                {
+                    $("#imageToUpload").validationEngine('showPrompt','Задолжително внесете слика за овој рецепт','','',true);
+                    submit = false;
+                }
+
+                if(!submit)
+                    event.preventDefault();
+            })
+
+        });
+
+        
+
+        $(function(){
+
+            window.onbeforeunload = function(e) {                
+                return "Дали сте сигурни дека сакате да напуштите?";
+            };
+
+            $("#ingredientInput_dropdown").mCustomScrollbar({
+                axis:"y"
+            });
+
+            $("#stepText").on("focus",function(){
+                $(this).validationEngine("hide");
+            })
+
+            $("#ingredientInput_value").on("focus",function(){
+                $("#ingredientInput").validationEngine("hide");
+            })
+
+            ingredientInput
+
+            $("#pictureFile").on("change",function(){
+                var path = $(this).val();
+                var input = document.getElementById("pictureFile");
+                var fReader = new FileReader();
+                fReader.readAsDataURL(input.files[0]);
+
+                fReader.onloadend = function(event){
+                    var img = document.getElementById("imageToUpload");
+                    img.src = event.target.result;
+                    $(img).removeClass("hidden");
+                }
+
+                $("#imageToUpload").validationEngine('hide');
+            });            
+
+            $("#createRecipeForm").validationEngine({
+                promptPosition : "topLeft",
+                custom_error_messages:{
+                    required:{
+                        message: "Полето е задолжително!"
+                    },
+                    'custom[integer]':{
+                        message:"Внесете само броеви!"
+                    }
+                }
+            });
+            
+            ActivateNavigation("#addRecipe");
+        })
+
+    </script>
+}

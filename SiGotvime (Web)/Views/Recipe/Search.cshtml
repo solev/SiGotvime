@@ -1,0 +1,217 @@
+﻿@model SiGotvime.Data.ViewModels.SearchViewModel
+@using SiGotvime.Utilities
+@using SiGotvime.Web.Helpers
+@{
+    ViewBag.Title = "Saerch";
+
+
+    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
+    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel
+    {
+        action = "Search",
+        controller = "Recipe",
+        pageSize = Constants.PageSize,
+        currentPage = page
+    };
+    pagerConfig.maxCount = Model.result != null ? Model.result.MaxCount : 0;
+}
+
+<!--wrap-->
+<div class="wrap clearfix" ng-controller="Search">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="index.html" title="Home">Home</a></li>
+            <li>Search for Recipes</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--row-->
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">Пребарување рецепти</h2>
+        </header>
+
+
+        <!--content-->
+        <section class="content three-fourth wow fadeInUp">
+            @using (Html.BeginForm("Search", "Recipe", FormMethod.Post, new { id = "formSearch" }))
+            {
+                <!--recipefinder-->
+                <div class="container recipefinder">
+                    <div class="left">
+                        <h3>Пребарување според состојки</h3>
+                        <p>Употребувајте Кирилична поддршка при внесување на состојки</p>
+                        <div class="f-row">
+                            @*<input type="text" placeholder="Add ingredients (one at a time)" />*@
+                            <angucomplete-alt id="searchInput"
+                                              placeholder="Пребарај состојки"
+                                              pause="100"
+                                              selected-object="selectIngredient"
+                                              local-data="Ingredients"
+                                              search-fields="Name"
+                                              title-field="Name"
+                                              match-class="selection"
+                                              minlength="1"
+                                              input-class="form-control form-control-small"
+                                              clear-selected="true" />
+
+                        </div>
+
+                        <div class="f-row">
+                            <input type="submit" value="Пребарај" ng-disabled="SelectedIngredients.length == 0" ng-click="saveSelected()" />
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="ingredients">
+                            <h3>Одбрани состојки <small>(кликнете на одбрана состојка за да ја отстраните)</small></h3>
+
+                            <p class="selection animated" id="ingredientMessage" ng-show="SelectedIngredients.length == 0">Немате одбрано состојки</p>
+                            <a href="javascript:void(0)" ng-click="removeSelection($event,item)" class="button gold animated flipInX" ng-repeat="item in SelectedIngredients">{{item.Name}}</a>
+
+                            <input type="text" name="ingredients" ng-repeat="item in SelectedIngredients" value="{{item.ID}}" hidden />
+                        </div>
+
+                        <h3>Можете и да одберете категорија <small>(опционално)</small></h3>
+                        <div class="row">
+                            <div class="one-half">
+                                <select name="categoryID">
+                                    <option value="">--Одбери категорија--</option>
+                                    @foreach (var item in Model.Categories)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--//recipefinder-->
+            }
+
+
+            <!--results-->
+            <div class="entries row">
+                @if (Model.result != null && Model.result.Recipes != null)
+                {
+
+                    foreach (var item in Model.result.Recipes)
+                    {
+                        <!--item-->
+                        <div class="entry one-third wow fadeInLeft">
+                            <figure>
+                                <img src="@(!string.IsNullOrWhiteSpace(item.CroppedUrl)?item.CroppedUrl:item.ImageUrl)" alt="" class="imageFullSize" />
+                                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>View recipe</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
+                                <div class="actions">
+                                    <div>
+                                        <div class="difficulty">Состојки <a href="javascript:void(0)">@item.MatchingIngredients / <span class="highlight">@item.Ingredients.Count</span></a></div>
+                                        <div class="likes"><i class="ico i-likes"></i><a href="javacript:void(0)">@item.LikeCount</a></div>
+                                        <div class="comments"><i class="ico i-comments"></i><a href="javacript:void(0)">@item.CommentCount</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--item-->
+                    }
+                }
+
+            </div>
+            <!--//results-->
+            @{Html.RenderPartial("Pager", pagerConfig);}
+        </section>
+
+        <!--//content-->
+        <aside class="sidebar one-fourth">
+            @{Html.RenderPartial("_SideCategoriesBlocks");}
+
+            <a class="twitter-timeline" href="https://twitter.com/SiGotvime" data-widget-id="681599396665004033" height="450" data-lang="mk">Tweets by @@SiGotvime</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+
+            @*<div class="widget members wow fadeInRight" data-wow-delay=".4s">
+                <h3>Our members</h3>
+                <div id="members-list-options" class="item-options">
+                    <a href="#">Newest</a>
+                    <a class="selected" href="#">Active</a>
+                    <a href="#">Popular</a>
+                </div>
+                <ul class="boxed">
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Kimberly C.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Alex J.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Denise M.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Jason H.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Jennifer W.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Anabelle Q.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Thomas M.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Michelle S.</span></a></div></li>
+                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Bryan A.</span></a></div></li>
+                </ul>
+            </div>*@
+
+            @Html.Action("Advertisments", "Home")
+        </aside>
+    </div>
+    <!--//row-->
+</div>
+
+@section Scripts{
+    <script>
+        app.controller("Search", function ($scope,$timeout) {
+            $scope.Ingredients = @Html.Raw(Json.Encode(Model.Ingredients));
+            $scope.SelectedIngredients = @Html.Raw(Json.Encode(Model.SelectedIngredients));
+            
+            if($scope.SelectedIngredients.length==0)
+            {
+                var ingredientsFromStorage = localStorage.getItem("selectedIngredients");
+                var parsed = JSON.parse(ingredientsFromStorage);
+                if(parsed!=null && parsed!=[])
+                    $scope.SelectedIngredients = parsed;
+            }
+
+            $scope.selectIngredient = function(item){
+                var filter = $scope.SelectedIngredients.filter(function(el){
+                    return el.ID == item.description.ID
+                });
+
+                if(filter.length > 0)
+                    return;
+
+                $scope.SelectedIngredients.push(item.description);
+            }
+
+            $scope.removeSelection = function($event,item){
+                $($event.target).addClass("zoomOutDown");
+
+                $timeout(function() {
+                    $scope.SelectedIngredients = $scope.SelectedIngredients.filter(function(el){
+                        return el.ID != item.ID;
+                    });
+                }, 1000);
+
+            }
+
+            $scope.noIngredients = function()
+            {
+                console.log("asd");
+                $("#ingredientMessage").addClass("shake");
+            }
+
+            $scope.saveSelected = function()
+            {
+                console.log("saved");
+                localStorage.setItem("selectedIngredients",JSON.stringify($scope.SelectedIngredients));
+            }
+
+        });
+
+
+        $(function(){
+            $("#searchInput_dropdown").mCustomScrollbar({
+                axis:"y"
+            });
+            ActivateNavigation("#searchRecipe");
+        })
+    </script>
+}

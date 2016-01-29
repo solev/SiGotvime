@@ -1,0 +1,126 @@
+﻿
+@font-face {
+    font-family: 'LogoFont';
+    src: url('fonts/leckerlione/leckerlione-regular-webfont.eot');
+    src: url('fonts/leckerlione/leckerlione-regular-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/leckerlione/leckerlione-regular-webfont.woff2') format('woff2'), url('fonts/leckerlione/leckerlione-regular-webfont.woff') format('woff'), url('fonts/leckerlione/leckerlione-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Sagoe Ui Light';
+    src: url('fonts/copyfonts.com_segoe_ui_light.ttf') format('truetype');
+}
+
+.alert .datepicker .day{
+    color:initial;
+}
+.alert .datepicker .disabled.day{
+    color:#777;
+}
+
+.sagoeFont {
+    font-family: 'Sagoe Ui Light' !important;
+}
+
+.logoFont {
+    font-family: 'LogoFont' !important;
+}
+
+.selection {
+    color: #F4716A;
+}
+
+.imageFullSize {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#flashContent {
+    padding: 0 !important;
+    max-width: 270px;
+}
+
+.justifyIngredient {
+    line-height: initial !important;
+}
+
+.f-row label.error {
+    position: absolute;
+    background-color: #F4716A;
+    color: white;
+    min-width: 200px;
+    margin: 6px;
+    padding: 1px 10px;
+}
+
+    .f-row label.error:before {
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        content: '';
+        border-right: 10px solid #F4716A;
+        right: 200px;
+        position: absolute;
+    }
+
+.circular-img {
+    border-radius: 50%;
+}
+
+.userList {
+    text-align: left !important;
+    padding: 10px 30px;
+}
+
+    .userList > div > img, .userList > div > p {
+        display: inline-block !important;
+    }
+
+    .userList > div > p {
+        position: absolute;
+        left: 15%;
+        top: 25%;
+        font-size: 22px;
+    }
+
+    .userList > div > img {
+        max-width: 70px;
+    }
+
+.loader.red > div > div {
+    background-color: #F4716A;
+}
+
+@media (max-width:400px) {
+    #backTop {
+        display: none !important;
+    }
+}
+
+@media (max-width:769px) {
+    .f-row label.error {
+        color: #F4716A;
+        position: inherit;
+        background-color: transparent;
+        padding: 0;
+    }
+
+        .f-row label.error:before {
+            display: none;
+        }
+}
+
+input[type="submit"][disabled] {
+    pointer-events: none;
+    cursor: initial;
+    background-color: beige;
+}
+
+.editableWhite, .editableWhite:hover {
+    color:white!important;
+    border-bottom: dashed 1px white!important;
+    text-decoration:none;
+}

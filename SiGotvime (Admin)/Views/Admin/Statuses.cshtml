@@ -1,0 +1,158 @@
+﻿@model List<SiGotvime.Data.Models.Status>
+@{
+    ViewBag.Title = "Statuses";
+    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    serializer.MaxJsonLength = Int32.MaxValue;
+
+    var selectedStats = Model.Where(x => x.Selected).Select(x=>x.ID);
+}
+
+<h2>Статуси</h2>
+<hr/>
+<div ng-app="app" ng-controller="StatusController" class="statusContainer">
+    <div class="newStatus">
+        <div class="grid">
+            <div class="row">
+                <div class="span3 input-control text">
+                    <input type="text" ng-model="Header" placeholder="Наслов" />
+
+                </div>
+                <div class="span0.5"></div>
+                <div class="span3 input-control text">
+                    <input type="text" ng-model="Subheader" placeholder="Поднаслов" />
+                </div>
+                <div class="span0.5"></div>
+                <div class="span3">
+                    <button class="large" ng-click="addStatus()">Додади</button>
+                </div> 
+                <div class="span2"></div>               
+                <div class="span3">
+                    <img src="~/Content/images/goodIcon.jpg" style="visibility:hidden;" id="iconOk" width="45" height="45"/>
+                    <button class="large success" ng-click="saveSelected()">Зачувај</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tile double status newStatuses" ng-repeat="status in NewStatuses">
+        <p class="head">{{status.Content}}</p>
+        <p class="subhead">{{status.SubContent}}</p>
+    </div>
+    <div class="tile double status" ng-repeat="status in Statuses" ng-click="select(status)" ng-class="{selected:checkIfSelected(status)}">
+        <button class="mini danger delBtn" ng-click="deleteStatus(status)" style="visibility:hidden;position:absolute;top:0;right:0;">Избриши</button>
+        <p class="head">{{status.Content}}</p>
+        <p class="subhead">{{status.SubContent}}</p>
+    </div>
+    <p class="clearfix"></p>
+</div>
+
+
+
+
+@section Scripts{
+<script>
+    app.controller("StatusController", function ($scope, $rootScope, $http) {
+        $scope.Statuses = @Html.Raw(serializer.Serialize(Model))        
+        $scope.selectedStatuses = @Html.Raw(serializer.Serialize(selectedStats)) 
+        $scope.NewStatuses = [];
+
+        $scope.Header = "";
+        $scope.Subheader = "";
+
+        
+
+        $scope.select = function(item)
+        {
+            var check = $scope.selectedStatuses.filter(function (el) {
+                return el == item.ID;
+            })
+
+            if(check.length>0)
+            {
+                $scope.selectedStatuses = $scope.selectedStatuses.filter(function (el) {
+                    return el != item.ID;
+                });
+            }
+            else {
+                $scope.selectedStatuses.push(item.ID);
+            }
+        }
+
+        $scope.checkIfSelected = function(item)
+        {
+            var check = $scope.selectedStatuses.filter(function (el) {
+                return el == item.ID;
+            });
+            
+            if (check.length > 0)
+                return true;
+            return false;
+        }
+
+        $scope.addStatus = function () {
+            console.log($scope.Statuses);
+            var url = '@Url.Action("AddStatus","Admin")';
+
+            var obj = {
+                ID:$scope.NewStatuses.length,
+                Content: $scope.Header,
+                SubContent: $scope.Subheader,
+                Selected:false
+            };
+
+            $scope.NewStatuses.push(obj);
+            var model = obj;
+
+            $http.post(url, model).success(function (data) {
+                $scope.NewStatuses = null;
+                $scope.NewStatuses = [];
+                $scope.Statuses.unshift(data);
+                $scope.Header = "";
+                $scope.Subheader = "";
+            })           
+        }
+
+        $scope.deleteStatus = function(item)
+        {
+            var url = '@Url.Action("DeleteStatus","Admin")';
+            $scope.Statuses = $scope.Statuses.filter(function (el) {
+                return el.ID != item.ID;
+            });
+
+            var model = item;
+            $http.post(url, model).success(function (data) {
+                console.log(data);
+            });
+
+        }
+
+        $scope.saveSelected = function()
+        {
+            var url = '@Url.Action("ChangeSelectedStatuses", "Admin")';
+            var list = $scope.selectedStatuses;
+            $http.post(url, list).success(function (data) {
+                
+                if (data) {
+                    $("#iconOk").css("visibility", "inherit");
+                }
+                setTimeout(function () { $("#iconOk").css("visibility", "hidden"); }, 3000);
+            })
+        }
+    })
+
+    
+
+    $(function () {
+        $(".statusContainer").on({
+        mouseenter: function () {
+            
+            $(this).find("button").css("visibility", "visible");
+        },
+        mouseleave: function () {
+            $(this).find("button").css("visibility", "hidden");
+        }
+    },".tile")
+
+    })
+</script>
+}

@@ -1,0 +1,15 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "AllImages";
+}
+
+<h2>AllImages</h2>
+
+<div class="wrap clearfix bootstrap-item">
+    @foreach (var item in Model)
+    {
+        <a href="#" class="thumbnail" style="max-width:250px;display:inline-block;">
+            <img src="@item.Trim('~')" alt="...">
+        </a>
+    }    
+</div>

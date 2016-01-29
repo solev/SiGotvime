@@ -1,0 +1,23 @@
+﻿@model List<SiGotvime.Data.Models.Comment>
+
+<div class="comments wow fadeInUp" id="comments">
+    <h2>@Model.Count коментари </h2>
+    <ol class="comment-list">
+        @foreach(var item in Model)
+        {
+                        <!--comment-->
+            <li class="comment depth-1">
+                <div class="avatar"><a href="my_profile.html"><img src="@item.User.ImageUrl" alt="" /><span>@item.User.FirstName @item.User.LastName</span></a></div>
+                <div class="comment-box">
+                    <div class="comment-author meta">
+                        <strong>@item.User.FirstName @item.User.LastName</strong>&nbsp; - &nbsp; @item.DateCreated.ToShortDateString()<a href="#" class="comment-reply-link"> Reply</a>
+                    </div>
+                    <div class="comment-text">
+                        <p>@item.Content</p>
+                    </div>
+                </div>
+            </li>                    <!--//comment-->
+        }
+    </ol>
+</div>
+

@@ -1,0 +1,35 @@
+﻿@model SiGotvime.Data.Models.Tag
+
+@{
+    ViewBag.Title = "EditCategory";
+}
+
+<h3>Промени Категорија</h3>
+<div style="margin-top:50px;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model=>model.ID)
+
+        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+        <div class="input-control text span3">
+            @Html.EditorFor(model => model.Name)
+        </div>
+
+        @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+        <div class="input-control textarea span3">
+            @Html.TextAreaFor(model => model.Description)
+        </div>
+
+        <label style="color:red;">@ViewBag.error</label>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Зачувај" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
+

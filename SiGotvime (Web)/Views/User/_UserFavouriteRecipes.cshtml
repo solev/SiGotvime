@@ -1,0 +1,70 @@
+﻿@model List<SiGotvime.Data.Models.Recipe>
+@{
+    int rows = Model.Count / 3;
+    int additional = Model.Count % 3;
+}
+
+@for (int i = 0; i < rows; i++)
+{
+    <div class="entries row">
+        @for (int j = 0; j < 3; j++)
+        {
+            {
+                int idx = i * 3 + j;
+                SiGotvime.Data.Models.Recipe item = Model.ElementAt(idx);
+
+                <div class="entry one-third">
+                    <figure>
+                        <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
+                        <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
+                    </figure>
+                    <div class="container">
+                        <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
+                        <div class="actions">
+                            <div>
+                                <div class="difficulty"><i class="ico i-medium"></i><a href="javascript:void(0)">@item.Difficulty.ToString()</a></div>
+                                <div class="likes"><i class="ico i-likes"></i><a href="javascript:void(0)">@item.LikeCount</a></div>
+                                <div class="comments"><i class="ico i-comments"></i><a href="javascript:void(0)">@item.CommentCount</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+
+<div class="entries row">
+    @for (int i = 0; i < additional; i++)
+    {
+
+        
+        SiGotvime.Data.Models.Recipe item = Model.ElementAt(i);
+        <div class="entry one-third">
+            <figure>
+                <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
+                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
+            </figure>
+            <div class="container">
+                <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
+                <div class="actions">
+                    <div>
+                        <div class="difficulty"><i class="ico i-medium"></i><a href="javascript:void(0)">@item.Difficulty.ToString()</a></div>
+                        <div class="likes"><i class="ico i-likes"></i><a href="javascript:void(0)">@item.LikeCount</a></div>
+                        <div class="comments"><i class="ico i-comments"></i><a href="javascript:void(0)">@item.CommentCount</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    }
+</div>
+<script>
+    $('main img[src$=".gif"]').each(function (idx, obj) {
+        $(obj).removeClass("imageFullSize");
+        $(obj).width("100%");
+        $(obj).height($(obj).width());
+        console.log(idx);
+    });
+</script>

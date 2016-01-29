@@ -1,0 +1,104 @@
+﻿@model SiGotvime.Data.Result_Models.BlogPostResultModel
+@{
+    ViewBag.Title = "Блог";
+    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
+    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel
+    {
+        action = "Index",
+        controller = "Blog",
+        pageSize = SiGotvime.Utilities.Constants.PageSize,
+        currentPage = page,
+        maxCount = Model.MaxCount
+    };
+}
+
+@section Scripts{
+    <script>
+        ActivateNavigation("#blog");
+    </script>
+}
+
+
+<div class="wrap clearfix">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="index.html" title="Home">Home</a></li>
+            <li>Blog</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--row-->
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">Најнови Статии</h2>
+        </header>
+
+        <!--content-->
+        <section class="content three-fourth wow fadeInLeft">  
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div style="margin:10px 0;">
+                    <a class="button right" href="@Url.Action("NewBlogPost")">Нова статија</a>
+                    <span class="clearfix"></span>
+                </div>
+            }                   
+            <!--blog entry-->
+            @foreach (var item in Model.BlogPosts)
+            {
+                <article class="post">
+                    <div class="entry-meta">
+                        <div class="date">
+                            <span class="day">@item.DateCreated.Day</span>
+                            <span class="my">@item.DateCreated.ToString("MMMM", System.Globalization.CultureInfo.InvariantCulture), @item.DateCreated.Year</span>
+                        </div>
+                        <div class="avatar">
+                            <a href="@Url.Action("Profile", "User", new { id = item.User.ID})"><img src="@item.User.ImageUrl" alt="" /><span>@item.User.FirstName @item.User.LastName</span></a>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="entry-featured"><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})"><img src="@item.ImageUrl" alt="" /></a></div>
+                        <div class="entry-content">
+                            <h2><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})">@item.Title</a></h2>
+                            <p>@item.Description</p>
+                        </div>
+                        <div class="actions">
+                            <div>
+                                <div class="category"><i class="ico i-category"></i><a href="#">Tips and tricks</a></div>
+                                <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})#comments">@item.CommentCount</a></div>
+                                <div class="leave_comment"><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})#respond">Остави коментар</a></div>
+                                <div class="more"><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})">Прочитај повеќе</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            }
+            
+            
+            @{Html.RenderPartial("Pager", pagerConfig);}
+
+        </section>
+        <!--//content-->
+        <!--right sidebar-->
+        <aside class="sidebar one-fourth">           
+            <div class="widget">
+                <ul class="categories right">
+                    <li><a href="#">All recipes</a></li>
+                    <li class="active"><a href="#">Tips and Tricks</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Inspiration</a></li>
+                    <li><a href="#">Category name</a></li>
+                    <li><a href="#">Lorem ipsum</a></li>
+                    <li><a href="#">Dolor</a></li>
+                    <li><a href="#">Sit amet</a></li>
+                </ul>
+            </div>
+            <div class="widget">
+                <h3>Advertisment</h3>
+                <a href="#"><img src="images/img.jpg" alt="" /></a>
+            </div>
+        </aside>
+        <!--//right sidebar-->
+    </div>
+    <!--//row-->
+</div>

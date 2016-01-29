@@ -1,0 +1,43 @@
+﻿@model SiGotvime.Data.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    string returnUrl = Request.QueryString["ReturnUrl"];    
+}
+
+@using(Html.BeginForm("Login","Account"))
+{
+    
+<div class="wrap clearfix">
+    <!--row-->
+    <div class="row">
+        <!--content-->
+        <section class="content center full-width wow fadeInUp">
+            <div class="modal container">
+                <h3 class="three-fourth">Најава</h3>
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();" class="one-fourth">
+                </fb:login-button>
+                <div class="f-row">
+                    <input type="text" placeholder="Корисничко име" name="Username" />                    
+                </div>
+                <div class="f-row">
+                    <input type="password" placeholder="Лозинка" name="Password" />
+                </div>
+
+                <div class="f-row">
+                    @Html.EditorFor(x=>x.RememberMe)
+                    <label>Запамти ме</label>
+                </div>
+                
+                <div class="f-row bwrap">
+                    <input type="submit" value="Најава" />
+                </div>
+                <p><a href="#">Заборавена лозинка?</a></p>
+                <p>Не сте корисник сеуште? <a href="@Url.Action("Register")">Регистрирајте се.</a></p>
+            </div>
+        </section>
+        <!--//content-->
+    </div>
+    <!--//row-->
+</div>
+<input name="ReturnUrl" value="@returnUrl" hidden />
+}

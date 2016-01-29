@@ -1,0 +1,365 @@
+﻿@model SiGotvime.Data.ViewModels.ProfileViewModel
+@using SiGotvime.Utilities
+@{
+    ViewBag.Title = "Profile";
+    int currentUserID = Env.UserID();
+    bool isCurrentUser = Model.UserID == currentUserID;
+    int id = 0;
+    if(ViewContext.RouteData.Values["id"] != null)
+    {
+        int.TryParse(ViewContext.RouteData.Values["id"].ToString(), out id);
+    }   
+}
+
+@section Styles{
+<link href="~/Content/bootstrap-editable/bootstrap-editable.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/Scripts/bootstrap-editable/bootstrap-editable.min.js"></script>
+    <script src="~/Scripts/remodal.min.js"></script>
+    <link href="~/Content/cropper/cropper.min.css" rel="stylesheet" />
+    <script src="~/Content/cropper/cropper.min.js"></script>
+    <script>
+        var editUrl = '@Url.Action("EditProfileData","User")';
+
+        $(function () {
+
+            var recipeSection = window.location.href.indexOf("#recipes");
+            if(recipeSection > 0)
+            {
+                $("#recipesLink").click();
+            }
+            
+            $(".editable").editable({
+                type: 'text',
+                url: editUrl,
+                pk:1,
+                validate: function (value) {
+                    if ($.trim(value) == '') {
+                        return 'Полето е задолжително';
+                    }
+                },
+                emptytext:"Празно"
+            });
+
+            $(document).on('confirmation', '.remodal', function () {
+                $("#ImageForm").submit();
+            });
+
+            $(document).on('closed', '.remodal', function (e) {
+
+                // Reason: 'confirmation', 'cancellation'
+                if(e.reason && e.reason!="confirmation")
+                {
+                    console.log('Modal is closed' + (e.reason ? ', reason: ' + e.reason : ''));
+                }
+            });
+
+            $('#DOB').editable({
+                format: 'MM-DD-YYYY',
+                viewformat: 'DD.MM.YYYY',
+                template: 'DD / MMMM / YYYY',
+                combodate: {
+                    minYear: 1900,
+                    maxYear: @DateTime.Now.Year,
+                    minuteStep: 1
+                }
+            });
+
+            $("#pictureFile").on("change",function(){
+                var path = $(this).val();
+                var input = document.getElementById("pictureFile");
+                var fReader = new FileReader();
+                fReader.readAsDataURL(input.files[0]);
+
+                fReader.onloadend = function(event){
+                    var img = document.getElementById("imageToUpload");
+                    img.src = event.target.result;
+
+                    $("#imageToUpload").cropper({
+                        aspectRatio:1,
+                        scalable:false,
+                        zoomable:false,
+                        minCropBoxWidth: 230,
+                        crop: function(e) {
+                            // Output the result data for cropping image.
+
+                            $("input[name=imgx]").val(e.x);
+                            $("input[name=imgy]").val(e.y);
+                            $("input[name=imgw]").val(e.width);
+                            $("input[name=imgh]").val(e.height);
+                        }
+                    });
+
+                    $("#remodalConfirm").show();
+                }
+            })
+
+            var reload = '@(ViewBag.Reload!=null)';
+            
+            if(reload.toLowerCase() == 'true')
+            {
+                window.location.reload();
+            }                
+        })
+
+        function openFile()
+        {
+            $("#pictureFile").click();
+        }
+
+        
+    </script>
+}
+
+<div class="remodal" data-remodal-id="modal"
+     data-remodal-options="hashTracking: false, closeOnOutsideClick: false,closeOnConfirm: false">
+    <button data-remodal-action="close" class="remodal-close pull-right"></button>
+    <h1>Одберете слика</h1>
+    <div class="modal-content container" style="padding-bottom:10px;">
+        @using(Html.BeginForm("UploadPicture", "User", FormMethod.Post, new { enctype = "multipart/form-data", id = "ImageForm" }))
+        {
+            <div class="two-third">
+                <img src="@Model.ImageUrl" id="imageToUpload" />
+            </div>
+            <div class="one-third">
+                <a href="javascript:void(0)" class="button" onclick="openFile()">Одбери слика</a>
+                <input type="file" id="pictureFile" name="ImageToUpload" hidden />
+                <input type="text" name="id" value="@id" hidden />
+                <input type="text" name="imgx" hidden />
+                <input type="text" name="imgy" hidden />
+                <input type="text" name="imgw" hidden />
+                <input type="text" name="imgh" hidden />
+            </div>
+        }
+    </div>
+
+    <p style="clear:both;margin-top:10px;">&nbsp;</p>
+    <button data-remodal-action="confirm" id="remodalConfirm" class="remodal-confirm" style="display:none;">Зачувај</button>
+    <button data-remodal-action="cancel" class="remodal-cancel">Откажи</button>
+
+</div>
+
+<div class="wrap clearfix">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="index.html" title="Home">Home</a></li>
+            <li>My account</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--content-->
+    <section class="content">
+        <!--row-->
+        <div class="row">
+            <!--profile left part-->
+            <div class="my_account one-fourth wow fadeInLeft">
+                <figure>
+                    <img src="@Model.ImageUrl" alt="" class="imageFullSize" />
+                </figure>
+                <div class="container">
+                    <h2>
+                        @Model.FirstName
+                        @Model.LastName
+                    </h2>
+                </div>
+                @if(isCurrentUser)
+                {
+                    <a class="button big" href="@Url.Action("Logout","Account")" style="margin-top:10px;">Одјава</a>
+                    <a href="javascript:void(0)" class="button big" data-remodal-target="modal" style="margin-top:10px;">Промени слика</a>
+                }
+
+            </div>
+            <!--//profile left part-->
+
+            <div class="three-fourth wow fadeInRight">
+                <nav class="tabs">
+                    <ul>
+                        <li class="active"><a href="#about" title="About me">Мои податоци</a></li>                        
+                        <li><a id="recipesLink" onclick="GetPage('@Url.Action("UserRecipes","User")','#profileRecipes')" href="#profileRecipes" title="My recipes">Мои рецепти</a></li>
+                        <li><a href="#favorites" title="My favorites" onclick="GetPage('@Url.Action("UserFavourites", "User")','#favorites')">Омилени</a></li>
+                        <li><a href="#posts" title="My posts">Мои Блог Постови</a></li>
+                    </ul>
+                </nav>
+
+                <!--about-->
+                <div class="tab-content" id="about">
+                    @if(isCurrentUser)
+                    {
+                        <div>
+                            <div class="alert alert-warning" role="alert">
+                                * Кликнете на подвлечените податоци за да ги промените
+                            </div>
+                        </div>
+                    }
+                    
+
+                    <div class="row">
+
+                        <dl class="basic two-third">
+                            <dt>Име и Презиме</dt>
+                            <dd>
+                                @if(isCurrentUser)
+                                {
+                                    <div class="bootstrap-item">
+                                        <a href="javascript:void(0)" class="editableWhite editable" data-title="Зачувајте го вашето име" data-placeholder="Задолжително" id="FirstName">@Model.FirstName</a>
+                                        <a href="javascript:void(0)" class="editableWhite editable" data-title="Зачувајте го вашето презиме" id="LastName">@Model.LastName</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Model.FirstName @:  @Model.LastName
+                                }
+                            </dd>
+                            <dt>Емаил</dt>
+                            <dd>
+                                @if(isCurrentUser)
+                                {
+                                    <div class="bootstrap-item">
+                                        <a href="javascript:void(0)" class="editableWhite editable" data-type="email" data-title="Зачувајте го вашата емаил адреса" data-placeholder="Задолжително" id="Email">@(Model.Email != null ? Model.Email : "")</a>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    @(Model.Email != null ? Model.Email : "")
+                                }
+                            </dd>
+                            <dt>Телефон</dt>
+                            <dd>
+                                @if(isCurrentUser)
+                                {
+                                    <div class="bootstrap-item">
+                                        <a href="javascript:void(0)" class="editableWhite editable" data-title="Зачувајте го вашиот телефон" data-placeholder="Задолжително" id="Telephone">@(Model.Telephone != null ? Model.Telephone : "")</a>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    @(Model.Telephone != null ? Model.Telephone : "")
+                                }
+                            </dd>
+                            <dt>Датум на раѓање</dt>
+                            <dd>
+                                @if(isCurrentUser)
+                                {
+                                    <div class="bootstrap-item">
+                                        <a href="javascript:void(0)" class="editableWhite" data-type="combodate" data-title="Зачувајте го вашиот датум на раѓање" data-value="@(Model.DateOfBirth.HasValue ? string.Format("{0}-{1}-{2}",Model.DateOfBirth.Value.Month,Model.DateOfBirth.Value.Day,Model.DateOfBirth.Value.Year) : "")" id="DOB"></a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToShortDateString() : "")
+                                }
+                            </dd>
+
+                            <dt>Поставени рецепти</dt>
+                            <dd>@Model.RecipesSubmitted</dd>
+                            <dt>Блог постови</dt>
+                            <dd>@Model.PostsSubmitted</dd>
+                        </dl>
+
+                        <div class="one-third">
+                            <ul class="boxed gold">
+                                <li class="light"><a href="#" title="Best recipe"><i class="ico i-had_best_recipe"></i> <span>Had a best recipe</span></a></li>
+                                <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
+                                <li class="dark"><a href="#" title="Added a first recipe"><i class="ico i-added_first_recipe"></i> <span>Added a first recipe</span></a></li>
+
+                                <li class="medium"><a href="#" title="Added 10-20 recipes"><i class="ico i-added_several_recipes"></i> <span>Added 10-20 recipes</span></a></li>
+                                <li class="dark"><a href="recipes.html" title="Events"><i class="ico i-wrote_blog_post"></i> <span>Wrote a blog post</span></a></li>
+                                <li class="light"><a href="recipes.html" title="Fish"><i class="ico i-wrote_comment"></i> <span>Wrote a comment</span></a></li>
+
+                                <li class="dark"><a href="recipes.html" title="Fish"><i class="ico i-won_contest"></i> <span>Won a contest</span></a></li>
+                                <li class="light"><a href="recipes.html" title="Healthy"><i class="ico i-shared_recipe"></i> <span>Shared a recipe</span></a></li>
+                                <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--//about-->
+                <!--my recipes-->
+                <div class="tab-content" id="profileRecipes">
+
+                </div>
+                <!--//my recipes-->
+                <!--my favorites-->
+                <div class="tab-content" id="favorites">
+                    
+                </div>
+                <!--//my favorites-->
+                <!--my posts-->
+                <div class="tab-content" id="posts">
+                    <!--entries-->
+                    <div class="entries row">
+                        <!--item-->
+                        <div class="entry one-third">
+                            <figure>
+                                <img src="~/images/img.jpg" alt="" />
+                                <figcaption><a href="blog_single.html"><i class="ico i-view"></i> <span>View post</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="blog_single.html">Barbeque party</a></h2>
+                                <div class="actions">
+                                    <div>
+                                        <div class="date"><i class="ico i-date"></i><a href="#">22 Dec 2014</a></div>
+                                        <div class="comments"><i class="ico i-comments"></i><a href="blog_single.html#comments">27</a></div>
+                                    </div>
+                                </div>
+                                <div class="excerpt">
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet . . . </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--item-->
+                        <!--item-->
+                        <div class="entry one-third">
+                            <figure>
+                                <img src="~/images/img.jpg" alt="" />
+                                <figcaption><a href="blog_single.html"><i class="ico i-view"></i> <span>View post</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="blog_single.html">How to make sushi</a></h2>
+                                <div class="actions">
+                                    <div>
+                                        <div class="date"><i class="ico i-date"></i><a href="#">22 Dec 2014</a></div>
+                                        <div class="comments"><i class="ico i-comments"></i><a href="blog_single.html#comments">27</a></div>
+                                    </div>
+                                </div>
+                                <div class="excerpt">
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet . . . </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--item-->
+                        <!--item-->
+                        <div class="entry one-third">
+                            <figure>
+                                <img src="~/images/img.jpg" alt="" />
+                                <figcaption><a href="blog_single.html"><i class="ico i-view"></i> <span>View post</span></a></figcaption>
+                            </figure>
+                            <div class="container">
+                                <h2><a href="blog_single.html">Make your own bread</a></h2>
+                                <div class="actions">
+                                    <div>
+                                        <div class="date"><i class="ico i-date"></i><a href="#">22 Dec 2014</a></div>
+                                        <div class="comments"><i class="ico i-comments"></i><a href="blog_single.html#comments">27</a></div>
+                                    </div>
+                                </div>
+                                <div class="excerpt">
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet . . . </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--item-->
+                    </div>
+                    <!--//entries-->
+                </div>
+                <!--//my posts-->
+            </div>
+        </div>
+        <!--//row-->
+    </section>
+    <!--//content-->
+</div>
