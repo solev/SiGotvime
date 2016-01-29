@@ -52,7 +52,7 @@ namespace SiGotvime.Utilities
         {
             var user = fbUser.User;
             string userData = string.Concat(user.ID, "|", user.Username, "|", user.FirstName, "|", user.LastName, "|", user.ImageUrl, "|","",fbUser.Link);
-            var tkt = new FormsAuthenticationTicket(1, user.Username, DateTime.Now, DateTime.Now.AddMinutes(60), false, userData);
+            var tkt = new FormsAuthenticationTicket(1, user.Username, DateTime.Now, DateTime.Now.AddMinutes(300), false, userData);
             var cookiestr = FormsAuthentication.Encrypt(tkt);
             var ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookiestr);
             ck.Path = FormsAuthentication.FormsCookiePath;

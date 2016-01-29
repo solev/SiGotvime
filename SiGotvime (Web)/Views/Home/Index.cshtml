@@ -31,8 +31,7 @@
                 <a href="@Url.Action("Register","Account")" class="button white more medium">Придружи ни се</a>
                 <p>Веќе сте корисник? Кликнете <a href="@Url.Action("Login","Account")">овде</a> за да се најавите</p>
             </article>
-
-
+            
             <!--search recipes widget-->
             <div class="one-fourth wow fadeInDown" data-wow-delay=".5s">
                 <div class="widget container">
@@ -146,11 +145,11 @@
                         <article class="entry">
                             <figure>
                                 <img src="@Model.RecipeOfTheDay.ImageUrl" alt="" class="imageFullSize" />
-                                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
+                                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})"><i class="ico i-view"></i> <span>Погледни го рецептот</span></a></figcaption>
                             </figure>
                             <div class="container">
                                 <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})">@Model.RecipeOfTheDay.Title</a></h2>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+                                <p>@Model.RecipeOfTheDay.Description</p>
                                 <div class="actions">
                                     <div>
                                         <a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})" class="button">Погледни го целиот рецепт</a>
@@ -160,6 +159,7 @@
                             </div>
                         </article>
                     </div>
+
                     <!--//featured recipe-->
                     <!--featured member-->
                     <div class="featured one-third wow fadeInLeft" data-wow-delay=".2s">
@@ -173,11 +173,11 @@
                             </figure>
                             <div class="container">
                                 <h2><a href="@Url.Action("Profile", "User", new { id = Model.FeaturedMember.ID })">@Model.FeaturedMember.FirstName @Model.FeaturedMember.LastName</a></h2>
-                                <blockquote>Traditional dishes and fine bakery products accompanied by beautiful photographs to bend around and attract the tryout! Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</blockquote>
+                                @*<blockquote>Traditional dishes and fine bakery products accompanied by beautiful photographs to bend around and attract the tryout! Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</blockquote>*@
                                 <div class="actions">
                                     <div>
                                         <a href="@Url.Action("Profile", "User", new { id = Model.FeaturedMember.ID })#recipes" class="button">Моите рецепти</a>
-                                        <div class="more"><a href="javascript:void(0)">See past featured members</a></div>
+                                        <div class="more"><a href="javascript:void(0)">Погледни ги минатите избрани корисници</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +202,7 @@
                         <div class="entry one-third wow fadeInLeft">
                             <figure>
                                 <img src="@(item.CroppedUrl??item.ImageUrl)" alt="" />
-                                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID })"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
+                                <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID })"><i class="ico i-view"></i> <span>Погледни го рецептот</span></a></figcaption>
                             </figure>
                             <div class="container">
                                 <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID })">@item.Title</a></h2>

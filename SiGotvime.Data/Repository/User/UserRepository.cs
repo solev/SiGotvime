@@ -63,11 +63,18 @@ namespace SiGotvime.Data.Repository
                 user.LastName = value;
             else if(property == "DOB")
             {
-                DateTime dt;
-                if(DateTime.TryParse(value,out dt))
+                if(!string.IsNullOrEmpty(value))
                 {
-                    user.DateOfBirth = dt;
+                    DateTime dt;
+                    if (DateTime.TryParse(value, out dt))
+                    {
+                        user.DateOfBirth = dt;
+                    }
                 }
+                else
+                {
+                    user.DateOfBirth = null;
+                }                
             }
             else if(property == "Email")
             {

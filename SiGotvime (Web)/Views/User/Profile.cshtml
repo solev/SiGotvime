@@ -34,12 +34,7 @@
             $(".editable").editable({
                 type: 'text',
                 url: editUrl,
-                pk:1,
-                validate: function (value) {
-                    if ($.trim(value) == '') {
-                        return 'Полето е задолжително';
-                    }
-                },
+                pk:1,               
                 emptytext:"Празно"
             });
 
@@ -60,6 +55,8 @@
                 format: 'MM-DD-YYYY',
                 viewformat: 'DD.MM.YYYY',
                 template: 'DD / MMMM / YYYY',
+                url: editUrl,
+                pk:1,  
                 combodate: {
                     minYear: 1900,
                     maxYear: @DateTime.Now.Year,
@@ -145,8 +142,8 @@
     <!--breadcrumbs-->
     <nav class="breadcrumbs">
         <ul>
-            <li><a href="index.html" title="Home">Home</a></li>
-            <li>My account</li>
+            <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
+            <li>Мој Профил</li>
         </ul>
     </nav>
     <!--//breadcrumbs-->
@@ -262,7 +259,7 @@
                         </dl>
 
                         <div class="one-third">
-                            <ul class="boxed gold">
+                            @*<ul class="boxed gold">
                                 <li class="light"><a href="#" title="Best recipe"><i class="ico i-had_best_recipe"></i> <span>Had a best recipe</span></a></li>
                                 <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
                                 <li class="dark"><a href="#" title="Added a first recipe"><i class="ico i-added_first_recipe"></i> <span>Added a first recipe</span></a></li>
@@ -274,7 +271,9 @@
                                 <li class="dark"><a href="recipes.html" title="Fish"><i class="ico i-won_contest"></i> <span>Won a contest</span></a></li>
                                 <li class="light"><a href="recipes.html" title="Healthy"><i class="ico i-shared_recipe"></i> <span>Shared a recipe</span></a></li>
                                 <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
-                            </ul>
+                            </ul>*@
+
+                            @Html.Action("Advertisments", "Home")
                         </div>
                     </div>
                 </div>

@@ -17,18 +17,18 @@
         $(function () {
             ActivateNavigation("#recipes");
             $("ul.categories > #allRecipes").addClass("active");
-        })
-        
-
+        });
     </script>
 }
+
+
 <!--wrap-->
 <div class="wrap clearfix">
     <!--breadcrumbs-->
     <nav class="breadcrumbs">
         <ul>
             <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
-            <li>Latest Recipes</li>
+            <li>Најнови рецепти</li>
         </ul>
     </nav>
     <!--//breadcrumbs-->
@@ -48,7 +48,7 @@
                     <div class="entry one-third wow fadeInLeft">
                         <figure>
                             <img src="@(!string.IsNullOrWhiteSpace(item.CroppedUrl)?item.CroppedUrl:item.ImageUrl)" alt="" class="imageFullSize"/>
-                            <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>View recipe</span></a></figcaption>
+                            <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>Погледни го рецептот</span></a></figcaption>
                         </figure>
                         <div class="container">
                             <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>

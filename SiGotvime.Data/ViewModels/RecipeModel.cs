@@ -14,6 +14,7 @@ namespace SiGotvime.Data.ViewModels
         public int UserID { get; set; }
         public string Title { get; set; }
         public int? PreparationTime { get; set; }
+        public int? NumberOfPeople { get; set; }
         public RecipeDifficulty? Difficulty { get; set; }
         public string Description { get; set; }
         public int CategoryID { get; set; }        

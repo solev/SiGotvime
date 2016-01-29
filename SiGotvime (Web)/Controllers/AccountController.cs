@@ -29,6 +29,8 @@ namespace SiGotvime__Web_.Controllers
         {
             return View();
         }
+        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)

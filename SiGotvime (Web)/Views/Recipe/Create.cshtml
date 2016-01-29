@@ -14,8 +14,8 @@
     <!--breadcrumbs-->
     <nav class="breadcrumbs">
         <ul>
-            <li><a href="index.html" title="Home">Home</a></li>
-            <li>Submit a recipe</li>
+            <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
+            <li>Поставете рецепт</li>
         </ul>
     </nav>
     <!--//breadcrumbs-->
@@ -61,6 +61,11 @@
                                         <option value="@item.ID">@item.Name</option>
                                     }
                                 </select>
+                            </div>
+                        </div>
+                        <div class="f-row">
+                            <div class="third">
+                                @Html.TextBoxFor(x => x.NumberOfPeople, new { placeholder = "Број на луѓе", @class = "validate[required,custom[integer]]", data_prompt_position = "bottomLeft" })
                             </div>
                         </div>
                     </section>

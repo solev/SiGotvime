@@ -427,11 +427,11 @@ namespace SiGotvime.Data.Repository
                 sb.Append(string.Format("Чекор {0}.{1}", i, item));
                 i++;
             }
-
-
+            
             recipe.Content = sb.ToString();
             recipe.Title = model.Title;
             recipe.PreparationTime = model.PreparationTime.Value;
+            recipe.NumberOfPeople = model.NumberOfPeople.Value;
             recipe.DateCreated = DateTime.Now;
             recipe.Rating = 0;
             recipe.Approved = false;
