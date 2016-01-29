@@ -410,10 +410,30 @@
     <Content Include="Content\images\cropped_0_39прженитиквички.jpg" />
     <Content Include="Content\images\cropped_0_89салатаодтуна.jpg" />
     <Content Include="Content\images\cropped_0_Food_Prep_Counter_hi.jpg" />
+    <Content Include="Content\images\cropped_0_Лепчињасотунаимоцарела.jpg" />
+    <Content Include="Content\images\cropped_0_Паниранкарфиол.jpg" />
+    <Content Include="Content\images\cropped_0_Пастасалатасопотпеченипиперки.jpg" />
+    <Content Include="Content\images\cropped_0_Пилешкосокостеновсос.jpg" />
+    <Content Include="Content\images\cropped_0_ПројаУжице.jpg" />
+    <Content Include="Content\images\cropped_0_Студентскипрженилепчиња.jpg" />
+    <Content Include="Content\images\cropped_0_Францускачорбасокромид.jpg" />
+    <Content Include="Content\images\cropped_0_Чваркиодсоја.jpg" />
+    <Content Include="Content\images\cropped_0_Чорбаоддоматиибосилек.jpg" />
+    <Content Include="Content\images\cropped_0_Чорбаодтиквавотиква.jpg" />
     <Content Include="Content\images\cropped_1_tzatziki.jpg" />
     <Content Include="Content\images\full_0_25тортелинипримавера.jpg" />
     <Content Include="Content\images\full_0_39прженитиквички.jpg" />
     <Content Include="Content\images\full_0_89салатаодтуна.jpg" />
+    <Content Include="Content\images\full_0_Лепчињасотунаимоцарела.jpg" />
+    <Content Include="Content\images\full_0_Паниранкарфиол.jpg" />
+    <Content Include="Content\images\full_0_Пастасалатасопотпеченипиперки.jpg" />
+    <Content Include="Content\images\full_0_Пилешкосокостеновсос.jpg" />
+    <Content Include="Content\images\full_0_ПројаУжице.jpg" />
+    <Content Include="Content\images\full_0_Студентскипрженилепчиња.jpg" />
+    <Content Include="Content\images\full_0_Францускачорбасокромид.jpg" />
+    <Content Include="Content\images\full_0_Чваркиодсоја.jpg" />
+    <Content Include="Content\images\full_0_Чорбаоддоматиибосилек.jpg" />
+    <Content Include="Content\images\full_0_Чорбаодтиквавотиква.jpg" />
     <Content Include="Content\images\full_1_tzatziki.jpg" />
     <Content Include="Content\images\goodIcon.jpg" />
     <Content Include="Content\images\images2%28cropped%29.jpg" />
@@ -491,6 +511,7 @@
     <Content Include="Content\structure.css" />
     <Content Include="Content\style-rtl.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\userImages\picture-Solev.jpg" />
     <Content Include="Content\Utilities\okTick.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -545,6 +566,7 @@
     <Content Include="Scripts\cropper.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\SiGotvimeFTP.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\Facebook\FBLogin.js" />
     <Content Include="Scripts\Full Calendar\fullcalendar.css" />
@@ -654,7 +676,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\userImages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
