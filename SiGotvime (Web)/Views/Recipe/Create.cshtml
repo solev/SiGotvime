@@ -22,7 +22,7 @@
     <!--row-->
     <div class="row">
         <header class="s-title wow fadeInLeft">
-            <h2 class="ribbon large">Најнови Рецепти</h2>
+            <h2 class="ribbon large">Поставете Рецепт</h2>
         </header>
 
         <!--content-->
@@ -30,7 +30,12 @@
             <div class="submit_recipe container">
                 @using (Html.BeginForm("Create", "Recipe", FormMethod.Post, new { enctype = "multipart/form-data", id = "createRecipeForm" }))
                 {
-                    @Html.AntiForgeryToken()
+
+                    <input type="text" name="imgx" hidden />
+                    <input type="text" name="imgy" hidden />
+                    <input type="text" name="imgw" hidden />
+                    <input type="text" name="imgh" hidden />
+
                     @Html.HiddenFor(x => x.ID)
                     //ingredients
                     <div ng-repeat="item in SelectedIngredients" style="display:none;">
@@ -141,14 +146,20 @@
                     <section>
                         <h2>Фото</h2>
                         <div class="f-row full bootstrap-item">
-                            @if (Model.ImageUrl != null)
-                            {
-                                <img id="imageToUpload" src="@Model.ImageUrl" class="img-thumbnail" style="max-width:25%;" />
-                            }
-                            else
-                            {
-                                <img id="imageToUpload" src="~/images/img.jpg" class="img-thumbnail" style="max-width:25%;" />
-                            }
+                            <div class="one-fourth">
+                                @if (Model.ImageUrl != null)
+                                {
+                                    <img id="imageToUpload" src="@Model.ImageUrl" class="img-thumbnail hidden" style="max-width:25%;" />
+                                }
+                                else
+                                {
+                                    <img id="imageToUpload" src="~/images/img.jpg" class="img-thumbnail hidden" style="max-width:25%;" />
+                                }
+                                <img id="imageCropper" src="~/images/img.jpg" class="img-thumbnail" />
+                            </div>
+                            <div class="one-fourth cropPreview hidden" style="overflow:hidden;height:280px!important;width:280px!important;">
+                                <img id=" previewimage" src="~/images/img.jpg" class="img-thumbnail" />
+                            </div>
                         </div>
                         <div class="f-row full">
                             <input type="file" id="pictureFile" accept="image/*" name="ImageToUpload"/>
@@ -166,7 +177,13 @@
 </div>
 <!--//wrap-->
 
+@section Styles{
+<link href="~/Content/cropper/cropper.min.css" rel="stylesheet" />
+}
+
 @section Scripts{
+
+<script src="~/Content/cropper/cropper.min.js"></script>
     <script>
         app.controller("CreateRecipe", function ($scope) {
             $scope.Ingredients = @Html.Raw(JsonSerializer.serializer.Serialize(Model.Ingredients));
@@ -294,8 +311,8 @@
                 $("#ingredientInput").validationEngine("hide");
             })
 
-            ingredientInput
-
+            
+            var cropper;
             $("#pictureFile").on("change",function(){
                 var path = $(this).val();
                 var input = document.getElementById("pictureFile");
@@ -305,7 +322,32 @@
                 fReader.onloadend = function(event){
                     var img = document.getElementById("imageToUpload");
                     img.src = event.target.result;
-                    $(img).removeClass("hidden");
+                    
+                    var cropImage = document.getElementById("imageCropper");
+                    cropImage.src = event.target.result;
+
+                    $(".cropPreview").removeClass("hidden");
+
+                    if (cropper != null)
+                    {
+                        $("#imageCropper").cropper('replace',event.target.result);
+                    }
+                    else{
+                        cropper= $("#imageCropper").cropper({
+                            aspectRatio: 1,
+                            viewMode: 2,
+                            preview: ".cropPreview",
+                            background: false,
+                            zoomable:false,
+                            crop: function (e) {                                
+                                $("input[name=imgx]").val(e.x);
+                                $("input[name=imgy]").val(e.y);
+                                $("input[name=imgw]").val(e.width);
+                                $("input[name=imgh]").val(e.height);
+                            }
+                        });
+                    }
+                    
                 }
 
                 $("#imageToUpload").validationEngine('hide');

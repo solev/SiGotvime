@@ -1,0 +1,70 @@
+﻿@model List<SiGotvime.Data.Models.BlogPost>
+@{
+    int rows = Model.Count / 3;
+    int additional = Model.Count % 3;
+}
+
+@for (int i = 0; i < rows; i++)
+{
+    <div class="entries row">
+        @for (int j = 0; j < 3; j++)
+        {
+            {
+
+                int idx = i * 3 + j;
+                SiGotvime.Data.Models.BlogPost item = Model.ElementAt(idx);
+
+                <!--item-->
+                <div class="entry one-third">
+                    <figure>
+                        <img src="@item.ImageUrl" alt="" />
+                        <figcaption><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})"><i class="ico i-view"></i> <span>Погледни статија</span></a></figcaption>
+                    </figure>
+                    <div class="container">
+                        <h2><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})">@item.Title</a></h2>
+                        <div class="actions">
+                            <div>
+                                <div class="date"><i class="ico i-date"></i><a href="javascript:void(0)">@item.DateCreated.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</a></div>
+                                <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetPost", "Blog", new  {id = item.BlogPostID })#comments">@item.CommentCount</a></div>
+                            </div>
+                        </div>
+                        <div class="excerpt">
+                            <p>@item.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+
+<div class="entries row">
+    @for (int j = 0; j < additional; j++)
+    {
+        {
+
+            int idx = j;
+            SiGotvime.Data.Models.BlogPost item = Model.ElementAt(idx);
+
+                <!--item-->
+            <div class="entry one-third">
+                <figure>
+                    <img src="@item.ImageUrl.TrimStart('~')" alt="" />
+                    <figcaption><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})"><i class="ico i-view"></i> <span>Погледни статија</span></a></figcaption>
+                </figure>
+                <div class="container">
+                    <h2><a href="@Url.Action("GetPost", "Blog", new { id = item.BlogPostID})">@item.Title</a></h2>
+                    <div class="actions">
+                        <div>
+                            <div class="date"><i class="ico i-date"></i><a href="javascript:void(0)">@item.DateCreated.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</a></div>
+                            <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetPost", "Blog", new  {id = item.BlogPostID })#comments">@item.CommentCount</a></div>
+                        </div>
+                    </div>
+                    <div class="excerpt">
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

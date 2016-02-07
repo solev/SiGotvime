@@ -177,7 +177,7 @@
                         <li class="active"><a href="#about" title="About me">Мои податоци</a></li>                        
                         <li><a id="recipesLink" onclick="GetPage('@Url.Action("UserRecipes","User")','#profileRecipes')" href="#profileRecipes" title="My recipes">Мои рецепти</a></li>
                         <li><a href="#favorites" title="My favorites" onclick="GetPage('@Url.Action("UserFavourites", "User")','#favorites')">Омилени</a></li>
-                        <li><a href="#posts" title="My posts">Мои Блог Постови</a></li>
+                        <li><a href="#posts" title="My posts" onclick="GetPage('@Url.Action("UserBlogPosts", "User")','#posts')">Мои Блог Постови</a></li>
                     </ul>
                 </nav>
 
@@ -291,68 +291,7 @@
                 <!--my posts-->
                 <div class="tab-content" id="posts">
                     <!--entries-->
-                    <div class="entries row">
-                        <!--item-->
-                        <div class="entry one-third">
-                            <figure>
-                                <img src="~/images/img.jpg" alt="" />
-                                <figcaption><a href="blog_single.html"><i class="ico i-view"></i> <span>View post</span></a></figcaption>
-                            </figure>
-                            <div class="container">
-                                <h2><a href="blog_single.html">Barbeque party</a></h2>
-                                <div class="actions">
-                                    <div>
-                                        <div class="date"><i class="ico i-date"></i><a href="#">22 Dec 2014</a></div>
-                                        <div class="comments"><i class="ico i-comments"></i><a href="blog_single.html#comments">27</a></div>
-                                    </div>
-                                </div>
-                                <div class="excerpt">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet . . . </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--item-->
-                        <!--item-->
-                        <div class="entry one-third">
-                            <figure>
-                                <img src="~/images/img.jpg" alt="" />
-                                <figcaption><a href="blog_single.html"><i class="ico i-view"></i> <span>View post</span></a></figcaption>
-                            </figure>
-                            <div class="container">
-                                <h2><a href="blog_single.html">How to make sushi</a></h2>
-                                <div class="actions">
-                                    <div>
-                                        <div class="date"><i class="ico i-date"></i><a href="#">22 Dec 2014</a></div>
-                                        <div class="comments"><i class="ico i-comments"></i><a href="blog_single.html#comments">27</a></div>
-                                    </div>
-                                </div>
-                                <div class="excerpt">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet . . . </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--item-->
-                        <!--item-->
-                        <div class="entry one-third">
-                            <figure>
-                                <img src="~/images/img.jpg" alt="" />
-                                <figcaption><a href="blog_single.html"><i class="ico i-view"></i> <span>View post</span></a></figcaption>
-                            </figure>
-                            <div class="container">
-                                <h2><a href="blog_single.html">Make your own bread</a></h2>
-                                <div class="actions">
-                                    <div>
-                                        <div class="date"><i class="ico i-date"></i><a href="#">22 Dec 2014</a></div>
-                                        <div class="comments"><i class="ico i-comments"></i><a href="blog_single.html#comments">27</a></div>
-                                    </div>
-                                </div>
-                                <div class="excerpt">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod. Lorem ipsum dolor sit amet . . . </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!--item-->
-                    </div>
+                    
                     <!--//entries-->
                 </div>
                 <!--//my posts-->

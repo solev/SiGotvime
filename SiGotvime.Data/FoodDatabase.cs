@@ -13,6 +13,7 @@ namespace SiGotvime.Data
         {
             this.Configuration.LazyLoadingEnabled = false;            
         }
+
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<IngredientsRecipe> IngredientsInRecipe { get; set; }

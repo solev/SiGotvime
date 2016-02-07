@@ -19,8 +19,9 @@ namespace SiGotvime.Data.ViewModels
         public string Description { get; set; }
         public int CategoryID { get; set; }        
         public string ImageUrl { get; set; }
+        public string CroppedImageUrl { get; set; }
         public string Steps { get; set; }
-        public HttpPostedFileBase ImageToUpload{ get; set; }
+        public bool isAdmin { get; set; }
 
         public List<IngredientViewModel> Ingredients { get; set; }
         public List<Tag> Categories { get; set; }

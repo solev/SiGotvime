@@ -42,6 +42,14 @@
     {
 
     }
+
+    List<int> selectedIngredients = new List<int>();
+    var ingredientsFromSession = Session["selectedIngredients"];
+    if(ingredientsFromSession!=null)
+    {
+        selectedIngredients = ingredientsFromSession as List<int>;
+    }
+    
 }
 
 @section Styles{
@@ -66,10 +74,9 @@
     <!--breadcrumbs-->
     <nav class="breadcrumbs">
         <ul>
-            <li><a href="index.html" title="Home">Home</a></li>
-            <li><a href="#" title="Recipes">Recipes</a></li>
-            <li><a href="recipes.html" title="Cocktails">Deserts</a></li>
-            <li>Recipe</li>
+            <li><a href="@Url.Action("Index","Home")" title="Дома">Дома</a></li>
+            <li><a href="@Url.Action("Latest","Recipe")" title="Рецепти">Рецепти</a></li>
+            <li>@Model.Title</li>
         </ul>
     </nav>
     <!--//breadcrumbs-->
@@ -117,7 +124,7 @@
                     </article>
                     <!--//two-third-->
                     <!--one-third-->
-                    
+
                     <article class="one-third wow fadeInDown">
                         <dl class="basic">
                             <dt>Време за подготовка (мин)</dt>
@@ -155,11 +162,37 @@
                             {
                                 if (item.Quantity.Length <= 10)
                                 {
-                                    <dt>@item.Quantity</dt>
+                                    <dt>
+                                        @item.Quantity
+                                        @if (selectedIngredients.Any())
+                                        {
+                                            if (selectedIngredients.Contains(item.Ingredient.ID))
+                                            {
+                                                <img src="~/images/Status/678134-sign-check-128.png" data-toggle="tooltip" data-placement="top" title="Ја имате оваа состојка" style="width:20px;position:absolute;left:4px;margin-top:-45px;" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/Status/678069-sign-error-128.png" data-toggle="tooltip" data-placement="top" title="Ја немате оваа состојка" style="width:20px;position:absolute;left:4px;margin-top:-45px;" />
+                                            }
+                                        }
+                                    </dt>
                                 }
                                 else
                                 {
-                                    <dt class="justifyIngredient">@item.Quantity</dt>
+                                    <dt class="justifyIngredient">
+                                        @item.Quantity
+                                        @if (selectedIngredients.Any())
+                                        {
+                                            if (selectedIngredients.Contains(item.Ingredient.ID))
+                                            {
+                                                <img src="~/images/Status/678134-sign-check-128.png" data-toggle="tooltip" data-placement="top" title="Ја имате оваа состојка" style="width:20px;position:absolute;left:4px;margin-top:-45px;" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/Status/678069-sign-error-128.png" data-toggle="tooltip" data-placement="top" title="Ја немате оваа состојка" style="width:20px;position:absolute;left:4px;margin-top:-45px;" />
+                                            }
+                                        }
+                                    </dt>
                                 }
 
                                 if (item.Ingredient.Name.Length <= 18)
@@ -171,8 +204,10 @@
                                     <dd class="justifyIngredient">@item.Ingredient.Name</dd>
                                 }
                             }
-
                         </dl>
+
+
+
                     </article>
                     <!--//one-third-->
                 </div>

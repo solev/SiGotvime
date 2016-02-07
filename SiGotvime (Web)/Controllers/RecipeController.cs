@@ -2,9 +2,11 @@
 using SiGotvime.Data.Repository;
 using SiGotvime.Data.ViewModels;
 using SiGotvime.Utilities;
+using SiGotvime__Web_.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -154,9 +156,7 @@ namespace SiGotvime__Web_.Controllers
             });
             return PartialView("_CommentSection", comments);
         }
-
-
-
+        
         [Authorize]
         public ActionResult Create()
         {
@@ -168,29 +168,20 @@ namespace SiGotvime__Web_.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(RecipeModel model)
+        public ActionResult Create(RecipeModel model, PictureUploadModel pictureModel)
         {
+            ImageHelper imageHelper = new ImageHelper { Width = 1500 };
+            Image img = Image.FromStream(pictureModel.ImageToUpload.InputStream);
 
-            string pic = System.IO.Path.GetFileName(model.ImageToUpload.FileName);
-            pic = pic.Replace(" ", "");
-            List<string> nameSplit = new List<string>(pic.Split('.'));
-            string ext = nameSplit.Last();
-            nameSplit.Remove(ext);
-            string picTitle = string.Format("{0}.{1}", string.Concat(nameSplit), ext);
-            string path = System.IO.Path.Combine(Server.MapPath("~/Content/images"), picTitle);
-            int i = 0;
-            while (System.IO.File.Exists(path))
-            {
+            ImageResult firstImage = imageHelper.RenameUploadFile(pictureModel.ImageToUpload);
 
-                picTitle = string.Format("{0}{1}.{2}", string.Concat(nameSplit), i, ext);                
-                path = System.IO.Path.Combine(Server.MapPath("~/Content/images"), picTitle);                
-                i++;
-            }
-            var img = Image.FromStream(model.ImageToUpload.InputStream, true, true);
-            img.Save(path);
-            model.ImageUrl = String.Format("~/Content/images/{0}", picTitle);
+            var cropped = imageHelper.cropImage(img, new Rectangle { X = (int)pictureModel.imgx, Y = (int)pictureModel.imgy, Width = (int)pictureModel.imgw, Height = (int)pictureModel.imgh });
+            ImageResult croppedImgResult = imageHelper.SaveNewImage(cropped, Path.GetFileName(pictureModel.ImageToUpload.FileName));
+
+            model.ImageUrl = String.Format("~/Content/images/{0}", firstImage.ImageName);
+            model.CroppedImageUrl = String.Format("~/Content/images/{0}", croppedImgResult.ImageName);
             model.UserID = Env.UserID();
+            model.isAdmin = Env.UserRoles().Contains(Constants.UserRoles.Administrator);
             int recipeID = _recipeRepository.CreateRecipe(model);
 
             TempData["RecipeSaved"] = true;

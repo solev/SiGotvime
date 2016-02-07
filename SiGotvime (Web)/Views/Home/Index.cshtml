@@ -244,7 +244,7 @@
                                 <h2><a href="@Url.Action("GetPost", "Blog", new  {id = item.BlogPostID })">@item.Title</a></h2>
                                 <div class="actions">
                                     <div>
-                                        <div class="date"><i class="ico i-date"></i><a href="#">@item.DateCreated.ToLongDateString()</a></div>
+                                        <div class="date"><i class="ico i-date"></i><a href="javascript:void(0)">@item.DateCreated.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)</a></div>
                                         <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetPost", "Blog", new  {id = item.BlogPostID })#comments">@item.CommentCount</a></div>
                                     </div>
                                 </div>

@@ -94,7 +94,6 @@ namespace SiGotvime.Data.Repository
             return result;
         }
 
-
         public FacebookUser InsertFacebookUser(FacebookUser user)
         {
             db.FacebookUsers.Add(user);
@@ -226,6 +225,32 @@ namespace SiGotvime.Data.Repository
                 FirstName = result.FirstName,
                 LastName = result.LastName
             };
+        }
+
+
+        public List<BlogPost> GetUserBlogPosts(int userID)
+        {
+            var tempResult = db.BlogPosts.Where(x => x.User.ID == userID && x.Approved).Select(x => new
+            {
+                x.BlogPostID,
+                x.ImageUrl,
+                x.Title,
+                x.DateCreated,
+                CommentCount = x.Comments.Count(),
+                x.Description
+            }).ToList();
+
+            List<BlogPost> result = tempResult.Select(x => new BlogPost
+            {
+                BlogPostID = x.BlogPostID,
+                ImageUrl = x.ImageUrl,
+                Title = x.Title,
+                DateCreated = x.DateCreated,
+                CommentCount = x.CommentCount,
+                Description = x.Description
+            }).ToList();
+
+            return result;
         }
     }
 }

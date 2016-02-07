@@ -17,6 +17,7 @@ namespace SiGotvime__Web_.Controllers
         {
             _statisticsRepository = statisticsRepository;
         }
+
         public ActionResult Index()
         {
             StatisticsViewModel model = _statisticsRepository.AverageRecipeTime();            

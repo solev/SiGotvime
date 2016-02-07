@@ -55,6 +55,12 @@ namespace SiGotvime.Utilities
             }
         }
 
+        public static bool IsInRole(int roleID)
+        {
+            var roles = UserRoles();
+            return roles.Contains(roleID);
+        }
+
         public static string FirstName()
         {
             if(HttpContext.Current.User.Identity.IsAuthenticated)

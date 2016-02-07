@@ -434,9 +434,10 @@ namespace SiGotvime.Data.Repository
             recipe.NumberOfPeople = model.NumberOfPeople.Value;
             recipe.DateCreated = DateTime.Now;
             recipe.Rating = 0;
-            recipe.Approved = false;
+            recipe.Approved = model.isAdmin;
             recipe.Difficulty = model.Difficulty.Value;
             recipe.ImageUrl = model.ImageUrl;
+            recipe.CroppedUrl = model.CroppedImageUrl;
             var ingredientIDs = model.Ingredients.Select(x=>x.ID).ToList();
             var ingredients = db.Ingredients.Where(x => ingredientIDs.Contains(x.ID)).ToList();
             recipe.Ingredients = ingredients.Select(x => new IngredientsRecipe { Ingredient = x,Quantity = model.Ingredients.FirstOrDefault(y=>y.ID == x.ID).Quantity }).ToList();

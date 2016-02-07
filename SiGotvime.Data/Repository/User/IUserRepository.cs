@@ -24,5 +24,6 @@ namespace SiGotvime.Data.Repository
         List<Recipe> GetUserRecipes(int userID);
         List<Recipe> GetUserFavouriteRecipes(int userID);
         User GetFeaturedUser(int UserID);
+        List<BlogPost> GetUserBlogPosts(int userID);
     }
 }

@@ -17,5 +17,14 @@ namespace SiGotvime.Utilities
         public static int HomePageSize = 6;
         public static int PageSize = 15;
         public static string DefaultImgUrl = "~/images/avatar.jpg";
+
+
+
+        public static class UserRoles
+        {
+            //Database ID's for the roles
+
+            public static int Administrator = 1;
+        }
     }
 }

@@ -104,7 +104,8 @@ namespace SiGotvime__Web_.Controllers
 
         public PartialViewResult UserBlogPosts(int page=1)
         {
-            return PartialView();
+            var blogposts = _userRepository.GetUserBlogPosts(Env.UserID());            
+            return PartialView("_UserBlogPosts", blogposts);
         }
 
     }

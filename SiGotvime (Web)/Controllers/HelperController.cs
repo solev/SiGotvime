@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace SiGotvime__Web_.Controllers
 {
+    [Authorize]
     public class HelperController : Controller
     {
         private FoodDatabase db;
@@ -61,5 +62,7 @@ namespace SiGotvime__Web_.Controllers
             }
             return "success";
         }
+
+
     }
 }

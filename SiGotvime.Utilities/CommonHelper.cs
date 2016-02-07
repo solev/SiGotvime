@@ -18,6 +18,7 @@ namespace SiGotvime.Utilities
 
             return content.Substring(0, maxLenght);
         }
+
         public static string GetBaseUrl()
         {
             var request = HttpContext.Current.Request;
@@ -48,6 +49,7 @@ namespace SiGotvime.Utilities
             ck.Path = FormsAuthentication.FormsCookiePath;
             HttpContext.Current.Response.Cookies.Add(ck);
         }
+
         public static void CreateCookieFacebook(FacebookUser fbUser)
         {
             var user = fbUser.User;
