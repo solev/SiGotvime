@@ -1,0 +1,82 @@
+﻿@model SiGotvime.Data.Result_Models.RecipesResultModel
+@{
+    ViewBag.Title = "Неодобрени Рецепти";
+    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
+    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel
+    {
+        action = "UnApprovedRecipes",
+        controller = "Admin",
+        pageSize = SiGotvime.Utilities.Constants.PageSize,
+        currentPage = page,
+        maxCount = Model.MaxCount
+    };
+}
+
+<div class="wrap clearfix">
+    <!--breadcrumbs-->
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
+            <li>Неодобрени рецепти</li>
+        </ul>
+    </nav>
+    <!--//breadcrumbs-->
+    <!--row-->
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">Неодобрени Рецепти</h2>
+        </header>
+
+        <!--content-->
+        <section class="content full-width wow fadeInUp">
+            <!--entries-->
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Рецепт</th>
+                        <th>Датум на поставување</th>
+                        <th>Корисник</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Recipes.Any())
+                    {
+                        foreach (var item in Model.Recipes)
+                        {
+
+                            <tr>
+                                <td>@item.Title</td>
+                                <td>@item.DateCreated.ToLongDateString()</td>
+                                <td><a href="@Url.Action("Profile", "User", new { id = item.User.ID})">@item.User.Username</a></td>
+                                <td>@Html.ActionLink("Погледни", "GetRecipe", "Recipe", new { id = item.ID }, null)</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4"><h3>Нема неодобрени рецепти</h3></td>
+                        </tr>
+                    }
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+            @{Html.RenderPartial("Pager", pagerConfig);}
+
+
+            <!--//entries-->
+        </section>
+        <!--//content-->
+        <!--right sidebar-->
+        <!--//right sidebar-->
+    </div>
+    <!--//row-->
+</div>

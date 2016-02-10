@@ -42,7 +42,7 @@ namespace SiGotvime.Utilities
 
         public static void CreateCookie(User user)
         {
-            string userData = string.Concat(user.ID, "|", user.Username, "|", user.FirstName, "|", user.LastName, "|", user.ImageUrl, "|", string.Join(",",user.Roles.Select(x => x.ID).ToList()));
+            string userData = string.Concat(user.ID, "|", user.Username, "|", user.FirstName, "|", user.LastName, "|", user.ImageUrl, "|",user.Roles!=null? string.Join(",",user.Roles.Select(x => x.ID).ToList()):"");
             var tkt = new FormsAuthenticationTicket(1, user.Username, DateTime.Now, DateTime.Now.AddMinutes(60), false, userData);
             var cookiestr = FormsAuthentication.Encrypt(tkt);
             var ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookiestr);
@@ -53,7 +53,7 @@ namespace SiGotvime.Utilities
         public static void CreateCookieFacebook(FacebookUser fbUser)
         {
             var user = fbUser.User;
-            string userData = string.Concat(user.ID, "|", user.Username, "|", user.FirstName, "|", user.LastName, "|", user.ImageUrl, "|","",fbUser.Link);
+            string userData = string.Concat(user.ID, "|", user.Username, "|", user.FirstName, "|", user.LastName, "|", user.ImageUrl, "|",user.Roles!=null? string.Join(",", user.Roles.Select(x => x.ID).ToList()):"","|" ,fbUser.Link);
             var tkt = new FormsAuthenticationTicket(1, user.Username, DateTime.Now, DateTime.Now.AddMinutes(300), false, userData);
             var cookiestr = FormsAuthentication.Encrypt(tkt);
             var ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookiestr);

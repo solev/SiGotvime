@@ -16,7 +16,6 @@ namespace SiGotvime__Web_.Controllers
 {
     public class RecipeController : Controller
     {
-
         private IRecipeRepository _recipeRepository;
         private IIngredientRepository _ingredientRepository;
         private ITagRepository _tagRepository;
@@ -30,7 +29,8 @@ namespace SiGotvime__Web_.Controllers
 
         public ActionResult GetRecipe(int id)
         {
-            var recipe = _recipeRepository.GetCompleteRecipe(id);
+            int adminUserID = Env.IsInRole(Constants.UserRoles.Administrator) ? Env.UserID() : 0;
+            var recipe = _recipeRepository.GetCompleteRecipe(id,adminUserID);
             ViewBag.ImageUrl = recipe.ImageUrl;
             recipe.ImageUrl = CommonHelper.createImageUrl(recipe.ImageUrl);
             recipe.CroppedUrl = CommonHelper.createImageUrl(recipe.CroppedUrl);

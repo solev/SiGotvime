@@ -90,7 +90,7 @@ namespace SiGotvime.Data.Repository
 
         public FacebookUser GetFacebookUserById(string fbId)
         {
-            var result = db.FacebookUsers.Include(x => x.User).FirstOrDefault(x => x.FacebookID == fbId);
+            var result = db.FacebookUsers.Include(x => x.User).Include(x=>x.User.Roles).FirstOrDefault(x => x.FacebookID == fbId);
             return result;
         }
 

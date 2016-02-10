@@ -109,7 +109,8 @@ namespace SiGotvime__Web_.Controllers
                         ImageUrl = model.url,
                         Password = "********",
                         ConfirmPassword = "********",
-                        Username = model.id
+                        Username = model.id,
+                        Roles = new List<Role>()
                     };
 
                     _userRepository.Insert(newUser);

@@ -42,5 +42,7 @@ namespace SiGotvime.Data.Repository
 
         int CreateRecipe(RecipeModel recipe);
         Recipe GetRecipeForHome(int recipeID);
+        RecipesResultModel GetUnApproved(int page, int pageSize);
+        void ApproveRecipe(int recipeID,bool approved);
     }
 }
