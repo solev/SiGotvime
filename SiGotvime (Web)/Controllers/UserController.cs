@@ -76,7 +76,6 @@ namespace SiGotvime__Web_.Controllers
             else return RedirectToAction("Profile", new { id = id });
         }
 
-
         private static Image cropImage(Image img, RectangleF cropArea)
         {
             Bitmap bmpImage = new Bitmap(img);
@@ -85,26 +84,32 @@ namespace SiGotvime__Web_.Controllers
             return (Image)(bmpCrop);
         }
 
-        public PartialViewResult UserRecipes(int page = 1)
+        public PartialViewResult UserRecipes(int page = 1, int userID = 0)
         {
-            int userID = Env.UserID();
+            if(userID == 0)
+                userID = Env.UserID();
 
             List<Recipe> recipes = _userRepository.GetUserRecipes(userID);
             recipes.ForEach(x => x.CroppedUrl = CommonHelper.createImageUrl(x.CroppedUrl));
             return PartialView("_UserRecipes",recipes);
         }
 
-        public PartialViewResult UserFavourites(int page = 1)
+        public PartialViewResult UserFavourites(int page = 1, int userID = 0)
         {
-            int userID = Env.UserID();
+            if (userID == 0)
+                userID = Env.UserID();
+
             var recipes = _userRepository.GetUserFavouriteRecipes(userID);
             recipes.ForEach(x => x.CroppedUrl = CommonHelper.createImageUrl(x.CroppedUrl));
             return PartialView("_UserFavouriteRecipes",recipes);
         }
 
-        public PartialViewResult UserBlogPosts(int page=1)
+        public PartialViewResult UserBlogPosts(int page = 1, int userID = 0)
         {
-            var blogposts = _userRepository.GetUserBlogPosts(Env.UserID());            
+            if (userID == 0)
+                userID = Env.UserID();
+
+            var blogposts = _userRepository.GetUserBlogPosts(userID);            
             return PartialView("_UserBlogPosts", blogposts);
         }
 

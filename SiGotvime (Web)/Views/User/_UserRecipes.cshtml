@@ -55,62 +55,62 @@
         }
     </div>
 }
+
 <div class="entries row">
-
-    @for (int i = 0; i < additional; i++)
+    @for (int i = rows * 3; i < rows * 3 + additional; i++)
     {
-
-        {
-        SiGotvime.Data.Models.Recipe item = Model.ElementAt(i);
-        if (item.Approved)
         {
 
+            SiGotvime.Data.Models.Recipe item = Model.ElementAt(i);
 
-            <div class="entry one-third">
-                <figure>
-                    <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
-                    <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
-                </figure>
-                <div class="container">
-                    <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
-                    <div class="actions">
-                        <div>
-                            <div class="difficulty"><i class="ico i-medium"></i><a href="javascript:void(0)">@item.Difficulty.ToString()</a></div>
-                            <div class="likes"><i class="ico i-likes"></i><a href="javascript:void(0)">@item.LikeCount</a></div>
-                            <div class="comments"><i class="ico i-comments"></i><a href="javascript:void(0)">@item.CommentCount</a></div>
+            if (item.Approved)
+            {
+
+                <div class="entry one-third">
+                    <figure>
+                        <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
+                        <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>Погледни рецепт</span></a></figcaption>
+                    </figure>
+                    <div class="container">
+                        <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
+                        <div class="actions">
+                            <div>
+                                <div class="difficulty"><i class="ico i-medium"></i><a href="javascript:void(0)">@item.Difficulty.ToString()</a></div>
+                                <div class="likes"><i class="ico i-likes"></i><a href="javascript:void(0)">@item.LikeCount</a></div>
+                                <div class="comments"><i class="ico i-comments"></i><a href="javascript:void(0)">@item.CommentCount</a></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-        else
-        {
-            <div class="entry one-third">
-                <figure>
-                    <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
-                    <figcaption class="unapprooved"><a href="javascript:void(0)"><i class="ico i-view"></i><span>Неодобрен</span></a></figcaption>
-                </figure>
-                <div class="container">
-                    <h2><a>@item.Title</a></h2>
-                    <div class="actions">
-                        <div>
-                            <div class="difficulty"><i class="ico i-medium"></i><a href="javascript:void(0)">@item.Difficulty.ToString()</a></div>
-                            <div class="likes"><i class="ico i-likes"></i><a href="javascript:void(0)">@item.LikeCount</a></div>
-                            <div class="comments"><i class="ico i-comments"></i><a href="javascript:void(0)">@item.CommentCount</a></div>
+            }
+            else
+            {
+                <div class="entry one-third">
+                    <figure>
+                        <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
+                        <figcaption class="unapprooved"><a href="javascript:void(0)"><i class="ico i-view"></i><span>Неодобрен</span></a></figcaption>
+                    </figure>
+                    <div class="container">
+                        <h2><a>@item.Title</a></h2>
+                        <div class="actions">
+                            <div>
+                                <div class="difficulty"><i class="ico i-medium"></i><a href="javascript:void(0)">@item.Difficulty.ToString()</a></div>
+                                <div class="likes"><i class="ico i-likes"></i><a href="javascript:void(0)">@item.LikeCount</a></div>
+                                <div class="comments"><i class="ico i-comments"></i><a href="javascript:void(0)">@item.CommentCount</a></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
         }
 
     }
+
 </div>
 <script>
     $('main img[src$=".gif"]').each(function (idx, obj) {
         $(obj).removeClass("imageFullSize");
         $(obj).width("100%");
-        $(obj).height($(obj).width());
-        console.log(idx);
+        $(obj).height($(obj).width());        
     });
 </script>
