@@ -20,6 +20,7 @@ namespace SiGotvime__Web_.Controllers
         {
             _userRepository = userRepository;
         }
+
         // GET: User
         public ActionResult Profile(int id=0)
         {
@@ -75,7 +76,7 @@ namespace SiGotvime__Web_.Controllers
                 return RedirectToAction("Profile");
             else return RedirectToAction("Profile", new { id = id });
         }
-
+        
         private static Image cropImage(Image img, RectangleF cropArea)
         {
             Bitmap bmpImage = new Bitmap(img);

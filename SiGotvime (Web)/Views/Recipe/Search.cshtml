@@ -2,7 +2,7 @@
 @using SiGotvime.Utilities
 @using SiGotvime.Web.Helpers
 @{
-    ViewBag.Title = "Saerch";
+    ViewBag.Title = "Пребарување рецепти";
 
 
     int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
@@ -71,19 +71,6 @@
 
                             <input type="text" name="ingredients" ng-repeat="item in SelectedIngredients" value="{{item.ID}}" hidden />
                         </div>
-
-                        <h3>Можете и да одберете категорија <small>(опционално)</small></h3>
-                        <div class="row">
-                            <div class="one-half">
-                                <select name="categoryID">
-                                    <option value="">--Одбери категорија--</option>
-                                    @foreach (var item in Model.Categories)
-                                    {
-                                        <option value="@item.ID">@item.Name</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!--//recipefinder-->
@@ -107,7 +94,7 @@
                                 <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
                                 <div class="actions">
                                     <div>
-                                        <div class="difficulty">Состојки <a href="javascript:void(0)">@item.MatchingIngredients / <span class="highlight">@item.Ingredients.Count</span></a></div>
+                                        <div class="difficulty bootstrap-item">Состојки <a href="javascript:void(0)" data-placement="top" data-toggle="popover" title="Состојки">@item.MatchingIngredients / <span class="highlight">@item.Ingredients.Count</span></a></div>
                                         <div class="likes"><i class="ico i-likes"></i><a href="javacript:void(0)">@item.LikeCount</a></div>
                                         <div class="comments"><i class="ico i-comments"></i><a href="javacript:void(0)">@item.CommentCount</a></div>
                                     </div>
@@ -208,10 +195,35 @@
 
 
         $(function(){
+
+            var templatecontent = '@{Html.RenderPartial("_IngredientsPopover");}'
+
             $("#searchInput_dropdown").mCustomScrollbar({
                 axis:"y"
             });
+
+            $('main img[src$=".gif"]').each(function (idx, obj) {
+                $(obj).removeClass("imageFullSize");
+                $(obj).width("100%");
+                $(obj).height($(obj).width());
+                console.log(idx);
+            });
+
+            $('[data-toggle="popover"]').each(function(){
+
+                $(this).popover({
+                    template:templatecontent,
+                    content: populate($(this))
+                });
+            })
+             
             ActivateNavigation("#searchRecipe");
         })
+
+        function populate(elem)
+        {
+            console.log(elem);
+        }
+       
     </script>
 }

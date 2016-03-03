@@ -1,7 +1,7 @@
 ﻿@model SiGotvime.Data.Result_Models.RecipesResultModel
 @using SiGotvime.Utilities;
 @{
-    ViewBag.Title = "Најнови";
+    ViewBag.Title = "Најнови рецепти";
     int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;    
     var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel { 
         action="Latest",
@@ -15,8 +15,17 @@
 @section Scripts{
     <script>
         $(function () {
+
             ActivateNavigation("#recipes");
             $("ul.categories > #allRecipes").addClass("active");
+
+            $('main img[src$=".gif"]').each(function (idx, obj) {
+                $(obj).removeClass("imageFullSize");
+                $(obj).width("100%");
+                $(obj).height($(obj).width());
+                console.log(idx);
+            });
+
         });
     </script>
 }

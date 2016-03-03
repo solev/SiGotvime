@@ -13,7 +13,8 @@
 }
 
 @{
-    ViewBag.Title = Model.Title;
+    ViewBag.Title = Model.Title+"- Рецепт";
+    
     List<string> steps = new List<string>();
     if (Model.Content.ToLower().Contains("чекор"))
     {
@@ -339,6 +340,7 @@
 
                 </ul>
             </div>
+
             @if (Model.UserLikes.Any())
             {
                 <div class="widget members">
@@ -407,18 +409,16 @@
     <h1>Опис</h1>
     <div class="modal-content">
         <p style="margin:10px;text-align:justify;">
-            @description
+            @(!string.IsNullOrEmpty(Model.Description)?Model.Description:description)
         </p>
     </div>
 </div>
 @section Scripts{
-
-
-
+    
     <script src="~/Scripts/bootstrap-editable/bootstrap-editable.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.mk.js"></script>
-
     <script src="~/Scripts/remodal.min.js"></script>
+
     <script>
         $(function () {
 

@@ -1,7 +1,7 @@
 ﻿@model SiGotvime.Data.ViewModels.RecipeModel
 @using SiGotvime.Web.Helpers
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Нов Рецепт";
 }
 <style>
     #ingredientInput_dropdown {
@@ -258,7 +258,7 @@
 
             $scope.ComputedSteps = function()
             {
-                return $scope.Steps.join();
+                return $scope.Steps.join('|');
             }
 
            

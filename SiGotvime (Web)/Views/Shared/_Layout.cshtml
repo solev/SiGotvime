@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="keywords" content="SiGotvime - Social Recipe HTML Website Application" />
-    <meta name="description" content="SiGotvime - Social Recipe HTML Website Application">
+    <meta name="keywords" content="SiGotvime - Social Recipe sigotvime.mk SiGotvime.mk СиГотвиме.мк Пребарување Рецепти Searching-Recipes" />
+    <meta name="description" content="SiGotvime.mk - Пребарување на рецепти според состојки што ги поседувате дома">
     <meta name="author" content="SiGotvime.mk">
 
     @RenderSection("metas", required: false)
-    <title>@ViewBag.Title - СиГотвиме</title>
+    <title>@ViewBag.Title - СиГотвиме - sigotvime.mk</title>
 
 
     <link href="~/Content/style.css" rel="stylesheet" />
@@ -24,8 +24,7 @@
     <link href="~/Content/angucomplete-alt.css" rel="stylesheet" />
     <script src="~/Scripts/moment.min.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
-
+    
     @RenderSection("styles", required: false)
 </head>
 
@@ -76,7 +75,6 @@
                         </li>
                     }
                 </ul>
-
             </nav>
 
             <nav class="user-nav" role="navigation">
@@ -91,7 +89,7 @@
                     {
                         <li class="medium">
                             <div class="avatar">
-                                <a href="@Url.Action("Profile", "User")" class="wow flipInX" data-wow-delay=".5s" data-wow-duration="1s" data-wow-offset="300"><img src="@Env.UserImage()" alt="" class="imageFullSize" /><span style="visibility:visible!important;">@Env.FirstName() @Env.LastName()</span></a>
+                                <a href="@Url.Action("Profile", "User",new {id = 0})" class="wow flipInX" data-wow-delay=".5s" data-wow-duration="1s" data-wow-offset="300"><img src="@Env.UserImage()" alt="" class="imageFullSize" /><span style="visibility:visible!important;">@Env.FirstName() @Env.LastName()</span></a>
                             </div>
                         </li>
                     }
@@ -239,13 +237,7 @@
             $("img").on("contextmenu", function () {
                 return false;
             });
-
-            $('main img[src$=".gif"]').each(function (idx, obj) {
-                $(obj).removeClass("imageFullSize");
-                $(obj).width("100%");
-                $(obj).height($(obj).width());
-                console.log(idx);
-            });
+                       
         })
 
         function GetPage(url, target) {

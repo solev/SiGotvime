@@ -1,7 +1,7 @@
 ﻿@model SiGotvime.Data.Result_Models.RecipeByCategoryResultModel
 @using SiGotvime.Utilities;
 @{
-    ViewBag.Title = "Category";
+    ViewBag.Title = "Рецепти по категорија";
     int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
     var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel
     {

@@ -421,7 +421,7 @@ namespace SiGotvime.Data.Repository
             Recipe recipe = new Recipe();
             StringBuilder sb = new StringBuilder();
             int i = 1;
-            var steps = model.Steps.Split(',');
+            var steps = model.Steps.Split('|');
             foreach (var item in steps)
             {
                 sb.Append(string.Format("Чекор {0}.{1}", i, item));
@@ -432,6 +432,7 @@ namespace SiGotvime.Data.Repository
             recipe.Title = model.Title;
             recipe.PreparationTime = model.PreparationTime.Value;
             recipe.NumberOfPeople = model.NumberOfPeople.Value;
+            recipe.Description = model.Description;
             recipe.DateCreated = DateTime.Now;
             recipe.Rating = 0;
             recipe.Approved = model.isAdmin;

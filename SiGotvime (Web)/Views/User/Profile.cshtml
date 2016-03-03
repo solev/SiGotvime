@@ -1,7 +1,7 @@
 ﻿@model SiGotvime.Data.ViewModels.ProfileViewModel
 @using SiGotvime.Utilities
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Профил";
     int currentUserID = Env.UserID();
     bool isCurrentUser = Model.UserID == currentUserID;
     int id = 0;
@@ -12,7 +12,7 @@
 }
 
 @section Styles{
-<link href="~/Content/bootstrap-editable/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable/bootstrap-editable.css" rel="stylesheet" />
 }
 
 @section Scripts{
@@ -148,7 +148,7 @@
     </nav>
     <!--//breadcrumbs-->
     <!--content-->
-    <section class="content">
+    <section class="content" style="width:100%;">
         <!--row-->
         <div class="row">
             <!--profile left part-->
@@ -175,9 +175,9 @@
                 <nav class="tabs">
                     <ul>
                         <li class="active"><a href="#about" title="About me">Мои податоци</a></li>                        
-                        <li><a id="recipesLink" onclick="GetPage('@Url.Action("UserRecipes","User")','#profileRecipes')" href="#profileRecipes" title="My recipes">Мои рецепти</a></li>
-                        <li><a href="#favorites" title="My favorites" onclick="GetPage('@Url.Action("UserFavourites", "User")','#favorites')">Омилени</a></li>
-                        <li><a href="#posts" title="My posts" onclick="GetPage('@Url.Action("UserBlogPosts", "User")','#posts')">Мои Блог Постови</a></li>
+                        <li><a id="recipesLink" onclick="GetPage('@Url.Action("UserRecipes", "User", new { userID = id })','#profileRecipes')" href="#profileRecipes" title="My recipes">Мои рецепти</a></li>
+                        <li><a href="#favorites" title="My favorites" onclick="GetPage('@Url.Action("UserFavourites", "User", new { userID = id })','#favorites')">Омилени</a></li>
+                        <li><a href="#posts" title="My posts" onclick="GetPage('@Url.Action("UserBlogPosts", "User", new { userID = id })','#posts')">Мои Блог Постови</a></li>
                     </ul>
                 </nav>
 
@@ -194,7 +194,6 @@
                     
 
                     <div class="row">
-
                         <dl class="basic two-third">
                             <dt>Име и Презиме</dt>
                             <dd>
@@ -230,7 +229,6 @@
                                 {
                                     <div class="bootstrap-item">
                                         <a href="javascript:void(0)" class="editableWhite editable" data-title="Зачувајте го вашиот телефон" data-placeholder="Задолжително" id="Telephone">@(Model.Telephone != null ? Model.Telephone : "")</a>
-
                                     </div>
                                 }
                                 else
@@ -278,23 +276,33 @@
                     </div>
                 </div>
                 <!--//about-->
+
                 <!--my recipes-->
                 <div class="tab-content" id="profileRecipes">
-
+                    <div class="entries row">
+                        <div class="entry full-width"></div>
+                    </div>
                 </div>
                 <!--//my recipes-->
+
                 <!--my favorites-->
                 <div class="tab-content" id="favorites">
-                    
+                    <div class="entries row">
+                        <div class="entry full-width"></div>
+                    </div>
                 </div>
                 <!--//my favorites-->
+
                 <!--my posts-->
                 <div class="tab-content" id="posts">
                     <!--entries-->
-                    
+                    <div class="entries row">
+                        <div class="entry full-width"></div>
+                    </div>
                     <!--//entries-->
                 </div>
                 <!--//my posts-->
+
             </div>
         </div>
         <!--//row-->
