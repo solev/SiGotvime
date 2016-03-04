@@ -4,7 +4,7 @@
 @functions{
     string CreateShortIngredientName(string name)
     {
-        if(name.Length>15)
+        if (name.Length > 15)
         {
             return name.Substring(0, 12) + "...";
         }
@@ -13,8 +13,8 @@
 }
 
 @{
-    ViewBag.Title = Model.Title+"- Рецепт";
-    
+    ViewBag.Title = Model.Title + "- Рецепт";
+
     List<string> steps = new List<string>();
     if (Model.Content.ToLower().Contains("чекор"))
     {
@@ -58,11 +58,11 @@
 
     List<int> selectedIngredients = new List<int>();
     var ingredientsFromSession = Session["selectedIngredients"];
-    if(ingredientsFromSession!=null)
+    if (ingredientsFromSession != null)
     {
         selectedIngredients = ingredientsFromSession as List<int>;
     }
-    
+
 }
 
 @section Styles{
@@ -268,42 +268,42 @@
         <!--right sidebar-->
         <aside class="sidebar one-fourth wow fadeInRight">
             @*<div class="widget nutrition">
-                <h3>Nutrition facts <span>(per serving)</span></h3>
-                <table>
-                    <tr>
-                        <td>Calories </td>
-                        <td>505</td>
-                    </tr>
-                    <tr>
-                        <td>Protein</td>
-                        <td>59g</td>
-                    </tr>
-                    <tr>
-                        <td>Carbs</td>
-                        <td>59g</td>
-                    </tr>
-                    <tr>
-                        <td>Fat</td>
-                        <td>29g</td>
-                    </tr>
-                    <tr>
-                        <td>Saturates</td>
-                        <td>17g</td>
-                    </tr>
-                    <tr>
-                        <td>Fibre</td>
-                        <td>2g</td>
-                    </tr>
-                    <tr>
-                        <td>Sugar</td>
-                        <td>44g</td>
-                    </tr>
-                    <tr>
-                        <td>Salt</td>
-                        <td>0.51g</td>
-                    </tr>
-                </table>
-            </div>*@
+                    <h3>Nutrition facts <span>(per serving)</span></h3>
+                    <table>
+                        <tr>
+                            <td>Calories </td>
+                            <td>505</td>
+                        </tr>
+                        <tr>
+                            <td>Protein</td>
+                            <td>59g</td>
+                        </tr>
+                        <tr>
+                            <td>Carbs</td>
+                            <td>59g</td>
+                        </tr>
+                        <tr>
+                            <td>Fat</td>
+                            <td>29g</td>
+                        </tr>
+                        <tr>
+                            <td>Saturates</td>
+                            <td>17g</td>
+                        </tr>
+                        <tr>
+                            <td>Fibre</td>
+                            <td>2g</td>
+                        </tr>
+                        <tr>
+                            <td>Sugar</td>
+                            <td>44g</td>
+                        </tr>
+                        <tr>
+                            <td>Salt</td>
+                            <td>0.51g</td>
+                        </tr>
+                    </table>
+                </div>*@
             @if (User.Identity.IsAuthenticated && Env.IsInRole(Constants.UserRoles.Administrator))
             {
                 if (!Model.Approved)
@@ -345,15 +345,15 @@
             {
                 <div class="widget members">
                     <h3>Луѓе на кои им се допаѓа рецептот</h3>
+                    <ul class="boxed">
+                        @foreach (var user in Model.UserLikes.Select(x => x.User).ToList())
+                        {
 
-                    @foreach (var user in Model.UserLikes.Select(x => x.User).ToList())
-                    {
-                        <ul class="boxed">
                             <li><div class="avatar"><a href="@Url.Action("Profile", "User", new { id = user.ID})"><img src="@user.ImageUrl" alt="" /><span>@user.FirstName @user.LastName</span></a></div></li>
-
-                        </ul>
-                        <p style="padding:7px;clear:both;border-top:1px solid lightgray;"><a href="javascript:void(0)" data-remodal-target="modal">Види ги сите</a></p>
-                    }
+                            
+                        }
+                    </ul>
+                    <p style="padding:7px;clear:both;border-top:1px solid lightgray;"><a href="javascript:void(0)" data-remodal-target="modal">Види ги сите</a></p>
                 </div>
             }
             else
@@ -409,12 +409,12 @@
     <h1>Опис</h1>
     <div class="modal-content">
         <p style="margin:10px;text-align:justify;">
-            @(!string.IsNullOrEmpty(Model.Description)?Model.Description:description)
+            @(!string.IsNullOrEmpty(Model.Description) ? Model.Description : description)
         </p>
     </div>
 </div>
 @section Scripts{
-    
+
     <script src="~/Scripts/bootstrap-editable/bootstrap-editable.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.mk.js"></script>
     <script src="~/Scripts/remodal.min.js"></script>
