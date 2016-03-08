@@ -192,7 +192,7 @@ namespace SiGotvime.Data.Repository
             var recipes = db.UserRecipes.Where(x => x.User.ID == userID && x.Recipe.Approved).Include(x => x.Recipe).Include(x=>x.Recipe.Comments).Include(x=>x.Recipe.UserLikes).Select(x =>
                 new
                 {
-                    ID = x.ID,
+                    ID = x.Recipe.ID,
                     Title = x.Recipe.Title,
                     CroppedImage = x.Recipe.CroppedUrl,
                     ImageUrl = x.Recipe.ImageUrl,

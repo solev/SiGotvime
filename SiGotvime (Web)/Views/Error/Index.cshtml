@@ -11,15 +11,15 @@
                 <div class="one-third">
                     <div class="error-container">
                         <span class="error_type">404</span>
-                        <span class="error_text">Page not found</span>
+                        <span class="error_text">Не најдовме таква страница</span>
                     </div>
                 </div>
 
                 <div class="two-third">
                     <div class="container">
-                        <p>The page you’ve requested could not be found or it was already removed from the database. </p>
-                        <p>If you believe that this is an error, please kindly <a href="#">contact us</a>. Thank you!</p>
-                        <p>You can go <a href="#">back home</a> or try using the search. </p>
+                        <p>Страната која ја побаравте не успеавме да ја пронајдеме или е избришана од нашиот систем. </p>
+                        <p>Ако мислите дека ова е грешка, ве молиме <a href="@Url.Action("Contact","Home")">контактирајте не</a>. Ви Благодариме!</p>
+                        <p>Можете да одите  <a href="@Url.Action("Index","Home")">Дома</a></p>
                     </div>
                 </div>
             </div>
@@ -27,16 +27,8 @@
         </section>
         <!--//content-->
         <!--sidebar-->
-        <aside class="sidebar one-fourth">
-            <div class="widget">
-                <h3>Search</h3>
-                <div class="f-row">
-                    <input type="search" placeholder="Enter your search term" />
-                </div>
-                <div class="f-row">
-                    <input type="submit" value="Search" />
-                </div>
-            </div>
+        <aside class="sidebar one-fourth" style="padding-top:15px;">
+            @Html.Action("Advertisments","Home")
         </aside>
         <!--//sidebar-->
     </div>
