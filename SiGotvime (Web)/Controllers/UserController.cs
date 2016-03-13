@@ -22,7 +22,7 @@ namespace SiGotvime__Web_.Controllers
         }
 
         // GET: User
-        public ActionResult Profile(int id=0)
+        public ActionResult Profile(int id = 0)
         {
             if(id == 0)
                 id = Env.UserID();

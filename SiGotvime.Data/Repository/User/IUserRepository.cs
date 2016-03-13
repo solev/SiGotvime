@@ -1,4 +1,5 @@
 ﻿using SiGotvime.Data.Models;
+using SiGotvime.Data.Result_Models;
 using SiGotvime.Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -25,5 +26,6 @@ namespace SiGotvime.Data.Repository
         List<Recipe> GetUserFavouriteRecipes(int userID);
         User GetFeaturedUser(int UserID);
         List<BlogPost> GetUserBlogPosts(int userID);
+        ListUsersResult GetAllUsers(int page, int PageSize);
     }
 }

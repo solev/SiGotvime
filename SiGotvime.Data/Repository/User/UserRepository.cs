@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using SiGotvime.Data.ViewModels;
+using SiGotvime.Data.Result_Models;
 
 namespace SiGotvime.Data.Repository
 {
@@ -17,9 +18,40 @@ namespace SiGotvime.Data.Repository
         {
             db = _db;
         }
+
+
+        public ListUsersResult GetAllUsers(int page, int PageSize)
+        {
+            var query = db.Users.OrderByDescending(x => x.ID).Select(x=> new
+            {
+                x.ID,
+                x.FirstName,
+                x.LastName,
+                x.Username,
+                x.Email,
+                RecipeNumber = x.Recipes.Count()
+            });
+
+            ListUsersResult result = new ListUsersResult();
+            result.MaxCount = query.Count();
+            var queryResult = query.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+
+            result.Users = queryResult.Select(x => new UserDto
+            {
+                ID = x.ID,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Username = x.Username,
+                Email = x.Email,
+                RecipeNumber = x.RecipeNumber
+            }).ToList();
+
+            return result;
+        }
+
         public User Authenticate(string username, string password)
         {
-            var result = db.Users.Include(x=>x.Roles).FirstOrDefault(x => x.Username == username && x.Password == password);            
+            var result = db.Users.Include(x => x.Roles).FirstOrDefault(x => x.Username == username && x.Password == password);
             return result;
         }
 
@@ -27,7 +59,6 @@ namespace SiGotvime.Data.Repository
         {
             db.Dispose();
         }
-
 
         public User GetUserById(int userID)
         {
@@ -52,18 +83,18 @@ namespace SiGotvime.Data.Repository
             result.Username = user.Username;
             db.SaveChanges();
         }
-        
+
         public void UpdateUserProperty(int userID, string property, string value)
         {
             var user = db.Users.FirstOrDefault(x => x.ID == userID);
 
-            if(property == "FirstName")
+            if (property == "FirstName")
                 user.FirstName = value;
-            else if(property == "LastName")
+            else if (property == "LastName")
                 user.LastName = value;
-            else if(property == "DOB")
+            else if (property == "DOB")
             {
-                if(!string.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     DateTime dt;
                     if (DateTime.TryParse(value, out dt))
@@ -74,13 +105,13 @@ namespace SiGotvime.Data.Repository
                 else
                 {
                     user.DateOfBirth = null;
-                }                
+                }
             }
-            else if(property == "Email")
+            else if (property == "Email")
             {
                 user.Email = value;
             }
-            else if(property == "Telephone")
+            else if (property == "Telephone")
             {
                 user.Telephone = value;
             }
@@ -90,7 +121,7 @@ namespace SiGotvime.Data.Repository
 
         public FacebookUser GetFacebookUserById(string fbId)
         {
-            var result = db.FacebookUsers.Include(x => x.User).Include(x=>x.User.Roles).FirstOrDefault(x => x.FacebookID == fbId);
+            var result = db.FacebookUsers.Include(x => x.User).Include(x => x.User.Roles).FirstOrDefault(x => x.FacebookID == fbId);
             return result;
         }
 
@@ -110,11 +141,10 @@ namespace SiGotvime.Data.Repository
             db.SaveChanges();
         }
 
-
         public void CreateAccount(User user)
         {
             db.Users.Add(user);
-            db.SaveChanges();            
+            db.SaveChanges();
         }
 
         public bool emailExists(string email)
@@ -124,7 +154,7 @@ namespace SiGotvime.Data.Repository
         }
 
         public ProfileViewModel GetProfileInfo(int userID)
-        {            
+        {
             var user = db.Users.Where(x => x.ID == userID).Include(x => x.RecipeLikes).Select(x => new
             {
                 x.ID,
@@ -139,7 +169,7 @@ namespace SiGotvime.Data.Repository
             }).FirstOrDefault();
 
             ProfileViewModel result = new ProfileViewModel();
-            if(user!=null)
+            if (user != null)
             {
                 result = new ProfileViewModel
                 {
@@ -164,7 +194,7 @@ namespace SiGotvime.Data.Repository
                 {
                     ID = x.ID,
                     Title = x.Title,
-                    CroppedImage = x.CroppedUrl, 
+                    CroppedImage = x.CroppedUrl,
                     ImageUrl = x.ImageUrl,
                     Difficulty = x.Difficulty,
                     Likes = x.UserLikes.Count(),
@@ -176,7 +206,7 @@ namespace SiGotvime.Data.Repository
             {
                 ID = x.ID,
                 Title = x.Title,
-                CroppedUrl = x.CroppedImage??x.ImageUrl,
+                CroppedUrl = x.CroppedImage ?? x.ImageUrl,
                 Difficulty = x.Difficulty,
                 LikeCount = x.Likes,
                 CommentCount = x.CommentCount,
@@ -187,9 +217,9 @@ namespace SiGotvime.Data.Repository
         }
 
         public List<Recipe> GetUserFavouriteRecipes(int userID)
-        {          
+        {
 
-            var recipes = db.UserRecipes.Where(x => x.User.ID == userID && x.Recipe.Approved).Include(x => x.Recipe).Include(x=>x.Recipe.Comments).Include(x=>x.Recipe.UserLikes).Select(x =>
+            var recipes = db.UserRecipes.Where(x => x.User.ID == userID && x.Recipe.Approved).Include(x => x.Recipe).Include(x => x.Recipe.Comments).Include(x => x.Recipe.UserLikes).Select(x =>
                 new
                 {
                     ID = x.Recipe.ID,
@@ -198,7 +228,7 @@ namespace SiGotvime.Data.Repository
                     ImageUrl = x.Recipe.ImageUrl,
                     Difficulty = x.Recipe.Difficulty,
                     Likes = x.Recipe.UserLikes.Count(),
-                    CommentCount = x.Recipe.Comments.Count()                    
+                    CommentCount = x.Recipe.Comments.Count()
                 }).ToList();
 
             List<Recipe> result = recipes.Select(x => new Recipe
@@ -208,7 +238,7 @@ namespace SiGotvime.Data.Repository
                 CroppedUrl = x.CroppedImage ?? x.ImageUrl,
                 Difficulty = x.Difficulty,
                 LikeCount = x.Likes,
-                CommentCount = x.CommentCount                
+                CommentCount = x.CommentCount
             }).ToList();
 
             return result;
@@ -216,7 +246,7 @@ namespace SiGotvime.Data.Repository
 
         public User GetFeaturedUser(int UserID)
         {
-            var result = db.Users.Where(x => x.ID == UserID).Select(x => new { x.FirstName, x.LastName, x.ImageUrl,x.ID }).FirstOrDefault();
+            var result = db.Users.Where(x => x.ID == UserID).Select(x => new { x.FirstName, x.LastName, x.ImageUrl, x.ID }).FirstOrDefault();
 
             return new User
             {
@@ -226,7 +256,6 @@ namespace SiGotvime.Data.Repository
                 LastName = result.LastName
             };
         }
-
 
         public List<BlogPost> GetUserBlogPosts(int userID)
         {
@@ -252,5 +281,7 @@ namespace SiGotvime.Data.Repository
 
             return result;
         }
+
+
     }
 }

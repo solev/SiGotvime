@@ -415,6 +415,7 @@
     <Content Include="Views\User\_UserBlogPosts.cshtml" />
     <Content Include="Views\Admin\UnApprovedRecipes.cshtml" />
     <Content Include="Views\Shared\_IngredientsPopover.cshtml" />
+    <Content Include="Views\Admin\RegisteredUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

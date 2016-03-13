@@ -92,8 +92,10 @@
     <Compile Include="Repository\Recipe\RecipeRepository.cs" />
     <Compile Include="Repository\User\UserRepository.cs" />
     <Compile Include="Result Models\BlogPostResultModel.cs" />
+    <Compile Include="Result Models\ListUsersResult.cs" />
     <Compile Include="Result Models\RecipeByCategoryResultModel.cs" />
     <Compile Include="Result Models\RecipesResultModel.cs" />
+    <Compile Include="Result Models\UserDto.cs" />
     <Compile Include="ViewModels\CategorySearchModel.cs" />
     <Compile Include="ViewModels\FBLoginModel.cs" />
     <Compile Include="ViewModels\FullPlan.cs" />
