@@ -124,3 +124,7 @@ input[type="submit"][disabled] {
     border-bottom: dashed 1px white!important;
     text-decoration:none;
 }
+
+.field-validation-error{
+    color:#F4716A;
+}

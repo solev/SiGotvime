@@ -18,7 +18,8 @@ namespace SiGotvime.Utilities
         public static int PageSize = 15;
         public static string DefaultImgUrl = "~/images/avatar.jpg";
 
-
+        public static string ReCaptchaSecretKey = "6LdxrRoTAAAAAHFQanrJHbzuwHZPDF4ITcJYnYIR";
+        public static string ReCaptchaSiteKey = "6LdxrRoTAAAAAGJQ0EmTgdg9AZGns0yh-Wq4KSBd";
 
         public static class UserRoles
         {

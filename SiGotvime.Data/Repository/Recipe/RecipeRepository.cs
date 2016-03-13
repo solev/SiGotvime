@@ -275,7 +275,28 @@ namespace SiGotvime.Data.Repository
             var tempResult = db.Recipes.Where(x => x.Approved && x.Categories.Any(y => y.Tag.ID == categoryID));
             RecipeByCategoryResultModel result = new RecipeByCategoryResultModel();
             result.MaxCount = tempResult.Count();
-            result.Recipes = tempResult.OrderByDescending(x => x.DateCreated).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var recipeResult = tempResult.OrderByDescending(x => x.DateCreated).Select(x => new
+            {
+                x.ID,
+                x.ImageUrl,
+                x.CroppedUrl,
+                x.Title,
+                x.Difficulty,
+                LikeCount = x.UserLikes.Count(),
+                CommentCount = x.Comments.Count()
+
+            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            result.Recipes = recipeResult.Select(x =>
+                new Recipe
+                {
+                    ID = x.ID,
+                    ImageUrl = x.ImageUrl,
+                    CroppedUrl = x.CroppedUrl,
+                    Title = x.Title,
+                    CommentCount = x.CommentCount,
+                    LikeCount = x.LikeCount
+                }).ToList();
             result.Category = category;
             return result;
         }
@@ -502,7 +523,7 @@ namespace SiGotvime.Data.Repository
         }
 
 
-        public void ApproveRecipe(int recipeID,bool approved)
+        public void ApproveRecipe(int recipeID, bool approved)
         {
             var recipe = db.Recipes.Find(recipeID);
             recipe.Approved = approved;

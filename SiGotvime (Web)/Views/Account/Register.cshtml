@@ -1,4 +1,5 @@
 ﻿@model SiGotvime.Data.ViewModels.RegisterViewModel
+@using SiGotvime__Web_.Helpers
 @{
     ViewBag.Title = "Регистрација";
 }
@@ -16,20 +17,28 @@
                     <h3>Регистрација</h3>
                     <div class="f-row">
                         @Html.TextBoxFor(x => x.FirstName, new { placeholder = "Име" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
                     </div>
                     <div class="f-row ">
                         @Html.TextBoxFor(x => x.LastName, new { placeholder = "Презиме" })
+                        @Html.ValidationMessageFor(model => model.LastName)
                     </div>
                     <div class="f-row ">
                         @Html.TextBoxFor(x => x.Email, new { placeholder = "Email" })
+                        @Html.ValidationMessageFor(model => model.Email)
                     </div>
                     <div class="f-row ">
                         @Html.PasswordFor(x => x.Password, new { placeholder = "Лозинка" })
+                        @Html.ValidationMessageFor(model => model.Password)
                     </div>
                     <div class="f-row ">
                         @Html.PasswordFor(x => x.RepeatPassword, new { placeholder = "Повторете Лозинка" })
+                        @Html.ValidationMessageFor(model => model.RepeatPassword)
                     </div>
-
+                    <div class="f-row">
+                        @Html.reCaptcha()
+                        @Html.ValidationMessageFor(model => model.ReCaptchaSuccess)
+                    </div>
                     <div class="f-row bwrap">
                         <input type="submit" value="Регистрирај се" />
                     </div>

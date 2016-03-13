@@ -33,8 +33,20 @@ namespace SiGotvime__Web_.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model, bool CaptchaValid)
         {
+
+            if (!CaptchaValid)
+            {
+                ModelState.AddModelError("ReCaptchaSuccess", "Регистрацијата не е целосна доколку не го селектирате 'I'm not a robot' ");
+                return View(model);
+            }
+            
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var emailExists = _userRepository.emailExists(model.Email);
             if(emailExists)
             {

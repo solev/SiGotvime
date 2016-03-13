@@ -56,9 +56,9 @@
                             <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
                             <div class="actions">
                                 <div>
-                                    <div class="difficulty"><i class="ico i-medium"></i><a href="#">medium</a></div>
-                                    <div class="likes"><i class="ico i-likes"></i><a href="#">10</a></div>
-                                    <div class="comments"><i class="ico i-comments"></i><a href="recipe.html#comments">27</a></div>
+                                    <div class="difficulty"><i class="ico @CommonHelper.EvaluateDifficultyClass(item.Difficulty)"></i><a href="javascript:void(0)">@CommonHelper.EvaluateDifficulty(item.Difficulty)</a></div>
+                                    <div class="likes"><i class="ico i-likes"></i><a href="#">@item.LikeCount</a></div>
+                                    <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})#comments">@item.CommentCount</a></div>
                                 </div>
                             </div>
                         </div>
