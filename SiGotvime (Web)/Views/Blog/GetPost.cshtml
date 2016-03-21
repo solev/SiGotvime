@@ -90,8 +90,7 @@
         <!--right sidebar-->
         <aside class="sidebar one-fourth wow fadeInRight">
 
-            <a class="twitter-timeline" href="https://twitter.com/SiGotvime" data-widget-id="681599396665004033" height="450" data-lang="mk">Tweets by @@SiGotvime</a>
-            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+            @{ Html.RenderPartial("_Tweets");}
 
             @Html.Action("Advertisments", "Home")
         </aside>

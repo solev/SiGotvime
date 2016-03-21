@@ -24,6 +24,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -331,6 +332,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\MyScripts\BlockUI.js" />
+    <Content Include="Scripts\MyScripts\GoogleAnalytics.js" />
     <Content Include="Scripts\remodal.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -420,6 +422,7 @@
     <Content Include="Views\Admin\RegisteredUsers.cshtml" />
     <Content Include="Views\History\FeaturedUsers.cshtml" />
     <Content Include="Views\History\RecipesOfTheDay.cshtml" />
+    <Content Include="Views\Shared\_Tweets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -457,7 +460,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>41516</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
