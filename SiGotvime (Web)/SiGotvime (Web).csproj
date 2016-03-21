@@ -198,6 +198,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
@@ -217,6 +218,7 @@
     <Content Include="Content\angucomplete-alt.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\backTop.css" />
+    <Content Include="Content\banners\Pakomak 300x250.html" />
     <Content Include="Content\banners\Pakomak 300x250.swf" />
     <Content Include="Content\bootstrap-editable\bootstrap-editable.css" />
     <Content Include="Content\bootstrap.css" />
@@ -416,6 +418,8 @@
     <Content Include="Views\Admin\UnApprovedRecipes.cshtml" />
     <Content Include="Views\Shared\_IngredientsPopover.cshtml" />
     <Content Include="Views\Admin\RegisteredUsers.cshtml" />
+    <Content Include="Views\History\FeaturedUsers.cshtml" />
+    <Content Include="Views\History\RecipesOfTheDay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

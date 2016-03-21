@@ -1,4 +1,5 @@
-﻿using SiGotvime.Data.Models;
+﻿using SiGotvime.Data.Entity;
+using SiGotvime.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -30,5 +31,6 @@ namespace SiGotvime.Data
         public DbSet<Settings> Settings{ get; set; }
         public DbSet<Message> Messages{ get; set; }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<History> History { get; set; }
     }
 }

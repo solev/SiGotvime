@@ -45,7 +45,7 @@ namespace SiGotvime__Web_.Controllers
         public ActionResult RegisteredUsers(int page = 1)
         {
             if (!Env.IsInRole(Constants.UserRoles.Administrator))
-                return HttpNotFound();
+                throw new UnauthorizedAccessException();
 
             if(page < 1)
                 page = 1;

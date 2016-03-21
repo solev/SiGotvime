@@ -154,7 +154,7 @@
                                 <div class="actions">
                                     <div>
                                         <a href="@Url.Action("GetRecipe", "Recipe", new { id = Model.RecipeOfTheDay.ID})" class="button">Погледни го целиот рецепт</a>
-                                        <div class="more"><a href="javascript:void(0)">Види ги минатите рецепти на денот</a></div>
+                                        <div class="more"><a href="@Url.Action("RecipesOfTheDay","History")">Види ги минатите рецепти на денот</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                                 <div class="actions">
                                     <div>
                                         <a href="@Url.Action("Profile", "User", new { id = Model.FeaturedMember.ID })#recipes" class="button">Моите рецепти</a>
-                                        <div class="more"><a href="javascript:void(0)">Погледни ги минатите избрани корисници</a></div>
+                                        <div class="more"><a href="@Url.Action("FeaturedUsers","History")">Погледни ги минатите избрани корисници</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -297,8 +297,12 @@
                    
                 </ul>
             </div>
-            <a class="twitter-timeline" href="https://twitter.com/SiGotvime" data-widget-id="681599396665004033" height="450" data-lang="mk">Tweets by @@SiGotvime</a>
-            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+
+            <div class="widget wow fadeInRight" data-wow-delay=".2s">
+                <a class="twitter-timeline" href="https://twitter.com/SiGotvime" data-widget-id="681599396665004033" height="450" data-lang="mk">Tweets by @@SiGotvime</a>
+                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+            </div>
+            
 
             @*<div class="widget members wow fadeInRight" data-wow-delay=".4s">
                 <h3>Our members</h3>

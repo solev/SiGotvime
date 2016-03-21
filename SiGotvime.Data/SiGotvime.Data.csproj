@@ -56,6 +56,7 @@
     <Compile Include="Entity\BlogPost.cs" />
     <Compile Include="Entity\Comment.cs" />
     <Compile Include="Entity\FacebookUser.cs" />
+    <Compile Include="Entity\History.cs" />
     <Compile Include="Entity\Ingredient.cs" />
     <Compile Include="Entity\IngredientsRecipe.cs" />
     <Compile Include="Entity\Message.cs" />
@@ -75,6 +76,8 @@
     <Compile Include="Repository\Blog\IBlogRepository.cs" />
     <Compile Include="Repository\Category\ITagRepository.cs" />
     <Compile Include="Repository\Category\TagRepository.cs" />
+    <Compile Include="Repository\History\HistoryRepository.cs" />
+    <Compile Include="Repository\History\IHistoryRepository.cs" />
     <Compile Include="Repository\Home\HomeRepository.cs" />
     <Compile Include="Repository\Home\IHomeRepository.cs" />
     <Compile Include="Repository\Message\IMessageRepository.cs" />

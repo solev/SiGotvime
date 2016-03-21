@@ -18,6 +18,7 @@ namespace SiGotvime__Web_.Controllers
         {
             _planRepository = planRepository;
         }
+
         // GET: Plan
         public ActionResult Index()
         {
@@ -41,8 +42,7 @@ namespace SiGotvime__Web_.Controllers
                         url = Url.Action("GetRecipe", "Recipe", new { id = x.Recipe.ID})
                     });
                 });
-            }
-            
+            }         
             
             return Json(plans,JsonRequestBehavior.AllowGet);
         }
