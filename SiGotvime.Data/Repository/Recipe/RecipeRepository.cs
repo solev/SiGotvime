@@ -261,6 +261,7 @@ namespace SiGotvime.Data.Repository
                     ImageUrl = x.ImageUrl,
                     CroppedUrl = x.CroppedUrl,
                     Title = x.Title,
+                    Difficulty = x.Difficulty,
                     CommentCount = x.CommentCount,
                     LikeCount = x.LikeCount
                 }).ToList();
@@ -294,6 +295,7 @@ namespace SiGotvime.Data.Repository
                     ImageUrl = x.ImageUrl,
                     CroppedUrl = x.CroppedUrl,
                     Title = x.Title,
+                    Difficulty = x.Difficulty,
                     CommentCount = x.CommentCount,
                     LikeCount = x.LikeCount
                 }).ToList();

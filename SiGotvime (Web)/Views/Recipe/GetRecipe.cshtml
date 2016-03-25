@@ -163,7 +163,7 @@
                         </div>
 
                         <dl class="user">
-                            <dt>Ставено од</dt>
+                            <dt>Поставено од</dt>
                             @if (Model.User != null)
                             {
                                 <dd><a href="@Url.Action("Profile", "User", new {id=Model.User.ID })">@Model.User.FirstName @(Model.User.LastName.ElementAt(0)).</a></dd>
