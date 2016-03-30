@@ -7,25 +7,25 @@ namespace SiGotvime.Utilities
 {
     public class Constants
     {
-        public static int RecipesPerPage = 15;
+        public const int RecipesPerPage = 15;
         //public static string rootUrl = "http://portal-baranjerecepti.azurewebsites.net";
-        public static string rootUrl = "http://localhost:61820";
+        public const string rootUrl = "http://localhost:61820";
 
-        public static string RecipeOfTheDay = "RecipeOfTheDay";
-        public static string FeaturedMember = "FeaturedMember";
+        public const string RecipeOfTheDay = "RecipeOfTheDay";
+        public const string FeaturedMember = "FeaturedMember";
 
-        public static int HomePageSize = 6;
-        public static int PageSize = 15;
-        public static string DefaultImgUrl = "~/images/avatar.jpg";
+        public const int HomePageSize = 6;
+        public const int PageSize = 15;
+        public const string DefaultImgUrl = "~/images/avatar.jpg";
 
-        public static string ReCaptchaSecretKey = "6LdxrRoTAAAAAHFQanrJHbzuwHZPDF4ITcJYnYIR";
-        public static string ReCaptchaSiteKey = "6LdxrRoTAAAAAGJQ0EmTgdg9AZGns0yh-Wq4KSBd";
+        public const string ReCaptchaSecretKey = "6LdxrRoTAAAAAHFQanrJHbzuwHZPDF4ITcJYnYIR";
+        public const string ReCaptchaSiteKey = "6LdxrRoTAAAAAGJQ0EmTgdg9AZGns0yh-Wq4KSBd";
 
         public static class UserRoles
         {
             //Database ID's for the roles
 
-            public static int Administrator = 1;
+            public const int Administrator = 1;
         }
     }
 }

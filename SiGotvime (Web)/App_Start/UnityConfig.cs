@@ -27,6 +27,7 @@ namespace SiGotvime__Web_
             container.RegisterType<IMessageRepository, MessageRepository>();
             container.RegisterType<IBlogRepository, BlogRepository>();
             container.RegisterType<IPlanRepository, PlanRepository>();
+            container.RegisterType<IHistoryRepository, HistoryRepository>();
             container.RegisterType<FoodDatabase>(new PerResolveLifetimeManager());
             
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));

@@ -49,30 +49,7 @@
 
         <!--content-->
         <section class="content three-fourth wow fadeInUp">
-            <!--entries-->
-            <div class="entries row">
-                <!--item-->
-                @foreach(var item in Model.Recipes)
-                {
-                    <div class="entry one-third wow fadeInLeft">
-                        <figure>
-                            <img src="@(!string.IsNullOrWhiteSpace(item.CroppedUrl)?item.CroppedUrl:item.ImageUrl)" alt="" class="imageFullSize"/>
-                            <figcaption><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})"><i class="ico i-view"></i> <span>Погледни го рецептот</span></a></figcaption>
-                        </figure>
-                        <div class="container">
-                            <h2><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})">@item.Title</a></h2>
-                            <div class="actions">
-                                <div>
-                                    <div class="difficulty"><i class="ico @CommonHelper.EvaluateDifficultyClass(item.Difficulty)"></i><a href="javascript:void(0)">@CommonHelper.EvaluateDifficulty(item.Difficulty)</a></div>
-                                    <div class="likes"><i class="ico i-likes"></i><a href="#">@item.LikeCount</a></div>
-                                    <div class="comments"><i class="ico i-comments"></i><a href="@Url.Action("GetRecipe", "Recipe", new { id = item.ID})#comments">@item.CommentCount</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }         
-                               
-            </div>
+            @{Html.RenderPartial("_RecipeList",Model.Recipes);}            
 
             @{Html.RenderPartial("Pager", pagerConfig);}
             <!--//entries-->

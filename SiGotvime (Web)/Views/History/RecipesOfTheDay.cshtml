@@ -1,5 +1,16 @@
-﻿@{
+﻿@model SiGotvime.Data.Result_Models.RecipesResultModel
+@using SiGotvime.Utilities;
+@{
     ViewBag.Title = "Минати рецепти на денот";
+    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
+    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel
+    {
+        action = "RecipesOfTheDay",
+        controller = "History",
+        pageSize = Constants.PageSize,
+        currentPage = page,
+        maxCount = Model.MaxCount
+    };
 }
 
 <div class="wrap clearfix">
@@ -16,5 +27,15 @@
         <header class="s-title wow fadeInLeft">
             <h2 class="ribbon large">Минати рецепти на денот</h2>
         </header>
+
+        <section class="content three-fourth wow fadeInUp">
+            @{Html.RenderPartial("~/Views/Recipe/_RecipeList.cshtml", Model.Recipes);}
+            @{Html.RenderPartial("Pager", pagerConfig);}
+        </section>
+
+        <aside class="sidebar one-fourth wow fadeInRight">
+            @{Html.RenderPartial("_Tweets");}
+            @Html.Action("Advertisments", "Home")
+        </aside>
     </div>
 </div>
