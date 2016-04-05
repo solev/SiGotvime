@@ -1,7 +1,15 @@
 ﻿@model List<SiGotvime.Data.Models.Recipe>
+@using SiGotvime.Utilities
 @{
-    int rows = Model.Count / 3;
-    int additional = Model.Count % 3;
+    
+    List<SiGotvime.Data.Models.Recipe> recipes = Model;
+    if (!(User.Identity.IsAuthenticated && Env.IsInRole(Constants.UserRoles.Administrator)))
+    {
+        recipes = Model.Where(x => x.Approved).ToList();
+    }
+
+    int rows = recipes.Count / 3;
+    int additional = recipes.Count % 3;
 }
 
 @for (int i = 0; i < rows; i++)
@@ -11,7 +19,7 @@
         {
             {
                 int idx = i * 3 + j;
-                SiGotvime.Data.Models.Recipe item = Model.ElementAt(idx);
+                SiGotvime.Data.Models.Recipe item = recipes.ElementAt(idx);
                 if (item.Approved)
                 {
                     <div class="entry one-third">
@@ -33,6 +41,7 @@
                 }
                 else
                 {
+
                     <div class="entry one-third">
                         <figure>
                             <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
@@ -49,6 +58,7 @@
                             </div>
                         </div>
                     </div>
+
                 }
 
             }
@@ -59,9 +69,8 @@
 <div class="entries row">
     @for (int i = rows * 3; i < rows * 3 + additional; i++)
     {
-        {
-
-            SiGotvime.Data.Models.Recipe item = Model.ElementAt(i);
+        {            
+            SiGotvime.Data.Models.Recipe item = recipes.ElementAt(i);
 
             if (item.Approved)
             {
@@ -85,6 +94,7 @@
             }
             else
             {
+
                 <div class="entry one-third">
                     <figure>
                         <img src="@item.CroppedUrl" alt="" class="imageFullSize" />
@@ -101,6 +111,7 @@
                         </div>
                     </div>
                 </div>
+
             }
         }
 
@@ -111,6 +122,6 @@
     $('main img[src$=".gif"]').each(function (idx, obj) {
         $(obj).removeClass("imageFullSize");
         $(obj).width("100%");
-        $(obj).height($(obj).width());        
+        $(obj).height($(obj).width());
     });
 </script>

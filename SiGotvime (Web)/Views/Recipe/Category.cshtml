@@ -21,6 +21,13 @@
             var categoryID = '@Model.EntityID';
             $("ul.categories > li[data-recipeid=" + categoryID + "]").addClass("active");
         });
+
+        $('main img[src$=".gif"]').each(function (idx, obj) {
+            $(obj).removeClass("imageFullSize");
+            $(obj).width("100%");
+            $(obj).height($(obj).width());
+            console.log(idx);
+        });
     </script>
 }
 

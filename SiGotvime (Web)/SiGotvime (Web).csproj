@@ -333,6 +333,8 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\MyScripts\BlockUI.js" />
     <Content Include="Scripts\MyScripts\GoogleAnalytics.js" />
+    <Content Include="Scripts\Notify\bootstrap-notify.js" />
+    <Content Include="Scripts\Notify\bootstrap-notify.min.js" />
     <Content Include="Scripts\remodal.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />

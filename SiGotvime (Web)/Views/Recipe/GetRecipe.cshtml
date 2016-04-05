@@ -1,7 +1,8 @@
 ﻿@model SiGotvime.Data.Models.Recipe
 @using SiGotvime.Utilities
 
-@functions{
+@functions
+{
     string CreateShortIngredientName(string name)
     {
         if (name.Length > 15)
@@ -350,7 +351,7 @@
                         {
 
                             <li><div class="avatar"><a href="@Url.Action("Profile", "User", new { id = user.ID})"><img src="@user.ImageUrl" alt="" /><span>@user.FirstName @user.LastName</span></a></div></li>
-                            
+
                         }
                     </ul>
                     <p style="padding:7px;clear:both;border-top:1px solid lightgray;"><a href="javascript:void(0)" data-remodal-target="modal">Види ги сите</a></p>
@@ -413,11 +414,14 @@
         </p>
     </div>
 </div>
+
+
 @section Scripts{
 
     <script src="~/Scripts/bootstrap-editable/bootstrap-editable.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.mk.js"></script>
     <script src="~/Scripts/remodal.min.js"></script>
+    <script src="~/Scripts/Notify/bootstrap-notify.js"></script>
 
     <script>
         $(function () {
@@ -444,7 +448,6 @@
 
                         $(".remodal .userList").data("loaded", true);
                         loaded = $(".remodal .userList").data("loaded");
-                        console.log(loaded);
                     })
                 }
             });
@@ -500,5 +503,27 @@
         }
 
 
+    </script>
+
+    <script>
+    //    $(function () {
+    //        $.notify({
+    //            message: 'Рецептот е успешно зачуван'
+    //        }, {
+    //            type: 'success',
+    //            delay: 60000,
+    //            template: '<div class="bootstrap-item"><div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert" style="background-color:#2ecc71!important">' +
+	//	'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+	//	'<span data-notify="icon"></span> ' +
+	//	'<span data-notify="title">{1}</span> ' +
+	//	'<span data-notify="message">{2}</span>' +
+	//	'<div class="progress" data-notify="progressbar">' +
+	//		'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+	//	'</div>' +
+	//	'<a href="{3}" target="{4}" data-notify="url"></a>' +
+	//'</div></div>'
+
+    //        });
+    //    })
     </script>
 }

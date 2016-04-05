@@ -189,7 +189,7 @@ namespace SiGotvime.Data.Repository
 
         public List<Recipe> GetUserRecipes(int userID)
         {
-            var recipes = db.Recipes.Where(x => x.User.ID == userID).Include(x => x.UserLikes).Include(x => x.Comments).Select(x =>
+            var recipes = db.Recipes.Where(x => x.User.ID == userID).OrderByDescending(x=>x.DateCreated).Include(x => x.UserLikes).Include(x => x.Comments).Select(x =>
                 new
                 {
                     ID = x.ID,
