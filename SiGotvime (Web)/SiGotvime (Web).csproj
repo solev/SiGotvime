@@ -219,8 +219,10 @@
     <Content Include="Content\angucomplete-alt.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\backTop.css" />
-    <Content Include="Content\banners\Pakomak 300x250.html" />
-    <Content Include="Content\banners\Pakomak 300x250.swf" />
+    <Content Include="Content\banners\EkonElektron\ekonElektron.jpg" />
+    <Content Include="Content\banners\EkonElektron\ekonElektron.png" />
+    <Content Include="Content\banners\Pakomak\Pakomak 300x250.html" />
+    <Content Include="Content\banners\Pakomak\Pakomak 300x250.swf" />
     <Content Include="Content\bootstrap-editable\bootstrap-editable.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -304,6 +306,7 @@
     <Content Include="Content\fonts\glyphicons\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\banners\EkonElektron\baner-si gotvime.CDR" />
     <None Include="Properties\PublishProfiles\sigotvime.pubxml" />
     <Content Include="Scripts\cropper.js" />
     <Content Include="Scripts\errors.json" />
