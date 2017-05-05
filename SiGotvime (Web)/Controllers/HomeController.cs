@@ -2,6 +2,7 @@
 using SiGotvime.Data.Repository;
 using SiGotvime.Data.ViewModels;
 using SiGotvime.Utilities;
+using SiGotvime__Web_.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace SiGotvime__Web_.Controllers
 {
+    //[CompressFilter]
     public class HomeController : Controller
     {
         private IRecipeRepository _recipeRepository;

@@ -1,0 +1,24 @@
+{
+  "images": {
+    "chicken": "chicken.png",
+    "macedonia": "macedonia.png",
+    "maindish": "MainDish.png",
+    "malta": "malta.png",
+    "meze": "meze.png",
+    "sauce6": "sauce6.png",
+    "spaghetti3": "spaghetti3.png",
+    "student": "student.png",
+    "supa": "supa.png",
+    "telesko": "telesko.png",
+    "toasted": "toasted.png"
+  },
+  "orientation": "vertical",
+  "optimize": "lossless",
+  "padding": 10,
+  "output": "png",
+  "stylesheet": "css",
+  "pathprefix": "",
+  "customstyles": {
+    "display": "inline-block"
+  }
+}

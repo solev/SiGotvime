@@ -20,18 +20,17 @@
 
     <tbody>
 
-        @foreach(var item in Model)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td class="text-right">                    
-                    @Html.ActionLink("Промени", "EditIngredient","Admin", new { id = item.ID }, new {@class="text-info" })
+                <td class="text-right">
+                    @Html.ActionLink("Промени", "EditIngredient", "Admin", new { id = item.ID }, new { @class = "text-info" })
                 </td>
             </tr>
         }
-
 
     </tbody>
 </table>

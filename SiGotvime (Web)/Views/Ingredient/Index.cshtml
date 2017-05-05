@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SiGotvime.Data.Models.Ingredient>
+
+@{
+    ViewBag.Title = "Состојки";
+}
+
+<div class="wrap clearfix">
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
+            <li>Состојки</li>
+        </ul>
+    </nav>
+
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">Состојки</h2>
+        </header>
+
+        <section class="content full-width wow fadeInUp">
+            <p>
+                @Html.ActionLink("Креирај нова", "Create", null, new { @class ="button" })
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        Состојка
+                    </th>     
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>                        
+                        <td>
+                            @Html.ActionLink("Промени", "Edit", new { id = item.ID }, new { @class = "text-info" })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </section>
+    </div>
+
+</div>
+

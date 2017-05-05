@@ -1,0 +1,80 @@
+[
+  {
+    "outputFileName": "Content/style.min.css",
+    "inputFiles": [
+      "Content/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/animate.min.css",
+    "inputFiles": [
+      "Content/animate.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/backTop.min.css",
+    "inputFiles": [
+      "Content/backTop.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/remodal.min.css",
+    "inputFiles": [
+      "Content/remodal.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/remodal-default-theme.min.css",
+    "inputFiles": [
+      "Content/remodal-default-theme.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/angucomplete-alt.min.css",
+    "inputFiles": [
+      "Content/angucomplete-alt.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.validate.min.js",
+    "inputFiles": [
+      "Scripts/jquery.validate.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/validation/languages/jquery.validationEngine-en.min.js",
+    "inputFiles": [
+      "Scripts/validation/languages/jquery.validationEngine-en.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/validation/jquery.validationEngine.min.js",
+    "inputFiles": [
+      "Scripts/validation/jquery.validationEngine.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/scripts.min.js",
+    "inputFiles": [
+      "Scripts/scripts.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/MyScripts/BlockUI.min.js",
+    "inputFiles": [
+      "Scripts/MyScripts/BlockUI.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/MyScripts/app.min.js",
+    "inputFiles": [
+      "Scripts/MyScripts/app.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Icons/categoryIcons.sprite.min.css",
+    "inputFiles": [
+      "Content/Icons/categoryIcons.sprite.css"
+    ]
+  }
+]

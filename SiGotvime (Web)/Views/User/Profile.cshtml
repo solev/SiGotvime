@@ -5,10 +5,10 @@
     int currentUserID = Env.UserID();
     bool isCurrentUser = Model.UserID == currentUserID;
     int id = 0;
-    if(ViewContext.RouteData.Values["id"] != null)
+    if (ViewContext.RouteData.Values["id"] != null)
     {
         int.TryParse(ViewContext.RouteData.Values["id"].ToString(), out id);
-    }   
+    }
 }
 
 @section Styles{
@@ -30,11 +30,11 @@
             {
                 $("#recipesLink").click();
             }
-            
+
             $(".editable").editable({
                 type: 'text',
                 url: editUrl,
-                pk:1,               
+                pk:1,
                 emptytext:"Празно"
             });
 
@@ -56,7 +56,7 @@
                 viewformat: 'DD.MM.YYYY',
                 template: 'DD / MMMM / YYYY',
                 url: editUrl,
-                pk:1,  
+                pk:1,
                 combodate: {
                     minYear: 1900,
                     maxYear: @DateTime.Now.Year,
@@ -94,11 +94,11 @@
             })
 
             var reload = '@(ViewBag.Reload!=null)';
-            
+
             if(reload.toLowerCase() == 'true')
             {
                 window.location.reload();
-            }                
+            }
         })
 
         function openFile()
@@ -106,7 +106,7 @@
             $("#pictureFile").click();
         }
 
-        
+
     </script>
 }
 
@@ -115,7 +115,7 @@
     <button data-remodal-action="close" class="remodal-close pull-right"></button>
     <h1>Одберете слика</h1>
     <div class="modal-content container" style="padding-bottom:10px;">
-        @using(Html.BeginForm("UploadPicture", "User", FormMethod.Post, new { enctype = "multipart/form-data", id = "ImageForm" }))
+        @using (Html.BeginForm("UploadPicture", "User", FormMethod.Post, new { enctype = "multipart/form-data", id = "ImageForm" }))
         {
             <div class="two-third">
                 <img src="@Model.ImageUrl" id="imageToUpload" />
@@ -162,7 +162,7 @@
                         @Model.LastName
                     </h2>
                 </div>
-                @if(isCurrentUser)
+                @if (isCurrentUser)
                 {
                     <a class="button big" href="@Url.Action("Logout","Account")" style="margin-top:10px;">Одјава</a>
                     <a href="javascript:void(0)" class="button big" data-remodal-target="modal" style="margin-top:10px;">Промени слика</a>
@@ -174,7 +174,7 @@
             <div class="three-fourth wow fadeInRight">
                 <nav class="tabs">
                     <ul>
-                        <li class="active"><a href="#about" title="About me">Мои податоци</a></li>                        
+                        <li class="active"><a href="#about" title="About me">Мои податоци</a></li>
                         <li><a id="recipesLink" onclick="GetPage('@Url.Action("UserRecipes", "User", new { userID = id })','#profileRecipes')" href="#profileRecipes" title="My recipes">Мои рецепти</a></li>
                         <li><a href="#favorites" title="My favorites" onclick="GetPage('@Url.Action("UserFavourites", "User", new { userID = id })','#favorites')">Омилени</a></li>
                         <li><a href="#posts" title="My posts" onclick="GetPage('@Url.Action("UserBlogPosts", "User", new { userID = id })','#posts')">Мои Статии</a></li>
@@ -183,7 +183,7 @@
 
                 <!--about-->
                 <div class="tab-content" id="about">
-                    @if(isCurrentUser)
+                    @if (isCurrentUser)
                     {
                         <div>
                             <div class="alert alert-warning" role="alert">
@@ -191,13 +191,13 @@
                             </div>
                         </div>
                     }
-                    
+
 
                     <div class="row">
                         <dl class="basic two-third">
                             <dt>Име и Презиме</dt>
                             <dd>
-                                @if(isCurrentUser)
+                                @if (isCurrentUser)
                                 {
                                     <div class="bootstrap-item">
                                         <a href="javascript:void(0)" class="editableWhite editable" data-title="Зачувајте го вашето име" data-placeholder="Задолжително" id="FirstName">@Model.FirstName</a>
@@ -211,7 +211,7 @@
                             </dd>
                             <dt>Емаил</dt>
                             <dd>
-                                @if(isCurrentUser)
+                                @if (isCurrentUser)
                                 {
                                     <div class="bootstrap-item">
                                         <a href="javascript:void(0)" class="editableWhite editable" data-type="email" data-title="Зачувајте го вашата емаил адреса" data-placeholder="Задолжително" id="Email">@(Model.Email != null ? Model.Email : "")</a>
@@ -225,7 +225,7 @@
                             </dd>
                             <dt>Телефон</dt>
                             <dd>
-                                @if(isCurrentUser)
+                                @if (isCurrentUser)
                                 {
                                     <div class="bootstrap-item">
                                         <a href="javascript:void(0)" class="editableWhite editable" data-title="Зачувајте го вашиот телефон" data-placeholder="Задолжително" id="Telephone">@(Model.Telephone != null ? Model.Telephone : "")</a>
@@ -238,7 +238,7 @@
                             </dd>
                             <dt>Датум на раѓање</dt>
                             <dd>
-                                @if(isCurrentUser)
+                                @if (isCurrentUser)
                                 {
                                     <div class="bootstrap-item">
                                         <a href="javascript:void(0)" class="editableWhite" data-type="combodate" data-title="Зачувајте го вашиот датум на раѓање" data-value="@(Model.DateOfBirth.HasValue ? string.Format("{0}-{1}-{2}",Model.DateOfBirth.Value.Month,Model.DateOfBirth.Value.Day,Model.DateOfBirth.Value.Year) : "")" id="DOB"></a>
@@ -258,25 +258,24 @@
 
                         <div class="one-third">
                             @*<ul class="boxed gold">
-                                <li class="light"><a href="#" title="Best recipe"><i class="ico i-had_best_recipe"></i> <span>Had a best recipe</span></a></li>
-                                <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
-                                <li class="dark"><a href="#" title="Added a first recipe"><i class="ico i-added_first_recipe"></i> <span>Added a first recipe</span></a></li>
+                                    <li class="light"><a href="#" title="Best recipe"><i class="ico i-had_best_recipe"></i> <span>Had a best recipe</span></a></li>
+                                    <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
+                                    <li class="dark"><a href="#" title="Added a first recipe"><i class="ico i-added_first_recipe"></i> <span>Added a first recipe</span></a></li>
 
-                                <li class="medium"><a href="#" title="Added 10-20 recipes"><i class="ico i-added_several_recipes"></i> <span>Added 10-20 recipes</span></a></li>
-                                <li class="dark"><a href="recipes.html" title="Events"><i class="ico i-wrote_blog_post"></i> <span>Wrote a blog post</span></a></li>
-                                <li class="light"><a href="recipes.html" title="Fish"><i class="ico i-wrote_comment"></i> <span>Wrote a comment</span></a></li>
+                                    <li class="medium"><a href="#" title="Added 10-20 recipes"><i class="ico i-added_several_recipes"></i> <span>Added 10-20 recipes</span></a></li>
+                                    <li class="dark"><a href="recipes.html" title="Events"><i class="ico i-wrote_blog_post"></i> <span>Wrote a blog post</span></a></li>
+                                    <li class="light"><a href="recipes.html" title="Fish"><i class="ico i-wrote_comment"></i> <span>Wrote a comment</span></a></li>
 
-                                <li class="dark"><a href="recipes.html" title="Fish"><i class="ico i-won_contest"></i> <span>Won a contest</span></a></li>
-                                <li class="light"><a href="recipes.html" title="Healthy"><i class="ico i-shared_recipe"></i> <span>Shared a recipe</span></a></li>
-                                <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
-                            </ul>*@
+                                    <li class="dark"><a href="recipes.html" title="Fish"><i class="ico i-won_contest"></i> <span>Won a contest</span></a></li>
+                                    <li class="light"><a href="recipes.html" title="Healthy"><i class="ico i-shared_recipe"></i> <span>Shared a recipe</span></a></li>
+                                    <li class="medium"><a href="#" title="Was featured"><i class="ico i-was_featured"></i> <span>Was featured</span></a></li>
+                                </ul>*@
 
                             @Html.Action("Advertisments", "Home")
                         </div>
                     </div>
                 </div>
                 <!--//about-->
-
                 <!--my recipes-->
                 <div class="tab-content" id="profileRecipes">
                     <div class="entries row">
@@ -284,7 +283,6 @@
                     </div>
                 </div>
                 <!--//my recipes-->
-
                 <!--my favorites-->
                 <div class="tab-content" id="favorites">
                     <div class="entries row">
@@ -292,7 +290,6 @@
                     </div>
                 </div>
                 <!--//my favorites-->
-
                 <!--my posts-->
                 <div class="tab-content" id="posts">
                     <!--entries-->

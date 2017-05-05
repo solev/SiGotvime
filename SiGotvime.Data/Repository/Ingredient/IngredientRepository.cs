@@ -2,6 +2,7 @@
 using SiGotvime.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -38,7 +39,9 @@ namespace SiGotvime.Data.Repository
 
         public bool Edit(Models.Ingredient model)
         {
-            throw new NotImplementedException();
+            db.Entry(model).State = EntityState.Modified;
+            int res = db.SaveChanges();
+            return res > 0;
         }
 
 

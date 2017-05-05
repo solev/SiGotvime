@@ -17,7 +17,7 @@
 }
 
 <!--wrap-->
-<div class="wrap clearfix" ng-controller="Search">
+<div class="wrap clearfix" >
     <!--breadcrumbs-->
     <nav class="breadcrumbs">
         <ul>
@@ -32,9 +32,8 @@
             <h2 class="ribbon large">Пребарување рецепти</h2>
         </header>
 
-
         <!--content-->
-        <section class="content three-fourth wow fadeInUp">
+        <section class="content three-fourth wow fadeInUp" ng-controller="Search">
             @using (Html.BeginForm("Search", "Recipe", FormMethod.Post, new { id = "formSearch" }))
             {
                 <!--recipefinder-->
@@ -43,7 +42,7 @@
                         <h3>Пребарување според состојки</h3>
                         <p>Употребувајте Кирилична поддршка при внесување на состојки</p>
                         <div class="f-row">
-                            @*<input type="text" placeholder="Add ingredients (one at a time)" />*@
+                            
                             <angucomplete-alt id="searchInput"
                                               placeholder="Пребарај состојки"
                                               pause="100"
@@ -114,27 +113,7 @@
         <aside class="sidebar one-fourth">
             @{Html.RenderPartial("_SideCategoriesBlocks");}
 
-            @{ Html.RenderPartial("_Tweets");}
-
-            @*<div class="widget members wow fadeInRight" data-wow-delay=".4s">
-                <h3>Our members</h3>
-                <div id="members-list-options" class="item-options">
-                    <a href="#">Newest</a>
-                    <a class="selected" href="#">Active</a>
-                    <a href="#">Popular</a>
-                </div>
-                <ul class="boxed">
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Kimberly C.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Alex J.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Denise M.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Jason H.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Jennifer W.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Anabelle Q.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Thomas M.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Michelle S.</span></a></div></li>
-                    <li><div class="avatar"><a href="my_profile.html"><img src="~/images/avatar.jpg" alt="" /><span>Bryan A.</span></a></div></li>
-                </ul>
-            </div>*@
+            @{ Html.RenderPartial("_Tweets");}            
 
             @Html.Action("Advertisments", "Home")
         </aside>
@@ -147,7 +126,7 @@
         app.controller("Search", function ($scope,$timeout) {
             $scope.Ingredients = @Html.Raw(Json.Encode(Model.Ingredients));
             $scope.SelectedIngredients = @Html.Raw(Json.Encode(Model.SelectedIngredients));
-            
+
             if($scope.SelectedIngredients.length==0)
             {
                 var ingredientsFromStorage = localStorage.getItem("selectedIngredients");
@@ -215,7 +194,7 @@
                     content: populate($(this))
                 });
             })
-             
+
             ActivateNavigation("#searchRecipe");
         })
 
@@ -223,6 +202,6 @@
         {
             console.log(elem);
         }
-       
+
     </script>
 }

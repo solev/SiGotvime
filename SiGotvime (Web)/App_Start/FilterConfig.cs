@@ -10,6 +10,7 @@ namespace SiGotvime__Web_
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new CaptchaFilterAttribute());
+            //filters.Add(new CompressFilterAttribute());
         }
     }
 }

@@ -9,24 +9,12 @@
 
     @RenderSection("metas", required: false)
     <title>@ViewBag.Title - СиГотвиме - sigotvime.mk</title>
+        
 
-
-    <link href="~/Content/style.css" rel="stylesheet" />
-    <link href="~/Content/animate.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800" rel="stylesheet">
     <link rel="shortcut icon" href="~/images/favicon.ico" />
-    <link href="~/Content/loaders/loaders.css.min.css" rel="stylesheet" />
-    <link href="~/Content/backTop.css" rel="stylesheet" />
-    <link href="~/Content/remodal.css" rel="stylesheet" />
-    <link href="~/Content/remodal-default-theme.css" rel="stylesheet" />
-    <link href="~/Content/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
-    <link href="~/Content/angucomplete-alt.css" rel="stylesheet" />
-    <script src="~/Scripts/moment.min.js"></script>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
 
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="~/Scripts/MyScripts/GoogleAnalytics.js"></script>
+    @Styles.Render("~/Content/css")
 
     @RenderSection("styles", required: false)
 </head>
@@ -38,8 +26,8 @@
     var controller = ViewContext.RouteData.GetRequiredString("controller");
     var action = ViewContext.RouteData.GetRequiredString("action");
     string full = string.Format("{0}/{1}", controller, action);
-
 }
+
 <body class="@(full == "Home/Index"?"home":"") sagoeFont" ng-app="SiGotvime">
     <header class="head" role="banner">
         <!--wrap-->
@@ -75,6 +63,7 @@
                             <ul>
                                 <li><a href="@Url.Action("UnApprovedRecipes","Admin")" title="Неодобрени рецепти">Неодобрени Рецепти</a></li>
                                 <li><a href="@Url.Action("RegisteredUsers","Admin")" title="Регистрирани корисници">Корисници</a></li>
+                                <li><a href="@Url.Action("Index","Ingredient")" title="Регистрирани корисници">Состојки</a></li>
                             </ul>
                         </li>
                     }
@@ -160,7 +149,7 @@
                             <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
                             <li><a href="@Url.Action("Latest","Recipe")" title="Recipes">Рецепти</a></li>
                             <li><a href="@Url.Action("Index","Plan")" title="Планирање оброци">Планирање оброци</a></li>
-                            <li><a href="@Url.Action("Index","Blog")" title="Статии">Статии</a></li>
+                            <li><a href="@Url.Action("Index","Blog")" title="Статии">Блог</a></li>
                             <li><a href="@Url.Action("Search","Recipe")" title="Search for recipes">Пребарувај рецепти</a></li>
                             <li><a href="@Url.Action("Contact","Home")" title="Contact"><span>Контакт</span></a></li>
                             <li><a href="@Url.Action("Register","Account")" title="Register">Зачлени се</a></li>
@@ -181,90 +170,16 @@
     <!--backToTop-->
     <a id='backTop'>Back To Top</a>
     <!--//backToTop-->
-        
+
     <div id="twitter-wjs"></div>
 
-    
-    <script src="~/Scripts/jquery-1.11.1.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    <script src="~/Scripts/jquery.uniform.min.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/validation/languages/jquery.validationEngine-en.js"></script>
-    <script src="~/Scripts/validation/jquery.validationEngine.js"></script>
-    <script src="~/Scripts/wow.min.js"></script>
-    <script src="~/Scripts/jquery.slicknav.min.js"></script>
-    <script src="~/Scripts/scripts.js"></script>
-    <script src="~/Scripts/jquery.backTop.min.js"></script>
-    <script src="~/Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/MyScripts/BlockUI.js"></script>
     <script>
-        window.dynamicNumbersBound = false;
-        var wow = new WOW();
-        WOW.prototype.show = function (box) {
-            wow.applyStyle(box);
-            if (typeof box.parentNode !== 'undefined' && hasClass(box.parentNode, 'dynamic-numbers') && !window.dynamicNumbersBound) {
-                bindDynamicNumbers();
-                window.dynamicNumbersBound = true;
-            }
-            return box.className = "" + box.className + " " + wow.config.animateClass;
-        };
-        wow.init();
-
-        function hasClass(element, cls) {
-            return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
-        }
-
-        function bindDynamicNumbers() {
-            $('.dynamic-number').each(function () {
-                var startNumber = $(this).text();
-                var endNumber = $(this).data('dnumber');
-                var dynamicNumberControl = $(this);
-
-                $({ numberValue: startNumber }).animate({ numberValue: endNumber }, {
-                    duration: 4000,
-                    easing: 'swing',
-                    step: function () {
-                        $(dynamicNumberControl).text(Math.ceil(this.numberValue));
-                    }
-                });
-            });
-        }
-
         var isAuthenticated = '@User.Identity.IsAuthenticated';
         var isFbUser = '@(Env.FbLink() != "")';
-
-        $(function () {
-            $("#backTop").backTop({
-                position: 400,
-                speed: 500,
-                color: 'red'
-            });
-
-            $("img").on("contextmenu", function () {
-                return false;
-            });
-                       
-        })
-
-        function GetPage(url, target) {
-            $.get(url, function (data) {
-                $(target).html(data);
-            });
-        }
-
-        function ActivateNavigation(elem) {
-            $(".main-nav , .user-nav ").find(elem).addClass('current-menu-item');
-        }
-
     </script>
 
-    @*angular*@
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/AngularApp/angucomplete-alt.min.js"></script>
-    <script src="~/Scripts/AngularApp/app.js"></script>
-    <script src="~/Scripts/Facebook/FBLogin.js"></script>
-    <script src="~/Scripts/Twitter/Twitter.js"></script>
+    @Scripts.Render("~/Bundles/js")
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     @RenderSection("scripts", required: false)
 </body>
 
