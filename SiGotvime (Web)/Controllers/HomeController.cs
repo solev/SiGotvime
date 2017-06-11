@@ -22,7 +22,7 @@ namespace SiGotvime__Web_.Controllers
         private IMessageRepository _messageRepository;
         private IBlogRepository _blogRepository;
 
-        public HomeController(RecipeRepository recipeRepository, HomeRepository homeRepository, SettingsRepository settingsRepository, UserRepository userRepository,MessageRepository messageRepository,BlogRepository blogRepository)
+        public HomeController(RecipeRepository recipeRepository, HomeRepository homeRepository, SettingsRepository settingsRepository, UserRepository userRepository, MessageRepository messageRepository, BlogRepository blogRepository)
         {
             _recipeRepository = recipeRepository;
             _homeRepository = homeRepository;
@@ -86,7 +86,7 @@ namespace SiGotvime__Web_.Controllers
 
         public ActionResult Contact()
         {
-            if(TempData["MessageCreated"]!=null)
+            if (TempData["MessageCreated"] != null)
             {
                 ViewBag.Message = "Успешно е пратена пораката!";
             }
@@ -101,7 +101,7 @@ namespace SiGotvime__Web_.Controllers
                 return RedirectToAction("Contact");
 
             message.DateCreated = DateTime.Now;
-            if(Env.UserID()!=0)
+            if (Env.UserID() != 0)
             {
                 message.UserBy = new User { ID = Env.UserID() };
             }
@@ -109,6 +109,6 @@ namespace SiGotvime__Web_.Controllers
             TempData["MessageCreated"] = true;
             return RedirectToAction("Contact");
         }
-                
+
     }
 }

@@ -116,8 +116,7 @@ namespace Food_App_Service.Controllers
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
-
+        
         public ActionResult Ingredients()
         {
             var list = ingredientRepository.GetAll();
@@ -489,5 +488,6 @@ namespace Food_App_Service.Controllers
 
             return RedirectToAction("RecipesOfTheDay");
         }
+
     }
 }

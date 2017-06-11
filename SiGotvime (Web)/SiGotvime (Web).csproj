@@ -231,6 +231,17 @@
     <Content Include="Content\backTop.min.css">
       <DependentUpon>backTop.css</DependentUpon>
     </Content>
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\ekonElektorn.html" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_1.png" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_11.png" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_2.jpg" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_3.jpg" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_4.jpg" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_5.jpg" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_6.jpg" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_7.jpg" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_8.jpg" />
+    <Content Include="Content\banners\3EkonElektorn%28soLink%29\images\_9.png" />
     <Content Include="Content\banners\EkonElektron\ekonElektron.jpg" />
     <Content Include="Content\banners\EkonElektron\ekonElektron.png" />
     <Content Include="Content\banners\Pakomak\Pakomak 300x250.html" />
