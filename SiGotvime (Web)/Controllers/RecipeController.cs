@@ -19,12 +19,14 @@ namespace SiGotvime__Web_.Controllers
         private IRecipeRepository _recipeRepository;
         private IIngredientRepository _ingredientRepository;
         private ITagRepository _tagRepository;
+        private readonly ISettingsRepository _settingsRepository;
 
-        public RecipeController(RecipeRepository recipeRepository,IngredientRepository ingredientRepository, TagRepository tagRepository)
+        public RecipeController(RecipeRepository recipeRepository,IngredientRepository ingredientRepository, TagRepository tagRepository, ISettingsRepository settingsRepository)
         {
             _recipeRepository = recipeRepository;
             _ingredientRepository = ingredientRepository;
             _tagRepository = tagRepository;
+            _settingsRepository = settingsRepository;
         }
 
         public ActionResult GetRecipe(int id)
@@ -197,6 +199,23 @@ namespace SiGotvime__Web_.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [AdminAuthorize]
+        public ActionResult RecipeOfTheDay(int page = 1, string search = null)
+        {
+            int recipeOfTheDayID = Convert.ToInt32(_settingsRepository.GetSettingWithKey(Constants.RecipeOfTheDay));
+            var recipe = _recipeRepository.GetRecipeForHome(recipeOfTheDayID);
+            ViewBag.Recipe = recipe;
+            var recipes = _recipeRepository.GetAll(page, search);
+            return View(recipes);
+        }
+
+        [AdminAuthorize]
+        public ActionResult SetRecipeOfTheDay(int id)
+        {
+            _settingsRepository.UpdateSetting(Constants.RecipeOfTheDay, id.ToString());
+            return RedirectToAction("RecipeOfTheDay");
         }
     }
 }

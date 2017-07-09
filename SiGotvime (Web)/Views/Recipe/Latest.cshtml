@@ -2,9 +2,10 @@
 @using SiGotvime.Utilities;
 @{
     ViewBag.Title = "Најнови рецепти";
-    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;    
-    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel { 
-        action="Latest",
+    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
+    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel
+    {
+        action = "Latest",
         controller = "Recipe",
         pageSize = Constants.PageSize,
         currentPage = page,
@@ -49,7 +50,7 @@
 
         <!--content-->
         <section class="content three-fourth wow fadeInUp">
-            @{Html.RenderPartial("_RecipeList",Model.Recipes);}            
+            @{Html.RenderPartial("_RecipeList", Model.Recipes);}
 
             @{Html.RenderPartial("Pager", pagerConfig);}
             <!--//entries-->
@@ -58,7 +59,7 @@
         <!--right sidebar-->
         <aside class="sidebar one-fourth wow fadeInRight">
             @{Html.RenderPartial("_SideCategoriesList");}
-            @Html.Action("Advertisments","Home")
+            @Html.Action("Advertisments", "Home")
         </aside>
         <!--//right sidebar-->
     </div>

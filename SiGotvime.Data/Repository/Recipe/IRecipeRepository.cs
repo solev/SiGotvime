@@ -13,7 +13,7 @@ namespace SiGotvime.Data.Repository
     {
         Recipe FindById(int id);
         bool Add(RecipeViewModel model, int userID = 0);
-        RecipeListingModel GetAll(int page);
+        RecipeListingModel GetAll(int page, string search = null);
         RecipeViewModel GetFullRecipeById(int id);
         Recipe GetCompleteRecipe(int recipeID,int AdminUserID=0);
 

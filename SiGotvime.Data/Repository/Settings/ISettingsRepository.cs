@@ -11,5 +11,6 @@ namespace SiGotvime.Data.Repository
     {
         string GetSettingWithKey(string key);
         List<Settings> GetSettingsInKeys(List<string> keys);
+        void UpdateSetting(string key, string value);
     }
 }

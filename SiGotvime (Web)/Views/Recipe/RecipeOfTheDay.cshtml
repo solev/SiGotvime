@@ -1,0 +1,80 @@
+﻿@model SiGotvime.Data.ViewModels.RecipeListingModel
+@using SiGotvime.Utilities;
+@using SiGotvime.Data.Models;
+@{
+    ViewBag.Title = "Рецепт на денот";
+    int page = Request.QueryString["page"] != null ? Convert.ToInt32(Request.QueryString["page"]) : 1;
+    string search = Request.QueryString["search"];
+    var pagerConfig = new SiGotvime.Data.ViewModels.PagerViewModel
+    {
+        action = "RecipeOfTheDay",
+        controller = "Recipe",
+        pageSize = Constants.PageSize,
+        currentPage = page,
+        maxCount = Model.Count
+    };
+
+    var recipe = ViewBag.Recipe as Recipe;
+
+}
+
+<div class="wrap clearfix">
+    <nav class="breadcrumbs">
+        <ul>
+            <li><a href="@Url.Action("Index","Home")" title="Home">Дома</a></li>
+            <li>Рецепт на денот</li>
+        </ul>
+    </nav>
+
+    <div class="row">
+        <header class="s-title wow fadeInLeft">
+            <h2 class="ribbon large">Рецепт на денот</h2>
+        </header>
+
+        <section class="content full-width wow fadeInUp">
+            <table>
+                <tr>
+                    <th>Рецепт на денот</th>
+                </tr>
+                <tr>
+                    <td>@recipe.Title</td>
+                </tr>
+            </table>
+
+            @using (Html.BeginForm("RecipeOfTheDay", "Recipe", FormMethod.Get))
+            {
+                <div class="f-row" style="margin-top:30px;">
+                    <div class="three-fourth" style="padding-left:0;padding-bottom:0;">
+                        <input type="text" placeholder="Пребарај..." value="@search" name="search" />
+                    </div>
+
+                    <input type="submit" value="Барај" />
+                </div>
+            }
+
+            <table class="table">
+                <tr>
+                    <th>
+                        Рецепт
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Recipes)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Одбери", "SetRecipeOfTheDay", new { id = item.ID }, new { @class = "text-info" })
+                        </td>
+                    </tr>
+                    }
+            </table>
+            @{Html.RenderPartial("Pager", pagerConfig);}
+        </section>
+    </div>
+
+</div>
+

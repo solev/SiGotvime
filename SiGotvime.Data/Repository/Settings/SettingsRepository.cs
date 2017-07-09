@@ -21,12 +21,19 @@ namespace SiGotvime.Data.Repository
             string result = db.Settings.Where(x => x.SettingKey == key).Select(x => x.SettingValue).FirstOrDefault();
             return result;
         }
-        
+
         public List<Settings> GetSettingsInKeys(List<string> keys)
         {
             var result = db.Settings.Where(x => keys.Contains(x.SettingKey)).Select(x => new { Key = x.SettingKey, Value = x.SettingValue }).ToList();
 
             return result.Select(x => new Settings { SettingKey = x.Key, SettingValue = x.Value }).ToList();
+        }
+
+        public void UpdateSetting(string key, string value)
+        {
+            var setting = db.Settings.FirstOrDefault(x => x.SettingKey == key);
+            setting.SettingValue = value;
+            db.SaveChanges();
         }
     }
 }

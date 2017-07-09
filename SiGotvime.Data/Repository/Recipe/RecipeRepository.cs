@@ -81,14 +81,19 @@ namespace SiGotvime.Data.Repository
         {
             return db.Recipes.FirstOrDefault(x => x.ID == id);
         }
-
-
-        public RecipeListingModel GetAll(int page)
+        
+        public RecipeListingModel GetAll(int page, string search = null)
         {
-            var tempResult = db.Recipes.OrderBy(x => x.ID);
+            var query = db.Recipes.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(x => x.Title.Contains(search));
+
+            query = query.OrderByDescending(x => x.ID);
+
             RecipeListingModel result = new RecipeListingModel();
-            result.Count = tempResult.Count();
-            var listResult = tempResult.Skip((page - 1) * recipesPerPage).Take(recipesPerPage).ToList();
+            result.Count = query.Count();
+            var listResult = query.Skip((page - 1) * recipesPerPage).Take(recipesPerPage).ToList();
             result.Recipes = listResult;
 
             return result;
