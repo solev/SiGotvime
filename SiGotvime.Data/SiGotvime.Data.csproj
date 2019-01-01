@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\RecipeDto.cs" />
     <Compile Include="Entity\Achievment.cs" />
     <Compile Include="Entity\BlogPost.cs" />
     <Compile Include="Entity\Comment.cs" />

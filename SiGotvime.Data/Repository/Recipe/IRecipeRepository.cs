@@ -1,4 +1,5 @@
-﻿using SiGotvime.Data.Models;
+﻿using SiGotvime.Data.DTO;
+using SiGotvime.Data.Models;
 using SiGotvime.Data.Result_Models;
 using SiGotvime.Data.ViewModels;
 using System;
@@ -14,7 +15,7 @@ namespace SiGotvime.Data.Repository
         Recipe FindById(int id);
         bool Add(RecipeViewModel model, int userID = 0);
         RecipeListingModel GetAll(int page, string search = null);
-        RecipeViewModel GetFullRecipeById(int id);
+        RecipeDto GetFullRecipeById(int id);
         Recipe GetCompleteRecipe(int recipeID,int AdminUserID=0);
 
         //OLD
@@ -27,7 +28,7 @@ namespace SiGotvime.Data.Repository
         bool Delete(int id);
         //OLD
         List<int> GetLatest(int page);
-        string GetRecipeImageUrl(int RecipeID);
+        
         RecipesResultModel GetLatestRecipes(int page,int pageSize);
         RecipeByCategoryResultModel GetRecipesByCategory(int page, int pageSize, int categoryID);
         void Like(int recipeID, int userID);

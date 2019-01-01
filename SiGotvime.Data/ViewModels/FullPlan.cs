@@ -9,6 +9,7 @@ namespace SiGotvime.Data.ViewModels
     public class FullPlan
     {
         public int success { get; set; }
-        public List<PlanViewModel> result { get; set; }
+        public List<PlanViewModel> result { get; set; }        
+
     }
 }

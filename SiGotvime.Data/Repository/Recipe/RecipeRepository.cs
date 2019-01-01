@@ -8,6 +8,7 @@ using SiGotvime.Data.ViewModels;
 using System.Data.Entity;
 using SiGotvime.Data.Result_Models;
 using System.Text;
+using SiGotvime.Data.DTO;
 
 namespace SiGotvime.Data.Repository
 {
@@ -58,23 +59,29 @@ namespace SiGotvime.Data.Repository
             return res > 0;
         }
 
-        public RecipeViewModel GetFullRecipeById(int id)
+        public RecipeDto GetFullRecipeById(int id)
         {
-            var recipe = FindById(id);
-            RecipeViewModel result = new RecipeViewModel { Content = recipe.Content, ImageUrl = recipe.ImageUrl, PreparationTime = recipe.PreparationTime, Title = recipe.Title, Rating = recipe.Rating, CroppedUrl = recipe.CroppedUrl };
-            var ingredients = db.IngredientsInRecipe.Where(x => x.Recipe.ID == id).ToList();
-            var tags = db.RecipeTags.Where(x => x.Recipe.ID == id).Select(x => x.Tag.ID).ToList();
-            List<IngredientViewModel> tempIngredients = new List<IngredientViewModel>();
-
-            foreach (var item in ingredients)
+            var res = db.Recipes.Where(x => x.ID == id).Select(x => new RecipeDto
             {
-                tempIngredients.Add(new IngredientViewModel { Name = item.Ingredient.Name, Quantity = item.Quantity });
-            }
+                ID = x.ID,
+                Title = x.Title,
+                Content = x.Content,
+                Description = x.Description,
+                ImageUrl = x.ImageUrl,
+                CroppedUrl = x.CroppedUrl,
+                NumberOfPeople = x.NumberOfPeople,
+                Difficulty = x.Difficulty,
+                PreparationTime = x.PreparationTime,
+                Rating = x.Rating,
+                Ingredients = x.Ingredients.Select(t=> new IngredientViewModel
+                {
+                    ID = t.Ingredient.ID,
+                    Name = t.Ingredient.Name,
+                    Quantity = t.Quantity
+                })
+            }).FirstOrDefault();
 
-            result.ingredients = tempIngredients;
-            result.tags = tags;
-
-            return result;
+            return res;
         }
 
         public Recipe FindById(int id)
@@ -141,8 +148,7 @@ namespace SiGotvime.Data.Repository
 
             return res > 0;
         }
-
-
+        
         public bool Delete(int id)
         {
             var recipe = db.Recipes.FirstOrDefault(x => x.ID == id);
@@ -180,30 +186,28 @@ namespace SiGotvime.Data.Repository
             if (page == 0) page = 1;
             var tempRecipes = db.RecipeTags.Where(x => x.Tag.ID == categoryID).OrderBy(x => x.ID).Skip((page - 1) * recipesPerPage).Take(recipesPerPage).Select(x => x.Recipe.ID).ToList();
             List<RecipeViewModel> res = new List<RecipeViewModel>();
-            foreach (var item in tempRecipes)
-            {
-                var recipe = GetFullRecipeById(item);
-                res.Add(recipe);
-            }
+            //foreach (var item in tempRecipes)
+            //{
+            //    var recipe = GetFullRecipeById(item);
+            //    res.Add(recipe);
+            //}
 
             return res;
         }
-
-
+        
         public IEnumerable<RecipeViewModel> GetEasiest(int page)
         {
             if (page == 0) page = 1;
             var tempResult = db.Recipes.OrderBy(x => x.PreparationTime).Skip((page - 1) * recipesPerPage).Take(recipesPerPage).Select(x => x.ID).ToList();
             List<RecipeViewModel> result = new List<RecipeViewModel>();
-            foreach (var item in tempResult)
-            {
-                var rec = GetFullRecipeById(item);
-                result.Add(rec);
-            }
+            //foreach (var item in tempResult)
+            //{
+            //    var rec = GetFullRecipeById(item);
+            //    result.Add(rec);
+            //}
             return result;
         }
-
-
+        
         public RecipeListingModel SearchRecipes(string search, int page = 1)
         {
             var tempresult = db.Recipes.Where(x => x.Title.ToLower().Contains(search.ToLower())).OrderBy(x => x.ID);
@@ -214,12 +218,7 @@ namespace SiGotvime.Data.Repository
 
             return result;
         }
-
-        public string GetRecipeImageUrl(int RecipeID)
-        {
-            return db.Recipes.Where(x => x.ID == RecipeID).Select(x => x.CroppedUrl ?? x.ImageUrl).FirstOrDefault();
-        }
-
+                
 
         public Recipe GetCompleteRecipe(int recipeID, int AdminUserID = 0)
         {
@@ -441,8 +440,7 @@ namespace SiGotvime.Data.Repository
 
             return model;
         }
-
-
+        
         public int CreateRecipe(RecipeModel model)
         {
 
@@ -485,8 +483,7 @@ namespace SiGotvime.Data.Repository
             return recipe.ID;
 
         }
-
-
+        
         public Recipe GetRecipeForHome(int recipeID)
         {
             var recipe = db.Recipes.Where(x => x.ID == recipeID).Select(x => new { x.ImageUrl, x.Title, x.Description, x.ID }).FirstOrDefault();
@@ -499,8 +496,7 @@ namespace SiGotvime.Data.Repository
                 ImageUrl = recipe.ImageUrl
             };
         }
-
-
+        
         public RecipesResultModel GetUnApproved(int page, int pageSize)
         {
             var tempResult = db.Recipes.Where(x => !x.Approved).Select(x => new
@@ -528,8 +524,7 @@ namespace SiGotvime.Data.Repository
 
             return result;
         }
-
-
+        
         public void ApproveRecipe(int recipeID, bool approved)
         {
             var recipe = db.Recipes.Find(recipeID);
