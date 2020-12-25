@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slave (Food App)", "Slave (Food App)\Slave (Food App).csproj", "{D7F3386A-9F79-4371-9482-0DEA04204923}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiGotvime (Web)", "SiGotvime (Web)\SiGotvime (Web).csproj", "{C991817B-A118-4CF0-95A5-14BC3BAA5FEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiGotvime.Data", "SiGotvime.Data\SiGotvime.Data.csproj", "{2AA6DF41-9C7E-405C-A800-9FF73C6F41C4}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D7F3386A-9F79-4371-9482-0DEA04204923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7F3386A-9F79-4371-9482-0DEA04204923}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7F3386A-9F79-4371-9482-0DEA04204923}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7F3386A-9F79-4371-9482-0DEA04204923}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C991817B-A118-4CF0-95A5-14BC3BAA5FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C991817B-A118-4CF0-95A5-14BC3BAA5FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C991817B-A118-4CF0-95A5-14BC3BAA5FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC78F9B3-11D3-4943-BFC4-557821F8F8F9}
 	EndGlobalSection
 EndGlobal
